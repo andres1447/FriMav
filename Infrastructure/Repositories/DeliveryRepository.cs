@@ -32,6 +32,7 @@ namespace FriMav.Infrastructure.Repositories
         {
             return _databaseContext.Set<Delivery>()
                 .Where(x => x.DeliveryId == deliveryId)
+                .Include(d => d.Employee)
                 .Include(d => d.Invoices.Select(i => i.Person))
                 .Include(d => d.Invoices.Select(i => i.Items.Select(it => it.Product)))
                 .FirstOrDefault();

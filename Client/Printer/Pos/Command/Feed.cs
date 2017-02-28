@@ -9,12 +9,12 @@ namespace FriMav.Client.Printer.Pos.Command
 {
     public class Feed : RawPrinterCommand
     {
-        [XmlAttribute("Lines")]
-        public int Lines { get; set; }
+        [XmlText]
+        public string Lines { get; set; }
 
         public override void Apply(EpsonCommander commander)
         {
-            commander.Feed(Lines);
+            commander.Feed(Convert.ToInt32(Lines));
         }
 
         public override void Revert(EpsonCommander commander)

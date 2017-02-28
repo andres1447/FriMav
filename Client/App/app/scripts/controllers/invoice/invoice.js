@@ -94,7 +94,7 @@ angular.module('client')
           });
           Invoice.save(invoice, function (result) {
               Notification.success('Imprimiendo factura...');
-              PrintHelper.print('Factura', JSON.stringify($scope.getPrintModel(invoice)));
+              PrintHelper.print('Invoice', JSON.stringify($scope.getPrintModel(invoice)));
               $state.reload();
           });
       };

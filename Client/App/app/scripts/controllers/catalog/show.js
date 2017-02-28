@@ -37,7 +37,7 @@ angular.module('client')
 
       $scope.print = function (catalog) {
           Notification.success('Imprimiendo lista de precios...');
-          PrintHelper.print('ListaPrecios', JSON.stringify($scope.getPrintModel(catalog)));
+          PrintHelper.print('PriceList', JSON.stringify($scope.getPrintModel(catalog)));
       };
 
       $scope.getPrintModel = function (catalog) {

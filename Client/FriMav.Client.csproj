@@ -198,13 +198,14 @@
     <Content Include="App\app\scripts\routes\zone.js" />
     <Content Include="App\app\scripts\services\zone.js" />
     <Content Include="App\app\scripts\services\healthcheck.js" />
+    <Content Include="App\app\views\delivery\show.html" />
     <Content Include="App\app\views\zone\create.html" />
     <Content Include="App\app\views\zone\index.html" />
     <Content Include="App\app\views\zone\show.html" />
     <Content Include="App\app\views\zone\update.html" />
     <Content Include="App\app\views\zone\_form.html" />
     <Content Include="App\app\views\family\show.html" />
-    <Content Include="App\dist\scripts\scripts.c50be39f.js">
+    <Content Include="App\dist\scripts\scripts.f0288cdc.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\EscpInvoice.xml">

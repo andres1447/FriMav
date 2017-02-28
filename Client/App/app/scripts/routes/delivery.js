@@ -25,5 +25,15 @@ angular
                     return Invoice.undelivered().$promise;
                 }
             }
+        })
+        .state('DeliveryShow', {
+            url: '/delivery/:deliveryId',
+            templateUrl: 'views/delivery/show.html',
+            controller: 'DeliveryShowCtrl',
+            resolve: {
+                delivery: function (Delivery, $stateParams) {
+                    return Delivery.get({ deliveryId: $stateParams.deliveryId }).$promise;
+                }
+            }
         });
   });

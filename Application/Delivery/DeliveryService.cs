@@ -30,11 +30,11 @@ namespace FriMav.Application
                 PersonId = command.EmployeeId,
                 Invoices = _invoiceRepository.FindAllBy(x => command.Invoices.Contains(x.TransactionId)).ToList()
             };
+            _deliveryRepository.Create(delivery);
             foreach (var invoice in delivery.Invoices)
             {
                 invoice.Delivery = delivery;
             }
-            _deliveryRepository.Create(delivery);
             _deliveryRepository.DetectChanges();
             _deliveryRepository.Save();
         }

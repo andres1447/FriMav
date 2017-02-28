@@ -44,7 +44,7 @@ angular.module('client')
           angular.forEach($scope.products, function (item) {
               model.products.push({ name: item.name, price: item.price });
           });
-          PrintHelper.print('ListaPrecios', JSON.stringify(model));
+          PrintHelper.print('PriceList', JSON.stringify(model));
       };
 
       $scope.delete = function () {

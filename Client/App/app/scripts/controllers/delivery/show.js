@@ -27,11 +27,16 @@ angular.module('client')
       });
 
       $scope.init = function () {
-          $scope.products = {};
+          var products = {};
           angular.forEach($.map($scope.delivery.invoices, function (i) { return i.items; }), function (it) {
-              if ($scope.products[it.product.productId]) {
-
+              if (!products[it.product.productId]) {
+                  products[it.product.productId] = { productId: it.productId, name: it.product.name, quantity: 0 };
               }
+              products[it.product.productId].quantity += it.quantity;
+          });
+          $scope.products = [];
+          angular.forEach(products, function (it) {
+              $scope.products.push(it);
           });
       };
 
@@ -39,22 +44,34 @@ angular.module('client')
 
       $scope.print = function () {
           Notification.success('Imprimiendo envio...');
-          PrintHelper.print('Factura', JSON.stringify($scope.getPrintModel($scope.invoice)));
+          PrintHelper.print('Delivery', JSON.stringify($scope.getPrintModel()));
       };
 
-      $scope.getPrintModel = function (invoice) {
+      $scope.getPrintModel = function () {
           var model = {
-              date: invoice.date,
-              deliveryAddress: invoice.deliveryAddress,
-              customerCode: invoice.person.code,
-              customerName: invoice.person.name,
-              number: invoice.number,
-              balance: 0,
+              date: $scope.delivery.date,
+              employeeCode: $scope.delivery.employee.code,
+              employeeName: $scope.delivery.employee.name,
+              invoices: [],
               items: []
           };
-          angular.forEach(invoice.items, function (item) {
-              model.items.push({ product: item.product.name, quantity: item.quantity, price: item.price });
+          angular.forEach($scope.delivery.invoices, function (item) {
+              model.invoices.push({ code: item.person.code, customer: item.person.name, total: item.total, number: item.number });
+          });
+          angular.forEach($scope.products, function (item) {
+              model.items.push({ product: item.name, quantity: item.quantity });
           });
           return model;
+      };
+
+      $scope.delete = function () {
+          ModalService.show({ title: 'Envio', message: 'Desea borrar el envio?' }).then(function (res) {
+              Delivery.delete({ deliveryId: delivery.deliveryId }, function (res) {
+                  Notification.success('Envio borrado correctamente.');
+                  $state.go('DeliveryIndex');
+              }, function (err) {
+                  Notification.error(err.data);
+              });
+          });
       };
   });

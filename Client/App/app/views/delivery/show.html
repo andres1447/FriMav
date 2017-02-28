@@ -1,0 +1,58 @@
+<div class="row">
+    <h4>Envio</h4>
+</div>
+<div class="row">
+    <a ui-sref="DeliveryIndex" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i><span class="key-shortcut">esc</span></a>
+    <a ng-click="print()" class="btn btn-success"><i class="glyphicon glyphicon-print"></i><span class="key-shortcut">F5</span></a>
+    <a ng-click="delete()" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i><span class="key-shortcut">-</span></a>
+</div>
+<div class="row">
+    <table class="table">
+        <tr>
+            <td>Fecha</td>
+            <td>{{:: delivery.date | date:'dd/MM/yyyy' }}</td>
+        </tr>
+        <tr>
+            <td>Empleado</td>
+            <td>{{:: delivery.employee.name }}</td>
+        </tr>
+    </table>
+</div>
+<div class="row">
+    <h5>Facturas</h5>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Numero</th>
+                <th>Codigo de cliente</th>
+                <th>Cliente</th>
+                <th>Monto</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="it in delivery.invoices">
+                <td class="col-md-2">{{:: it.number }}</td>
+                <td class="col-md-2">{{:: it.person.code }}</td>
+                <td class="col-md-2">{{:: it.person.name }}</td>
+                <td class="col-md-2 number">{{:: it.total | number:2 }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <h5>Productos</h5>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="it in products">
+                <td class="col-md-2">{{:: it.name }}</td>
+                <td class="col-md-2 number">{{:: it.quantity | number:2 }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,12 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <EscCommandTemplate>
-  <Line Length="40"/>
+  <Line>40</Line>
   <NewLine/>
-  <NewLine>
-    <Right>
-      <Text>@Model.Date.ToString("dd/MM/yyyy")</Text>
-    </Right>
-  </NewLine>
   <NewLine>
     <Center>
       <Emphasis>
@@ -14,22 +9,29 @@
       </Emphasis>
     </Center>
   </NewLine>
-  <Line Length="40"/>
+  <NewLine>
+    <Center>
+      <Text>Lista de precios</Text>
+    </Center>
+  </NewLine>
+  <Line>40</Line>
   <NewLine/>
   @foreach (var item in Model.Products)
   {
   <NewLine>
-    <Text>@item.Product</Text>
+    <Text>@item.Name</Text>
     <Right>
-      <Text>$@item.Amount().ToString("N2")</Text>
+      <Text>$@item.Price.ToString("N2")</Text>
     </Right>
   </NewLine>
   }
-  <Line Length="40"/>
+  <Line>40</Line>
   <NewLine/>
   <NewLine>
-    <Right>Válida al $@DateTime.Now.ToString("dd/MM/yyyy")</Right>
+    <Right>
+      <Text>Valida al @DateTime.Now.ToString("dd/MM/yyyy")</Text>
+    </Right>
   </NewLine>
-  <Line Length="40"/>
-  <Feed Lines="9"/>
+  <Line>40</Line>
+  <Feed>9</Feed>
 </EscCommandTemplate>

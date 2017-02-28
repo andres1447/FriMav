@@ -75,8 +75,10 @@ namespace FriMav.Client.Printer.Pos
 
         public EpsonCommander Line(int length)
         {
+            Underline(true);
             for (int x = 0; x < length; ++x)
-                _buffer += "_";
+                _buffer += ' ';
+            Underline(false);
             return NewLine();
         }
 

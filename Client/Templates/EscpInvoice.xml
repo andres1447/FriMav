@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <EscCommandTemplate>
-  <Line Length="40"/>
+  <Line>40</Line>
   <NewLine/>
   <NewLine>
     <Right>
@@ -14,7 +14,7 @@
       </Emphasis>
     </Center>
   </NewLine>
-  <Line Length="40"/>
+  <Line>40</Line>
   <NewLine/>
   @foreach (var item in Model.Items)
   {
@@ -28,11 +28,11 @@
     </Right>
   </NewLine>
   }
-  <Line Length="40"/>
+  <Line>40</Line>
   <NewLine/>
   <NewLine>
     <Right>Total: $@Model.Total().ToString("N2")</Right>
   </NewLine>
-  <Line Length="40"/>
-  <Feed Lines="9"/>
+  <Line>40</Line>
+  <Feed>9</Feed>
 </EscCommandTemplate>
