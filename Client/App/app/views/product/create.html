@@ -1,0 +1,9 @@
+<div class="row">
+    <h4>Nuevo producto</h4>
+</div>
+<div class="row">
+    <a ui-sref="ProductIndex" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i><span class="key-shortcut">esc</span></a>
+</div>
+<form class="form-horizontal" ng-submit="create(product)">
+    <div ng-include="'views/product/_form.html'"></div>
+</form>

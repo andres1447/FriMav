@@ -1,0 +1,30 @@
+<div class="row">
+    <h4>Envios</h4>
+</div>
+<div class="row">
+    <a ui-sref="DeliveryCreate" class="btn btn-success">Nuevo<span class="key-shortcut">+</span></a>
+</div>
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Empleado</th>
+                <th>Pedidos</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="it in deliveries" ng-class="{'alert-info': $index == deliveryIndex}">
+                <td class="col-md-2">{{::it.date | date:'dd/MM/yyyy'}}</td>
+                <td class="col-md-3">{{::it.employee}}</td>
+                <td class="col-md-3">{{::it.invoices}}</td>
+                <td class="col-md-4">
+                    <a ui-sref="CatalogShow({ deliveryId: it.deliveryId })" class="btn btn-info"><i class="glyphicon glyphicon-th-list"></i><span class="key-shortcut">&crarr;</span></a>
+                    <a ui-sref="CatalogUpdate({ deliveryId: it.deliveryId })" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i><span class="key-shortcut">&midast;</span></a>
+                    <button type="button" class="btn btn-danger" ng-click="delete($index)"><i class="glyphicon glyphicon-trash"></i><span class="key-shortcut">&minus;</span></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

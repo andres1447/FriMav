@@ -1,0 +1,34 @@
+<div class="row">
+    <h4>Empleados</h4>
+</div>
+<div class="row">
+    <a ui-sref="EmployeeCreate" class="btn btn-success">Nuevo<span class="key-shortcut">+</span></a>
+</div>
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Cuit</th>
+                <th>Direccion</th>
+                <th>Balance</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="it in employees" ng-class="{'alert-info': $index == index}">
+                <td class="col-md-1">{{::it.code}}</td>
+                <td class="col-md-2">{{::it.name}}</td>
+                <td class="col-md-2">{{::it.cuit}}</td>
+                <td class="col-md-2">{{::it.address}}</td>
+                <td class="col-md-2" ng-class="{'text-danger': it.balance > 0}">{{::it.balance}}</td>
+                <td class="col-md-3">
+                    <a ui-sref="EmployeeShow({ personId: it.personId })" class="btn btn-info"><i class="glyphicon glyphicon-th-list"></i><span class="key-shortcut">&crarr;</span></a>
+                    <a ui-sref="EmployeeUpdate({ personId: it.personId })" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i><span class="key-shortcut">&midast;</span></a>
+                    <button type="button" class="btn btn-danger" ng-click="delete($index)"><i class="glyphicon glyphicon-trash"></i><span class="key-shortcut">&minus;</span></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

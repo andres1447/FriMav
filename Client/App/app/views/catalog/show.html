@@ -1,0 +1,24 @@
+<div class="row">
+    <h4>Lista de precios {{:: catalog.name }}</h4>
+</div>
+<div class="row">
+    <a ui-sref="CatalogIndex" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i><span class="key-shortcut">esc</span></a>
+    <a ng-click="print(catalog)" class="btn btn-success"><i class="glyphicon glyphicon-print"></i><span class="key-shortcut">F5</span></a>
+    <a ng-click="delete(catalog)" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i><span class="key-shortcut">-</span></a>
+</div>
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="it in catalog.products">
+                <td class="col-md-2">{{:: it.name }}</td>
+                <td class="col-md-2 number">{{:: it.price | number:2 }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

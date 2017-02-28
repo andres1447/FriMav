@@ -1,0 +1,50 @@
+<div class="row">
+    <h4>Factura #{{:: invoice.number }}</h4>
+</div>
+<div class="row">
+    <a ui-sref="CustomerShow({ personId: invoice.personId })" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i><span class="key-shortcut">esc</span></a>
+    <a ng-click="print()" class="btn btn-success"><i class="glyphicon glyphicon-print"></i><span class="key-shortcut">F5</span></a>
+    <a ui-sref="TransactionRefund({ transactionId: transaction.transactionId })" class="btn btn-danger">Reembolzar<span class="key-shortcut">-</span></a>
+</div>
+<div class="row">
+    <table class="table">
+        <tr>
+            <td>Fecha</td>
+            <td>{{:: invoice.date | date:'dd/MM/yyyy' }}</td>
+        </tr>
+        <tr>
+            <td>Direccion de entrega</td>
+            <td>{{:: invoice.deliveryAddress }}</td>
+        </tr>
+        <tr>
+            <td>Total</td>
+            <td>{{:: invoice.total | number:2 }}</td>
+        </tr>
+    </table>
+</div>
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Importe</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="it in invoice.items">
+                <td class="col-md-2">{{:: it.product.name }}</td>
+                <td class="col-md-4 number">{{:: it.quantity }}</td>
+                <td class="col-md-2 number">{{:: it.price | number:2 }}</td>
+                <td class="col-md-2 number">{{:: it.quantity * it.price | number:2 }}</td>
+            </tr>
+            <tr>
+                <td class="col-md-4 number">{{::totals.quantity}}</td>
+                <td class="col-md-2"></td>
+                <td class="col-md-2"></td>
+                <td class="col-md-2 number">{{::totals.total | number:2 }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

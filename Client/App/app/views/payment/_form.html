@@ -1,0 +1,13 @@
+<div class="form-group">
+    <label for="payment_date" class="control-label">Fecha</label>
+    <input id="payment_date" type="date" class="form-control" ng-model="payment.date" ng-model-options="{timezone: 'UTC'}" ae-key-tab="[13]" ae-autofocus="InitPaymentCreate" autocomplete="off" />
+</div>
+<div class="form-group">
+    <label for="payment_total" class="control-label">Monto</label>
+    <input id="payment_total" type="text" class="form-control" ng-model="payment.total" ae-key-tab="[13]" autocomplete="off" />
+</div>
+<div class="form-group">
+    <label for="payment_description" class="control-label">Descripcion</label>
+    <textarea id="payment_description" type="text" class="form-control" ng-model="payment.description" ae-key-tab="[13]" autocomplete="off" ></textarea>
+</div>
+<button type="submit" class="btn btn-success">Guardar<span class="key-shortcut">F5</span></button>

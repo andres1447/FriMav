@@ -1,0 +1,24 @@
+<div class="form-group">
+    <label for="product_code" class="control-label">Codigo</label>
+    <input id="product_code" type="text" class="form-control" ng-model="product.code" ae-key-tab="[13]" ae-autofocus="InitProductCreate" autocomplete="off" />
+</div>
+<div class="form-group">
+    <label for="product_name" class="control-label">Nombre</label>
+    <input id="product_name" type="text" class="form-control" ng-model="product.name" ae-key-tab="[13]" autocomplete="off" />
+</div>
+<div class="form-group">
+    <label for="product_price" class="control-label">Precio</label>
+    <input id="product_price" type="text" class="form-control" ng-model="product.price" ae-key-tab="[13]" autocomplete="off" />
+</div>
+<div class="form-group">
+    <label for="product_family" class="control-label">Familia</label>
+    <input id="product_family" type="text" class="form-control" ng-model="product.family" ae-key-tab="[13]" autocomplete="off" uib-typeahead="family as family.name for family in productFamilies | filter:$viewValue | limitTo:8" class="form-control" ae-key-tab="[13, 9]" typeahead-on-select="setFamilyId(product)" typeahead-focus-on-select="false" typeahead-editable="false" />
+</div>
+<div class="form-group">
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" ng-model="product.active" ae-key-tab="[13]" /> Activo
+        </label>
+    </div>
+</div>
+<button type="submit" class="btn btn-success">Guardar<span class="key-shortcut">F5</span></button>

@@ -1,0 +1,1046 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FriMav.Domain.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Catalog">
+          <Key>
+            <PropertyRef Name="CatalogId" />
+          </Key>
+          <Property Name="CatalogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="CatalogProduct">
+          <Key>
+            <PropertyRef Name="CatalogId" />
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="CatalogId" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="PersonId" />
+          </Key>
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="10" />
+          <Property Name="Shipping" Type="int" Nullable="false" />
+          <Property Name="PaymentMethod" Type="int" Nullable="false" />
+          <Property Name="ZoneId" Type="int" />
+        </EntityType>
+        <EntityType Name="Delivery">
+          <Key>
+            <PropertyRef Name="DeliveryId" />
+          </Key>
+          <Property Name="DeliveryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="PersonId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="PersonId" />
+          </Key>
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="TransactionId" />
+          </Key>
+          <Property Name="TransactionId" Type="int" Nullable="false" />
+          <Property Name="Shipping" Type="int" Nullable="false" />
+          <Property Name="PaymentMethod" Type="int" Nullable="false" />
+          <Property Name="DeliveryAddress" Type="nvarchar" MaxLength="192" />
+          <Property Name="DeliveryId" Type="int" />
+        </EntityType>
+        <EntityType Name="InvoiceItem">
+          <Key>
+            <PropertyRef Name="InvoiceItemId" />
+          </Key>
+          <Property Name="InvoiceItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransactionId" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="decimal" Precision="13" Scale="2" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="13" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NumberSequence">
+          <Key>
+            <PropertyRef Name="Key" />
+          </Key>
+          <Property Name="Key" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CurrentId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="PersonId" />
+          </Key>
+          <Property Name="PersonId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Cuit" Type="nvarchar" MaxLength="11" />
+          <Property Name="Address" Type="nvarchar" MaxLength="192" />
+          <Property Name="Balance" Type="decimal" Precision="13" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PriceForCustomer">
+          <Key>
+            <PropertyRef Name="PersonId" />
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="13" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="10" />
+          <Property Name="Name" Type="nvarchar" MaxLength="196" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="13" Scale="2" Nullable="false" />
+          <Property Name="PriceDate" Type="datetime" Nullable="false" />
+          <Property Name="FamilyId" Type="int" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductFamily">
+          <Key>
+            <PropertyRef Name="FamilyId" />
+          </Key>
+          <Property Name="FamilyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="196" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Salary">
+          <Key>
+            <PropertyRef Name="SalaryId" />
+          </Key>
+          <Property Name="SalaryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="Since" Type="datetime" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="13" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="TransactionId" />
+          </Key>
+          <Property Name="TransactionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransactionType" Type="int" Nullable="false" />
+          <Property Name="Number" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="IsRefunded" Type="bit" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="13" Scale="2" Nullable="false" />
+          <Property Name="Balance" Type="decimal" Precision="13" Scale="2" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="FiscalYear" Type="int" Nullable="false" />
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="ReferenceId" Type="int" />
+        </EntityType>
+        <EntityType Name="TransactionPayment">
+          <Key>
+            <PropertyRef Name="SourceTransactionId" />
+            <PropertyRef Name="TargetTransactionId" />
+          </Key>
+          <Property Name="SourceTransactionId" Type="int" Nullable="false" />
+          <Property Name="TargetTransactionId" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="13" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Zone">
+          <Key>
+            <PropertyRef Name="ZoneId" />
+          </Key>
+          <Property Name="ZoneId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Customer_Zone">
+          <End Role="Zone" Type="Self.Zone" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zone">
+              <PropertyRef Name="ZoneId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="ZoneId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_CatalogProduct_dbo_Catalog_CatalogId">
+          <End Role="Catalog" Type="Self.Catalog" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CatalogProduct" Type="Self.CatalogProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Catalog">
+              <PropertyRef Name="CatalogId" />
+            </Principal>
+            <Dependent Role="CatalogProduct">
+              <PropertyRef Name="CatalogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_CatalogProduct_dbo_Product_ProductId">
+          <End Role="Product" Type="Self.Product" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CatalogProduct" Type="Self.CatalogProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="CatalogProduct">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Customer_dbo_Person_PersonId">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="PersonId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Delivery_dbo_Employee_PersonId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="PersonId" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Employee_dbo_Person_PersonId">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="PersonId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Invoice_dbo_Delivery_DeliveryId">
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="0..1" />
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Delivery">
+              <PropertyRef Name="DeliveryId" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="DeliveryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Invoice_dbo_Transaction_TransactionId">
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="1" />
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="TransactionId" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_InvoiceItem_dbo_Invoice_TransactionId">
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="1" />
+          <End Role="InvoiceItem" Type="Self.InvoiceItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice">
+              <PropertyRef Name="TransactionId" />
+            </Principal>
+            <Dependent Role="InvoiceItem">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_InvoiceItem_dbo_Product_ProductId">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="InvoiceItem" Type="Self.InvoiceItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="InvoiceItem">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PriceForCustomer_dbo_Customer_PersonId">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="PriceForCustomer" Type="Self.PriceForCustomer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="PersonId" />
+            </Principal>
+            <Dependent Role="PriceForCustomer">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PriceForCustomer_dbo_Product_ProductId">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="PriceForCustomer" Type="Self.PriceForCustomer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="PriceForCustomer">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Product_dbo_ProductFamily_FamilyId">
+          <End Role="ProductFamily" Type="Self.ProductFamily" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductFamily">
+              <PropertyRef Name="FamilyId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="FamilyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Salary_dbo_Employee_EmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Salary" Type="Self.Salary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="PersonId" />
+            </Principal>
+            <Dependent Role="Salary">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Transaction_dbo_Person_PersonId">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="PersonId" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Transaction_dbo_Transaction_ReferenceId">
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="0..1" />
+          <End Role="Transaction1" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="TransactionId" />
+            </Principal>
+            <Dependent Role="Transaction1">
+              <PropertyRef Name="ReferenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TransactionPayment_dbo_Transaction_SourceTransactionId">
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TransactionPayment" Type="Self.TransactionPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="TransactionId" />
+            </Principal>
+            <Dependent Role="TransactionPayment">
+              <PropertyRef Name="SourceTransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TransactionPayment_dbo_Transaction_TargetTransactionId">
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="1" />
+          <End Role="TransactionPayment" Type="Self.TransactionPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="TransactionId" />
+            </Principal>
+            <Dependent Role="TransactionPayment">
+              <PropertyRef Name="TargetTransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FriMavDomainStoreContainer">
+          <EntitySet Name="Catalog" EntityType="Self.Catalog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CatalogProduct" EntityType="Self.CatalogProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Delivery" EntityType="Self.Delivery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InvoiceItem" EntityType="Self.InvoiceItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NumberSequence" EntityType="Self.NumberSequence" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PriceForCustomer" EntityType="Self.PriceForCustomer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductFamily" EntityType="Self.ProductFamily" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Salary" EntityType="Self.Salary" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TransactionPayment" EntityType="Self.TransactionPayment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zone" EntityType="Self.Zone" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Customer_Zone" Association="Self.FK_Customer_Zone">
+            <End Role="Zone" EntitySet="Zone" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_CatalogProduct_dbo_Catalog_CatalogId" Association="Self.FK_dbo_CatalogProduct_dbo_Catalog_CatalogId">
+            <End Role="Catalog" EntitySet="Catalog" />
+            <End Role="CatalogProduct" EntitySet="CatalogProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_CatalogProduct_dbo_Product_ProductId" Association="Self.FK_dbo_CatalogProduct_dbo_Product_ProductId">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="CatalogProduct" EntitySet="CatalogProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Customer_dbo_Person_PersonId" Association="Self.FK_dbo_Customer_dbo_Person_PersonId">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Delivery_dbo_Employee_PersonId" Association="Self.FK_dbo_Delivery_dbo_Employee_PersonId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Delivery" EntitySet="Delivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Employee_dbo_Person_PersonId" Association="Self.FK_dbo_Employee_dbo_Person_PersonId">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Invoice_dbo_Delivery_DeliveryId" Association="Self.FK_dbo_Invoice_dbo_Delivery_DeliveryId">
+            <End Role="Delivery" EntitySet="Delivery" />
+            <End Role="Invoice" EntitySet="Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Invoice_dbo_Transaction_TransactionId" Association="Self.FK_dbo_Invoice_dbo_Transaction_TransactionId">
+            <End Role="Transaction" EntitySet="Transaction" />
+            <End Role="Invoice" EntitySet="Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_InvoiceItem_dbo_Invoice_TransactionId" Association="Self.FK_dbo_InvoiceItem_dbo_Invoice_TransactionId">
+            <End Role="Invoice" EntitySet="Invoice" />
+            <End Role="InvoiceItem" EntitySet="InvoiceItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_InvoiceItem_dbo_Product_ProductId" Association="Self.FK_dbo_InvoiceItem_dbo_Product_ProductId">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="InvoiceItem" EntitySet="InvoiceItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PriceForCustomer_dbo_Customer_PersonId" Association="Self.FK_dbo_PriceForCustomer_dbo_Customer_PersonId">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="PriceForCustomer" EntitySet="PriceForCustomer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PriceForCustomer_dbo_Product_ProductId" Association="Self.FK_dbo_PriceForCustomer_dbo_Product_ProductId">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="PriceForCustomer" EntitySet="PriceForCustomer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Product_dbo_ProductFamily_FamilyId" Association="Self.FK_dbo_Product_dbo_ProductFamily_FamilyId">
+            <End Role="ProductFamily" EntitySet="ProductFamily" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Salary_dbo_Employee_EmployeeId" Association="Self.FK_dbo_Salary_dbo_Employee_EmployeeId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Salary" EntitySet="Salary" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Transaction_dbo_Person_PersonId" Association="Self.FK_dbo_Transaction_dbo_Person_PersonId">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Transaction" EntitySet="Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Transaction_dbo_Transaction_ReferenceId" Association="Self.FK_dbo_Transaction_dbo_Transaction_ReferenceId">
+            <End Role="Transaction" EntitySet="Transaction" />
+            <End Role="Transaction1" EntitySet="Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TransactionPayment_dbo_Transaction_SourceTransactionId" Association="Self.FK_dbo_TransactionPayment_dbo_Transaction_SourceTransactionId">
+            <End Role="Transaction" EntitySet="Transaction" />
+            <End Role="TransactionPayment" EntitySet="TransactionPayment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TransactionPayment_dbo_Transaction_TargetTransactionId" Association="Self.FK_dbo_TransactionPayment_dbo_Transaction_TargetTransactionId">
+            <End Role="Transaction" EntitySet="Transaction" />
+            <End Role="TransactionPayment" EntitySet="TransactionPayment" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FriMav.Domain" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Catalog">
+          <Key>
+            <PropertyRef Name="CatalogId" />
+          </Key>
+          <Property Name="CatalogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="Self.CatalogProduct" FromRole="Catalog" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Customer" BaseType="FriMav.Domain.Person">
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Shipping" Type="FriMav.Domain.Shipping" Nullable="false" />
+          <Property Name="PaymentMethod" Type="FriMav.Domain.PaymentMethod" Nullable="false" />
+          <Property Name="ZoneId" Type="Int32" />
+          <NavigationProperty Name="Zone" Relationship="FriMav.Domain.FK_Customer_Zone" FromRole="Customer" ToRole="Zone" />
+        </EntityType>
+        <EntityType Name="Delivery">
+          <Key>
+            <PropertyRef Name="DeliveryId" />
+          </Key>
+          <Property Name="DeliveryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_dbo_Delivery_dbo_Employee_PersonId" FromRole="Delivery" ToRole="Employee" />
+          <NavigationProperty Name="Invoices" Relationship="Self.FK_dbo_Invoice_dbo_Delivery_DeliveryId" FromRole="Delivery" ToRole="Invoice" />
+        </EntityType>
+        <EntityType Name="Employee" BaseType="FriMav.Domain.Person">
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Salaries" Relationship="Self.FK_dbo_Salary_dbo_Employee_EmployeeId" FromRole="Employee" ToRole="Salary" />
+        </EntityType>
+        <EntityType Name="Invoice" BaseType="FriMav.Domain.Transaction">
+          <Property Name="Shipping" Nullable="false" Type="FriMav.Domain.Shipping" />
+          <Property Name="PaymentMethod" Nullable="false" Type="FriMav.Domain.PaymentMethod" />
+          <Property Name="DeliveryAddress" MaxLength="192" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="DeliveryId" Type="Int32" />
+          <NavigationProperty Name="Delivery" Relationship="Self.FK_dbo_Invoice_dbo_Delivery_DeliveryId" FromRole="Invoice" ToRole="Delivery" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_dbo_InvoiceItem_dbo_Invoice_TransactionId" FromRole="Invoice" ToRole="InvoiceItem" />
+        </EntityType>
+        <EntityType Name="InvoiceItem">
+          <Key>
+            <PropertyRef Name="InvoiceItemId" />
+          </Key>
+          <Property Name="InvoiceItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="13" Scale="2" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="13" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Invoice" Relationship="Self.FK_dbo_InvoiceItem_dbo_Invoice_TransactionId" FromRole="InvoiceItem" ToRole="Invoice" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_dbo_InvoiceItem_dbo_Product_ProductId" FromRole="InvoiceItem" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="NumberSequence">
+          <Key>
+            <PropertyRef Name="Key" />
+          </Key>
+          <Property Name="Key" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CurrentId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="PersonId" />
+          </Key>
+          <Property Name="PersonId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cuit" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="192" FixedLength="false" Unicode="true" />
+          <Property Name="Balance" Type="Decimal" Precision="13" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PriceForCustomer">
+          <Key>
+            <PropertyRef Name="PersonId" />
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="13" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_dbo_PriceForCustomer_dbo_Customer_PersonId" FromRole="PriceForCustomer" ToRole="Customer" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_dbo_PriceForCustomer_dbo_Product_ProductId" FromRole="PriceForCustomer" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="196" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="13" Scale="2" Nullable="false" />
+          <Property Name="PriceDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FamilyId" Type="Int32" />
+          <NavigationProperty Name="Family" Relationship="Self.FK_dbo_Product_dbo_ProductFamily_FamilyId" FromRole="Product" ToRole="ProductFamily" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductFamily">
+          <Key>
+            <PropertyRef Name="FamilyId" />
+          </Key>
+          <Property Name="FamilyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="196" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Salary">
+          <Key>
+            <PropertyRef Name="SalaryId" />
+          </Key>
+          <Property Name="SalaryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="Since" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Amount" Type="Decimal" Precision="13" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_dbo_Salary_dbo_Employee_EmployeeId" FromRole="Salary" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="TransactionId" />
+          </Key>
+          <Property Name="TransactionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionType" Type="FriMav.Domain.TransactionType" Nullable="false" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsRefunded" Type="Boolean" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="13" Scale="2" Nullable="false" />
+          <Property Name="Balance" Type="Decimal" Precision="13" Scale="2" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FiscalYear" Type="Int32" Nullable="false" />
+          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <Property Name="ReferenceId" Type="Int32" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_dbo_Transaction_dbo_Person_PersonId" FromRole="Transaction" ToRole="Person" />
+          <NavigationProperty Name="Reference" Relationship="Self.FK_dbo_Transaction_dbo_Transaction_ReferenceId" FromRole="Transaction" ToRole="Transaction1" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK_dbo_TransactionPayment_dbo_Transaction_TargetTransactionId" FromRole="Transaction" ToRole="TransactionPayment" />
+        </EntityType>
+        <EntityType Name="TransactionPayment">
+          <Key>
+            <PropertyRef Name="SourceTransactionId" />
+            <PropertyRef Name="TargetTransactionId" />
+          </Key>
+          <Property Name="SourceTransactionId" Type="Int32" Nullable="false" />
+          <Property Name="TargetTransactionId" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="13" Scale="2" Nullable="false" />
+          <NavigationProperty Name="SourceTransaction" Relationship="Self.FK_dbo_TransactionPayment_dbo_Transaction_SourceTransactionId" FromRole="TransactionPayment" ToRole="Transaction" />
+          <NavigationProperty Name="TargetTransaction" Relationship="Self.FK_dbo_TransactionPayment_dbo_Transaction_TargetTransactionId" FromRole="TransactionPayment" ToRole="Transaction" />
+        </EntityType>
+        <Association Name="FK_dbo_PriceForCustomer_dbo_Customer_PersonId">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="PriceForCustomer" Type="Self.PriceForCustomer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="PersonId" />
+            </Principal>
+            <Dependent Role="PriceForCustomer">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Delivery_dbo_Employee_PersonId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="PersonId" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Invoice_dbo_Delivery_DeliveryId">
+          <End Type="Self.Delivery" Multiplicity="0..1" Role="Delivery" />
+          <End Type="Self.Invoice" Multiplicity="*" Role="Invoice" />
+          <ReferentialConstraint>
+            <Principal Role="Delivery">
+              <PropertyRef Name="DeliveryId" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="DeliveryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Salary_dbo_Employee_EmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Salary" Type="Self.Salary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="PersonId" />
+            </Principal>
+            <Dependent Role="Salary">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_InvoiceItem_dbo_Invoice_TransactionId">
+          <End Type="Self.Invoice" Multiplicity="1" Role="Invoice">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Self.InvoiceItem" Multiplicity="*" Role="InvoiceItem" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice">
+              <PropertyRef Name="TransactionId" />
+            </Principal>
+            <Dependent Role="InvoiceItem">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_InvoiceItem_dbo_Product_ProductId">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="InvoiceItem" Type="Self.InvoiceItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="InvoiceItem">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Transaction_dbo_Person_PersonId">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="PersonId" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PriceForCustomer_dbo_Product_ProductId">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="PriceForCustomer" Type="Self.PriceForCustomer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="PriceForCustomer">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Product_dbo_ProductFamily_FamilyId">
+          <End Role="ProductFamily" Type="Self.ProductFamily" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductFamily">
+              <PropertyRef Name="FamilyId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="FamilyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Transaction_dbo_Transaction_ReferenceId">
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="0..1" />
+          <End Role="Transaction1" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="TransactionId" />
+            </Principal>
+            <Dependent Role="Transaction1">
+              <PropertyRef Name="ReferenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TransactionPayment_dbo_Transaction_SourceTransactionId">
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TransactionPayment" Type="Self.TransactionPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="TransactionId" />
+            </Principal>
+            <Dependent Role="TransactionPayment">
+              <PropertyRef Name="SourceTransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TransactionPayment_dbo_Transaction_TargetTransactionId">
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="1" />
+          <End Role="TransactionPayment" Type="Self.TransactionPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="TransactionId" />
+            </Principal>
+            <Dependent Role="TransactionPayment">
+              <PropertyRef Name="TargetTransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CatalogProduct">
+          <End Role="Catalog" Type="Self.Catalog" Multiplicity="*" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="BillingEntities" annotation:LazyLoadingEnabled="false">
+          <EntitySet Name="Catalog" EntityType="Self.Catalog" />
+          <EntitySet Name="Delivery" EntityType="Self.Delivery" />
+          <EntitySet Name="InvoiceItem" EntityType="Self.InvoiceItem" />
+          <EntitySet Name="NumberSequence" EntityType="Self.NumberSequence" />
+          <EntitySet Name="Person" EntityType="Self.Person" />
+          <EntitySet Name="PriceForCustomer" EntityType="Self.PriceForCustomer" />
+          <EntitySet Name="Product" EntityType="Self.Product" />
+          <EntitySet Name="ProductFamily" EntityType="Self.ProductFamily" />
+          <EntitySet Name="Salary" EntityType="Self.Salary" />
+          <EntitySet Name="Transaction" EntityType="Self.Transaction" />
+          <EntitySet Name="TransactionPayment" EntityType="Self.TransactionPayment" />
+          <AssociationSet Name="FK_dbo_PriceForCustomer_dbo_Customer_PersonId" Association="Self.FK_dbo_PriceForCustomer_dbo_Customer_PersonId">
+            <End Role="Customer" EntitySet="Person" />
+            <End Role="PriceForCustomer" EntitySet="PriceForCustomer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Delivery_dbo_Employee_PersonId" Association="Self.FK_dbo_Delivery_dbo_Employee_PersonId">
+            <End Role="Employee" EntitySet="Person" />
+            <End Role="Delivery" EntitySet="Delivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Invoice_dbo_Delivery_DeliveryId" Association="Self.FK_dbo_Invoice_dbo_Delivery_DeliveryId">
+            <End EntitySet="Delivery" Role="Delivery" />
+            <End EntitySet="Transaction" Role="Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Salary_dbo_Employee_EmployeeId" Association="Self.FK_dbo_Salary_dbo_Employee_EmployeeId">
+            <End Role="Employee" EntitySet="Person" />
+            <End Role="Salary" EntitySet="Salary" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_InvoiceItem_dbo_Invoice_TransactionId" Association="Self.FK_dbo_InvoiceItem_dbo_Invoice_TransactionId">
+            <End EntitySet="Transaction" Role="Invoice" />
+            <End EntitySet="InvoiceItem" Role="InvoiceItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_InvoiceItem_dbo_Product_ProductId" Association="Self.FK_dbo_InvoiceItem_dbo_Product_ProductId">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="InvoiceItem" EntitySet="InvoiceItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Transaction_dbo_Person_PersonId" Association="Self.FK_dbo_Transaction_dbo_Person_PersonId">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Transaction" EntitySet="Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PriceForCustomer_dbo_Product_ProductId" Association="Self.FK_dbo_PriceForCustomer_dbo_Product_ProductId">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="PriceForCustomer" EntitySet="PriceForCustomer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Product_dbo_ProductFamily_FamilyId" Association="Self.FK_dbo_Product_dbo_ProductFamily_FamilyId">
+            <End Role="ProductFamily" EntitySet="ProductFamily" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Transaction_dbo_Transaction_ReferenceId" Association="Self.FK_dbo_Transaction_dbo_Transaction_ReferenceId">
+            <End Role="Transaction" EntitySet="Transaction" />
+            <End Role="Transaction1" EntitySet="Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TransactionPayment_dbo_Transaction_SourceTransactionId" Association="Self.FK_dbo_TransactionPayment_dbo_Transaction_SourceTransactionId">
+            <End Role="Transaction" EntitySet="Transaction" />
+            <End Role="TransactionPayment" EntitySet="TransactionPayment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TransactionPayment_dbo_Transaction_TargetTransactionId" Association="Self.FK_dbo_TransactionPayment_dbo_Transaction_TargetTransactionId">
+            <End Role="Transaction" EntitySet="Transaction" />
+            <End Role="TransactionPayment" EntitySet="TransactionPayment" />
+          </AssociationSet>
+          <AssociationSet Name="CatalogProduct" Association="Self.CatalogProduct">
+            <End Role="Catalog" EntitySet="Catalog" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <EntitySet Name="Zone" EntityType="FriMav.Domain.Zone" />
+          <AssociationSet Name="FK_Customer_Zone" Association="FriMav.Domain.FK_Customer_Zone">
+            <End Role="Zone" EntitySet="Zone" />
+            <End Role="Customer" EntitySet="Person" />
+          </AssociationSet>
+          </EntityContainer>
+        <EnumType Name="TransactionType">
+          <Member Name="Invoice" Value="1" />
+          <Member Name="Payment" Value="2" />
+          <Member Name="CreditNote" Value="3" />
+          <Member Name="DebitNote" Value="4" />
+          <Member Name="Adjustment" Value="5" />
+        </EnumType>
+        <EnumType Name="Shipping">
+          <Member Name="Self" Value="1" />
+          <Member Name="Delivery" Value="2" />
+        </EnumType>
+        <EnumType Name="PaymentMethod">
+          <Member Name="Cash" Value="1" />
+          <Member Name="Credit" Value="2" />
+        </EnumType>
+        <EntityType Name="Zone">
+          <Key>
+            <PropertyRef Name="ZoneId" />
+          </Key>
+          <Property Name="ZoneId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Customer" Relationship="FriMav.Domain.FK_Customer_Zone" FromRole="Zone" ToRole="Customer" />
+        </EntityType>
+        <Association Name="FK_Customer_Zone">
+          <End Type="FriMav.Domain.Zone" Role="Zone" Multiplicity="0..1" />
+          <End Type="FriMav.Domain.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zone">
+              <PropertyRef Name="ZoneId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="ZoneId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FriMavDomainStoreContainer" CdmEntityContainer="BillingEntities">
+          <EntitySetMapping Name="Catalog">
+            <EntityTypeMapping TypeName="IsTypeOf(FriMav.Domain.Catalog)">
+              <MappingFragment StoreEntitySet="Catalog">
+                <ScalarProperty Name="CatalogId" ColumnName="CatalogId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Delivery">
+            <EntityTypeMapping TypeName="FriMav.Domain.Delivery">
+              <MappingFragment StoreEntitySet="Delivery">
+                <ScalarProperty Name="DeliveryId" ColumnName="DeliveryId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InvoiceItem">
+            <EntityTypeMapping TypeName="FriMav.Domain.InvoiceItem">
+              <MappingFragment StoreEntitySet="InvoiceItem">
+                <ScalarProperty Name="InvoiceItemId" ColumnName="InvoiceItemId" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NumberSequence">
+            <EntityTypeMapping TypeName="FriMav.Domain.NumberSequence">
+              <MappingFragment StoreEntitySet="NumberSequence">
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="CurrentId" ColumnName="CurrentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Person">
+            <EntityTypeMapping TypeName="IsTypeOf(FriMav.Domain.Person)">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Cuit" ColumnName="Cuit" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(FriMav.Domain.Employee)">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(FriMav.Domain.Customer)">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="ZoneId" ColumnName="ZoneId" />
+                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PriceForCustomer">
+            <EntityTypeMapping TypeName="FriMav.Domain.PriceForCustomer">
+              <MappingFragment StoreEntitySet="PriceForCustomer">
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="FriMav.Domain.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="PriceDate" ColumnName="PriceDate" />
+                <ScalarProperty Name="FamilyId" ColumnName="FamilyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductFamily">
+            <EntityTypeMapping TypeName="FriMav.Domain.ProductFamily">
+              <MappingFragment StoreEntitySet="ProductFamily">
+                <ScalarProperty Name="FamilyId" ColumnName="FamilyId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Salary">
+            <EntityTypeMapping TypeName="FriMav.Domain.Salary">
+              <MappingFragment StoreEntitySet="Salary">
+                <ScalarProperty Name="SalaryId" ColumnName="SalaryId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Since" ColumnName="Since" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transaction">
+            <EntityTypeMapping TypeName="IsTypeOf(FriMav.Domain.Transaction)">
+              <MappingFragment StoreEntitySet="Transaction">
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="ReferenceId" ColumnName="ReferenceId" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="FiscalYear" ColumnName="FiscalYear" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="IsRefunded" ColumnName="IsRefunded" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(FriMav.Domain.Invoice)">
+              <MappingFragment StoreEntitySet="Invoice">
+                <ScalarProperty Name="DeliveryId" ColumnName="DeliveryId" />
+                <ScalarProperty Name="DeliveryAddress" ColumnName="DeliveryAddress" />
+                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+                <ScalarProperty Name="Shipping" ColumnName="Shipping" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransactionPayment">
+            <EntityTypeMapping TypeName="FriMav.Domain.TransactionPayment">
+              <MappingFragment StoreEntitySet="TransactionPayment">
+                <ScalarProperty Name="SourceTransactionId" ColumnName="SourceTransactionId" />
+                <ScalarProperty Name="TargetTransactionId" ColumnName="TargetTransactionId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="CatalogProduct" TypeName="FriMav.Domain.CatalogProduct" StoreEntitySet="CatalogProduct">
+            <EndProperty Name="Product">
+              <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+            </EndProperty>
+            <EndProperty Name="Catalog">
+              <ScalarProperty Name="CatalogId" ColumnName="CatalogId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Zone">
+            <EntityTypeMapping TypeName="FriMav.Domain.Zone">
+              <MappingFragment StoreEntitySet="Zone">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ZoneId" ColumnName="ZoneId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,44 @@
+<div class="row">
+    <h4>Productos</h4>
+</div>
+<div class="row">
+    <div class="form-group">
+        <a ui-sref="ProductCreate" class="btn btn-success">Nuevo<span class="key-shortcut">+</span></a>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-search"></i><span class="key-shortcut">F2</span></span>
+            <input id="invoice_customer" type="text" ng-model="productSearch" class="form-control" autocomplete="off" ae-select-on-click=""
+                   uib-typeahead="product as (product.code + ' - ' + product.name) for product in getMatchingProducts($viewValue) | limitTo:8"
+                   typeahead-on-select="goToProduct(productSearch)" typeahead-is-open="typeaheadOpen"
+                   typeahead-editable="false" ae-autofocus="SearchProduct">
+        </div>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Familia</th>
+                <th>Precio</th>
+                <th>Activo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="it in products" ng-class="{'alert-info': $index == productIndex}">
+                <td class="col-md-2">{{::it.code}}</td>
+                <td class="col-md-2">{{::it.name}}</td>
+                <td class="col-md-2">{{::it.family.name}}</td>
+                <td class="col-md-2">{{::it.price | number:2 }}</td>
+                <td class="col-md-2">{{:: it.active ? 'Si' : 'No' }}</td>
+                <td class="col-md-2">
+                    <a ui-sref="ProductUpdate({productId: it.productId})" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i><span class="key-shortcut">&midast;</span></a>
+                    <button type="button" class="btn btn-danger" ng-click="delete($index)"><i class="glyphicon glyphicon-trash"></i><span class="key-shortcut">&minus;</span></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

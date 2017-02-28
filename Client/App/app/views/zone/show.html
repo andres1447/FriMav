@@ -1,0 +1,27 @@
+<div class="row">
+    <h4>{{zone.name}}</h4>
+</div>
+<div class="row">
+    <a ui-sref="ZoneIndex" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i><span class="key-shortcut">esc</span></a>
+    <a ng-click="delete()" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i><span class="key-shortcut">-</span></a>
+</div>
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Cuit</th>
+                <th>Direccion</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="it in customers">
+                <td class="col-md-2">{{:: it.code }}</td>
+                <td class="col-md-2">{{:: it.name }}</td>
+                <td class="col-md-2">{{:: it.cuit }}</td>
+                <td class="col-md-2">{{:: it.address }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

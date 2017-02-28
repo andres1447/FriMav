@@ -1,0 +1,40 @@
+<div class="row">
+    <h4>Impresiones</h4>
+</div>
+<div class="row">
+    <form class="form-horizontal" ng-submit="save()">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Documento</th>
+                    <th>Modo de impresion</th>
+                    <th>Plantilla</th>
+                    <th>Destino</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="it in printEntries">
+                    <td class="col-md-3">
+                        <select class="form-control" ng-model="it.Type">
+                            <option ng-repeat="opt in types" value="{{::opt.Value}}">{{::opt.Text}}</option>
+                        </select>
+                    </td>
+                    <td class="col-md-3">
+                        <select class="form-control" ng-model="it.Mode">
+                            <option ng-repeat="opt in printModes" value="{{::opt.Value}}">{{::opt.Text}}</option>
+                        </select>
+                    </td>
+                    <td class="col-md-3">
+                        <select class="form-control" ng-model="it.Template">
+                            <option ng-repeat="opt in templates" value="{{::opt}}">{{::opt}}</option>
+                        </select>
+                    </td>
+                    <td class="col-md-3">
+                        <input type="text" ng-model="it.Destination" uib-typeahead="printer for printer in printers" class="form-control" typeahead-focus-on-select="false">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-success">Guardar <span class="key-shortcut">F5</span></button>
+    </form>
+</div>

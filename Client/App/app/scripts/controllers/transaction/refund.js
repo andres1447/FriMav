@@ -1,0 +1,55 @@
+'use strict';
+
+angular.module('client')
+  .controller('TransactionRefundCtrl', function ($scope, $state, $timeout, hotkeys, Notification, Transaction, transaction) {
+      $scope.createRefund = {
+          date: new Date(),
+          transactionId: transaction.transactionId
+      };
+
+      $scope.transaction = transaction;
+
+      hotkeys.bindTo($scope)
+      .add({
+          combo: 'f5',
+          description: 'Guardar',
+          allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+          callback: function () {
+              $scope.refund($scope.createRefund);
+          }
+      })
+      .add({
+          combo: 'esc',
+          description: 'Volver a cliente',
+          allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+          persistent: false,
+          callback: function (e) {
+              $state.go('CustomerShow', { personId: transaction.personId });
+              e.preventDefault();
+          }
+      });
+
+      $scope.init = function () {
+          $scope.broadcast('InitRefund');
+      };
+
+      $scope.init();
+      
+      $scope.getTransactionType = function (transaction) {
+          switch (transaction.transactionType) {
+              case 1: return 'Factura';
+              case 2: return 'Pago';
+              case 3: return 'Nota de credito';
+              case 4: return 'Nota de debito';
+          }
+      };
+
+      $scope.refund = function (createRefund) {
+          Transaction.cancel(createRefund, function (res) {
+              Notification.success('Cancelacion creada correctamente.');
+              $state.go('CustomerShow', { personId: transaction.personId });
+          }, function (err) {
+              Notification.error({ title: err.data.message, message: err.data.errors.join('</br>') });
+          });
+      };
+  });

@@ -1,0 +1,441 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\CefSharp.WinForms.53.0.0\build\CefSharp.WinForms.props" Condition="Exists('..\packages\CefSharp.WinForms.53.0.0\build\CefSharp.WinForms.props')" />
+  <Import Project="..\packages\CefSharp.Common.53.0.0\build\CefSharp.Common.props" Condition="Exists('..\packages\CefSharp.Common.53.0.0\build\CefSharp.Common.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2B68DB66-F2B1-4FFD-9A63-EAA786CA4B87}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FriMav.Client</RootNamespace>
+    <AssemblyName>FriMav.Client</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>d:\publicaciones\FriMav.Client\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>16E63C90D3E4907AE5F44084361EF30F96679BFA</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>FriMav.Client_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>FriMav.Client.Client</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>App\dist\favicon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CefSharp">
+      <HintPath>..\packages\CefSharp.Common.53.0.0\CefSharp\x86\CefSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="CefSharp.BrowserSubprocess.Core">
+      <HintPath>..\packages\CefSharp.Common.53.0.0\CefSharp\x86\CefSharp.BrowserSubprocess.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="CefSharp.Core">
+      <HintPath>..\packages\CefSharp.Common.53.0.0\CefSharp\x86\CefSharp.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="CefSharp.WinForms">
+      <HintPath>..\packages\CefSharp.WinForms.53.0.0\CefSharp\x86\CefSharp.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlRenderer, Version=1.5.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlRenderer.Core.1.5.0.6\lib\net45\HtmlRenderer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HtmlRenderer.WinForms, Version=1.5.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlRenderer.WinForms.1.5.0.6\lib\net45\HtmlRenderer.WinForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RazorTemplates.Core, Version=1.2.1.0, Culture=neutral, PublicKeyToken=f2e65d6ca1d2b4cd, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorTemplates.1.2.1\lib\net40\RazorTemplates.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Select.HtmlToPdf, Version=2.4.0.1, Culture=neutral, PublicKeyToken=e0ae9f6e27a97018, processorArchitecture=MSIL">
+      <HintPath>..\packages\Select.HtmlToPdf.2.4.0.1\lib\net40\Select.HtmlToPdf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClientContainer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClientContainer.Designer.cs">
+      <DependentUpon>ClientContainer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Client.cs" />
+    <Compile Include="Models\CatalogModel.cs" />
+    <Compile Include="Models\ItemModel.cs" />
+    <Compile Include="Models\InvoiceModel.cs" />
+    <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\TicketModel.cs" />
+    <Compile Include="Printer\Modes\PrintEpsonCommandsToPrinter.cs" />
+    <Compile Include="Printer\Pos\Command\AlignCenter.cs" />
+    <Compile Include="Printer\Pos\Command\NewLine.cs" />
+    <Compile Include="Printer\Pos\Command\Line.cs" />
+    <Compile Include="Printer\Pos\Command\Feed.cs" />
+    <Compile Include="Printer\Pos\Command\Text.cs" />
+    <Compile Include="Printer\Pos\Command\AlignRight.cs" />
+    <Compile Include="Printer\Pos\Command\AlignLeft.cs" />
+    <Compile Include="Printer\Pos\Command\Emphasis.cs" />
+    <Compile Include="Printer\Pos\EpsonCommander.cs" />
+    <Compile Include="Printer\Modes\AbstractRazorPrintMode.cs" />
+    <Compile Include="Printer\IPrintMode.cs" />
+    <Compile Include="Printer\Modes\PrintEpsonCommandsToPort.cs" />
+    <Compile Include="Printer\Pos\PosTemplate.cs" />
+    <Compile Include="Printer\Pos\PosTemplateProcessor.cs" />
+    <Compile Include="Printer\Pos\Command\RawPrinterCommand.cs" />
+    <Compile Include="Printer\PrintConfiguration.cs" />
+    <Compile Include="Printer\Modes\PrintToImage.cs" />
+    <Compile Include="Printer\Modes\PrintToPDF.cs" />
+    <Compile Include="Printer\Modes\PrintToPrinter.cs" />
+    <Compile Include="Printer\PrintResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PrintResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Printer\RawPrinterHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Printer\PrintHelper.cs" />
+    <Compile Include="Utils\CefHelper.cs" />
+    <Compile Include="Utils\ClientConfig.cs" />
+    <Compile Include="Utils\SelectItem.cs" />
+    <Content Include="App\app\scripts\controllers\zone\create.js" />
+    <Content Include="App\app\scripts\controllers\zone\index.js" />
+    <Content Include="App\app\scripts\controllers\zone\show.js" />
+    <Content Include="App\app\scripts\controllers\zone\update.js" />
+    <Content Include="App\app\scripts\controllers\family\show.js" />
+    <Content Include="App\app\scripts\routes\zone.js" />
+    <Content Include="App\app\scripts\services\zone.js" />
+    <Content Include="App\app\scripts\services\healthcheck.js" />
+    <Content Include="App\app\views\zone\create.html" />
+    <Content Include="App\app\views\zone\index.html" />
+    <Content Include="App\app\views\zone\show.html" />
+    <Content Include="App\app\views\zone\update.html" />
+    <Content Include="App\app\views\zone\_form.html" />
+    <Content Include="App\app\views\family\show.html" />
+    <Content Include="App\dist\scripts\scripts.c50be39f.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\EscpInvoice.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\Factura.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\Ticket.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\EscpPriceList.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\EscpTicket.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="ClientContainer.resx">
+      <DependentUpon>ClientContainer.cs</DependentUpon>
+    </EmbeddedResource>
+    <Content Include="App\app\scripts\controllers\delivery\show.js" />
+    <EmbeddedResource Include="Printer\PrintResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PrintResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="App\dist\fonts\glyphicons-halflings-regular.eot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="App\dist\fonts\glyphicons-halflings-regular.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="App\dist\fonts\glyphicons-halflings-regular.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="App\dist\fonts\glyphicons-halflings-regular.woff2">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Content Include="App\app\404.html" />
+    <Content Include="App\app\favicon.ico" />
+    <Content Include="App\app\images\yeoman.png" />
+    <Content Include="App\app\index.html" />
+    <Content Include="App\app\robots.txt" />
+    <Content Include="App\app\scripts\app.js" />
+    <Content Include="App\app\scripts\controllers\catalog\create.js" />
+    <Content Include="App\app\scripts\controllers\catalog\index.js" />
+    <Content Include="App\app\scripts\controllers\catalog\show.js" />
+    <Content Include="App\app\scripts\controllers\customer\create.js" />
+    <Content Include="App\app\scripts\controllers\customer\index.js" />
+    <Content Include="App\app\scripts\controllers\customer\show.js" />
+    <Content Include="App\app\scripts\controllers\customer\update.js" />
+    <Content Include="App\app\scripts\controllers\delivery\create.js" />
+    <Content Include="App\app\scripts\controllers\delivery\index.js" />
+    <Content Include="App\app\scripts\controllers\employee\create.js" />
+    <Content Include="App\app\scripts\controllers\employee\index.js" />
+    <Content Include="App\app\scripts\controllers\employee\show.js" />
+    <Content Include="App\app\scripts\controllers\employee\update.js" />
+    <Content Include="App\app\scripts\controllers\transaction\refund.js" />
+    <Content Include="App\app\scripts\controllers\invoice\invoice.js" />
+    <Content Include="App\app\scripts\controllers\invoice\show.js" />
+    <Content Include="App\app\scripts\controllers\invoice\ticket.js" />
+    <Content Include="App\app\scripts\controllers\main.js" />
+    <Content Include="App\app\scripts\controllers\family\create.js" />
+    <Content Include="App\app\scripts\controllers\family\index.js" />
+    <Content Include="App\app\scripts\controllers\family\update.js" />
+    <Content Include="App\app\scripts\controllers\payment\cancel.js" />
+    <Content Include="App\app\scripts\controllers\payment\create.js" />
+    <Content Include="App\app\scripts\controllers\product\create.js" />
+    <Content Include="App\app\scripts\controllers\product\index.js" />
+    <Content Include="App\app\scripts\controllers\product\update.js" />
+    <Content Include="App\app\scripts\controllers\settings\print.js" />
+    <Content Include="App\app\scripts\directives\selectonclick.js" />
+    <Content Include="App\app\scripts\directives\autofocus.js" />
+    <Content Include="App\app\scripts\directives\keytab.js" />
+    <Content Include="App\app\scripts\directives\navigate.js" />
+    <Content Include="App\app\scripts\routes\catalog.js" />
+    <Content Include="App\app\scripts\routes\employee.js" />
+    <Content Include="App\app\scripts\routes\delivery.js" />
+    <Content Include="App\app\scripts\routes\transaction.js" />
+    <Content Include="App\app\scripts\routes\settings.js" />
+    <Content Include="App\app\scripts\routes\invoice.js" />
+    <Content Include="App\app\scripts\routes\customer.js" />
+    <Content Include="App\app\scripts\routes\family.js" />
+    <Content Include="App\app\scripts\routes\payment.js" />
+    <Content Include="App\app\scripts\routes\product.js" />
+    <Content Include="App\app\scripts\services\transaction.js" />
+    <Content Include="App\app\scripts\services\config.js" />
+    <Content Include="App\app\scripts\services\confirm.js" />
+    <Content Include="App\app\scripts\services\employee.js" />
+    <Content Include="App\app\scripts\services\customer.js" />
+    <Content Include="App\app\scripts\services\family.js" />
+    <Content Include="App\app\scripts\services\catalog.js" />
+    <Content Include="App\app\scripts\services\invoice.js" />
+    <Content Include="App\app\scripts\services\delivery.js" />
+    <Content Include="App\app\scripts\services\payment.js" />
+    <Content Include="App\app\scripts\services\product.js" />
+    <Content Include="App\app\styles\main.css" />
+    <Content Include="App\app\views\catalog\create.html" />
+    <Content Include="App\app\views\catalog\index.html" />
+    <Content Include="App\app\views\catalog\show.html" />
+    <Content Include="App\app\views\customer\show.html" />
+    <Content Include="App\app\views\delivery\create.html" />
+    <Content Include="App\app\views\delivery\index.html" />
+    <Content Include="App\app\views\employee\create.html" />
+    <Content Include="App\app\views\employee\index.html" />
+    <Content Include="App\app\views\employee\show.html" />
+    <Content Include="App\app\views\employee\update.html" />
+    <Content Include="App\app\views\employee\_form.html" />
+    <Content Include="App\app\views\transaction\refund.html" />
+    <Content Include="App\app\views\invoice\invoice.html" />
+    <Content Include="App\app\views\invoice\show.html" />
+    <Content Include="App\app\views\invoice\ticket.html" />
+    <Content Include="App\app\views\main.html" />
+    <Content Include="App\app\views\customer\create.html" />
+    <Content Include="App\app\views\customer\index.html" />
+    <Content Include="App\app\views\customer\update.html" />
+    <Content Include="App\app\views\customer\_form.html" />
+    <Content Include="App\app\views\family\create.html" />
+    <Content Include="App\app\views\family\index.html" />
+    <Content Include="App\app\views\family\update.html" />
+    <Content Include="App\app\views\family\_form.html" />
+    <Content Include="App\app\views\partials\modal.html" />
+    <Content Include="App\app\views\payment\cancel.html" />
+    <Content Include="App\app\views\payment\create.html" />
+    <Content Include="App\app\views\payment\_form.html" />
+    <Content Include="App\app\views\product\create.html" />
+    <Content Include="App\app\views\product\index.html" />
+    <Content Include="App\app\views\product\update.html" />
+    <Content Include="App\app\views\product\_form.html" />
+    <Content Include="App\app\views\settings\print.html" />
+    <Content Include="App\dist\404.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App\dist\favicon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App\dist\fonts\glyphicons-halflings-regular.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App\dist\images\yeoman.c582c4d1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App\dist\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App\dist\robots.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App\dist\scripts\vendor.bf4ad30b.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App\dist\styles\main.2cdc908c.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App\dist\styles\vendor.7b778be6.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\FriMav.Domain.csproj">
+      <Project>{9638ba74-6730-4b5c-9950-ccddc5017c52}</Project>
+      <Name>FriMav.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\cef.redist.x64.3.2785.1482\build\cef.redist.x64.targets" Condition="Exists('..\packages\cef.redist.x64.3.2785.1482\build\cef.redist.x64.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\cef.redist.x64.3.2785.1482\build\cef.redist.x64.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x64.3.2785.1482\build\cef.redist.x64.targets'))" />
+    <Error Condition="!Exists('..\packages\cef.redist.x86.3.2785.1482\build\cef.redist.x86.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x86.3.2785.1482\build\cef.redist.x86.targets'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.Common.53.0.0\build\CefSharp.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.53.0.0\build\CefSharp.Common.props'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.Common.53.0.0\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.53.0.0\build\CefSharp.Common.targets'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.WinForms.53.0.0\build\CefSharp.WinForms.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.WinForms.53.0.0\build\CefSharp.WinForms.props'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.WinForms.53.0.0\build\CefSharp.WinForms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.WinForms.53.0.0\build\CefSharp.WinForms.targets'))" />
+    <Error Condition="!Exists('..\packages\Select.HtmlToPdf.2.4.0.1\build\Select.HtmlToPdf.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Select.HtmlToPdf.2.4.0.1\build\Select.HtmlToPdf.targets'))" />
+  </Target>
+  <Import Project="..\packages\cef.redist.x86.3.2785.1482\build\cef.redist.x86.targets" Condition="Exists('..\packages\cef.redist.x86.3.2785.1482\build\cef.redist.x86.targets')" />
+  <Import Project="..\packages\CefSharp.Common.53.0.0\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.53.0.0\build\CefSharp.Common.targets')" />
+  <Import Project="..\packages\CefSharp.WinForms.53.0.0\build\CefSharp.WinForms.targets" Condition="Exists('..\packages\CefSharp.WinForms.53.0.0\build\CefSharp.WinForms.targets')" />
+  <Import Project="..\packages\Select.HtmlToPdf.2.4.0.1\build\Select.HtmlToPdf.targets" Condition="Exists('..\packages\Select.HtmlToPdf.2.4.0.1\build\Select.HtmlToPdf.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

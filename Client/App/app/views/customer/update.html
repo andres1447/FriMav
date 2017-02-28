@@ -1,0 +1,9 @@
+<div class="row">
+    <h4>Editar cliente</h4>
+</div>
+<div class="row">
+    <a ui-sref="CustomerIndex" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i><span class="key-shortcut">esc</span></a>
+</div>
+<form class="form-horizontal" ng-submit="update(customer)">
+    <div ng-include="'views/customer/_form.html'"></div>
+</form>

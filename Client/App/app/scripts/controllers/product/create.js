@@ -1,0 +1,45 @@
+'use strict';
+
+angular.module('client')
+  .controller('ProductCreateCtrl', function ($scope, $state, $timeout, hotkeys, Notification, Product, productFamilies) {
+      $scope.productFamilies = productFamilies;
+
+      hotkeys.bindTo($scope).add({
+          combo: 'f5',
+          description: 'Guardar',
+          allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+          callback: function () {
+              $scope.create($scope.product);
+          }
+      })
+      .add({
+          combo: 'esc',
+          description: 'Volver al indice',
+          allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+          persistent: false,
+          callback: function (e) {
+              $state.go('ProductIndex');
+              e.preventDefault();
+          }
+      });
+
+      $scope.init = function () {
+          $scope.product = { active: true };
+          $scope.broadcast('InitProductCreate');
+      };
+
+      $scope.init();
+      
+      $scope.create = function (product) {
+          Product.save(product, function (res) {
+              Notification.success('Producto creado correctamente.');
+              $state.go('ProductIndex');
+          }, function (err) {
+              Notification.error({ title: err.data.message, message: err.data.errors.join('</br>') });
+          });
+      };
+
+      $scope.setFamilyId = function (product) {
+          product.familyId = product.family.familyId;
+      };
+  });

@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<EscCommandTemplate>
+  <Line Length="40"/>
+  <NewLine/>
+  <NewLine>
+    <Right>
+      <Text>@Model.Date.ToString("dd/MM/yyyy")</Text>
+    </Right>
+  </NewLine>
+  <NewLine>
+    <Center>
+      <Emphasis>
+        <Text>Granja Malvinas</Text>
+      </Emphasis>
+    </Center>
+  </NewLine>
+  <Line Length="40"/>
+  <NewLine/>
+  @foreach (var item in Model.Items)
+  {
+  <NewLine>
+    <Text>@item.Product</Text>
+  </NewLine>
+  <NewLine>
+    <Text>@item.Quantity.ToString("N2") x $@item.Price.ToString("N2")</Text>
+    <Right>
+      <Text>$@item.Amount().ToString("N2")</Text>
+    </Right>
+  </NewLine>
+  }
+  <Line Length="40"/>
+  <NewLine/>
+  <NewLine>
+    <Right>Total: $@Model.Total().ToString("N2")</Right>
+  </NewLine>
+  <Line Length="40"/>
+  <Feed Lines="9"/>
+</EscCommandTemplate>
