@@ -9,6 +9,12 @@ namespace FriMav.Client.Models
     public class CatalogModel
     {
         public string Name { get; set; }
-        public IEnumerable<ProductModel> Products { get; set; } 
+        public IEnumerable<CatalogProductModel> Products { get; set; } 
+    }
+
+    public class CatalogProductModel
+    {
+        public string Name { get; set; }
+        public decimal Price { get; set; }
     }
 }

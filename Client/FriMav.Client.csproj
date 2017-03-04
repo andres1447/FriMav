@@ -155,9 +155,8 @@
     </Compile>
     <Compile Include="Client.cs" />
     <Compile Include="Models\CatalogModel.cs" />
-    <Compile Include="Models\ItemModel.cs" />
+    <Compile Include="Models\DeliveryModel.cs" />
     <Compile Include="Models\InvoiceModel.cs" />
-    <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\TicketModel.cs" />
     <Compile Include="Printer\Modes\PrintEpsonCommandsToPrinter.cs" />
     <Compile Include="Printer\Pos\Command\AlignCenter.cs" />
@@ -205,11 +204,12 @@
     <Content Include="App\app\views\zone\update.html" />
     <Content Include="App\app\views\zone\_form.html" />
     <Content Include="App\app\views\family\show.html" />
-    <Content Include="App\dist\scripts\scripts.f0288cdc.js">
+    <Content Include="App\dist\scripts\scripts.5614ed04.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\EscpInvoice.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Templates\Factura.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

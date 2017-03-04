@@ -10,11 +10,23 @@ namespace FriMav.Client.Models
     {
         public DateTime Date { get; set; }
         public string Brand { get; set; }
-        public IEnumerable<ItemModel> Items { get; set; }
+        public IEnumerable<TicketItemModel> Items { get; set; }
 
         public decimal Total()
         {
             return Items.Sum(x => x.Amount());
+        }
+    }
+
+    public class TicketItemModel
+    {
+        public string Product { get; set; }
+        public decimal Quantity { get; set; }
+        public decimal Price { get; set; }
+
+        public decimal Amount()
+        {
+            return Quantity * Price;
         }
     }
 }

@@ -10,7 +10,7 @@
   <NewLine>
     <Center>
       <Emphasis>
-        <Text>Granja Malvinas</Text>
+        <Text>Frigorífico Malvinas</Text>
       </Emphasis>
     </Center>
   </NewLine>
@@ -31,7 +31,9 @@
   <Line>40</Line>
   <NewLine/>
   <NewLine>
-    <Right>Total: $@Model.Total().ToString("N2")</Right>
+    <Right>
+      <Text>Total: $@Model.Total().ToString("N2")</Text>
+    </Right>
   </NewLine>
   <Line>40</Line>
   <Feed>9</Feed>

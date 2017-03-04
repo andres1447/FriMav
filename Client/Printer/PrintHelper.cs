@@ -21,6 +21,7 @@ namespace FriMav.Client.Printer
             _models.Add("Ticket", typeof(TicketModel));
             _models.Add("Invoice", typeof(InvoiceModel));
             _models.Add("PriceList", typeof(CatalogModel));
+            _models.Add("Delivery", typeof(DeliveryModel));
 
             _configPath = configPath;
             _jsonSerializerSettings = new JsonSerializerSettings()

@@ -50,13 +50,12 @@ angular.module('client')
       $scope.getPrintModel = function () {
           var model = {
               date: $scope.delivery.date,
-              employeeCode: $scope.delivery.employee.code,
-              employeeName: $scope.delivery.employee.name,
+              employee: { code: $scope.delivery.employee.code, name: $scope.delivery.employee.name },
               invoices: [],
               items: []
           };
           angular.forEach($scope.delivery.invoices, function (item) {
-              model.invoices.push({ code: item.person.code, customer: item.person.name, total: item.total, number: item.number });
+              model.invoices.push({ customer: { code: item.person.code, name: item.person.name }, total: item.total, number: item.number });
           });
           angular.forEach($scope.products, function (item) {
               model.items.push({ product: item.name, quantity: item.quantity });
