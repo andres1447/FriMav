@@ -25,9 +25,17 @@ namespace FriMav.Client.Printer
 
         public override void PrintTemplate(string dest, string template)
         {
-            var text = PosTemplateProcessor.Build(template);
-            Byte[] buffer = new byte[text.Length];
-            buffer = System.Text.Encoding.ASCII.GetBytes(text);
+            var pages = PosTemplateProcessor.Print(template);
+            foreach (var page in pages)
+            {
+                Print(dest, page);
+            }
+        }
+
+        public void Print(string dest, string template)
+        {
+            Byte[] buffer = new byte[template.Length];
+            buffer = System.Text.Encoding.ASCII.GetBytes(template);
 
             try
             {

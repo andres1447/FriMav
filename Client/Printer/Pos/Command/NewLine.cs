@@ -17,5 +17,13 @@ namespace FriMav.Client.Printer.Pos.Command
         {
             commander.NewLine();
         }
+
+        public override bool HasNewLine
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

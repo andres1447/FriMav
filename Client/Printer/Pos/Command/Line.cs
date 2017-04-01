@@ -14,11 +14,26 @@ namespace FriMav.Client.Printer.Pos.Command
 
         public override void Apply(EpsonCommander commander)
         {
-            commander.Line(Convert.ToInt32(Lenght));
+            if (!string.IsNullOrEmpty(Lenght))
+            {
+                commander.Line(Convert.ToInt32(Lenght));
+            }
+            else
+            {
+                commander.Line();
+            }
         }
 
         public override void Revert(EpsonCommander commander)
         {
+        }
+
+        public override bool HasNewLine
+        {
+            get
+            {
+                return true;
+            }
         }
     }
 }

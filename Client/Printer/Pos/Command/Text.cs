@@ -20,6 +20,10 @@ namespace FriMav.Client.Printer.Pos.Command
 
         public override void Apply(EpsonCommander commander)
         {
+            if (Value == null)
+            {
+                Value = "";
+            }
             string data;
             if (string.IsNullOrEmpty(Width))
             {
@@ -37,6 +41,7 @@ namespace FriMav.Client.Printer.Pos.Command
                     case "L":
                     default: data = data.Insert(0, text); break;
                 }
+                data = data.Substring(0, width);
             }
             commander.Text(data);
         }

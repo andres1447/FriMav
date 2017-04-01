@@ -27,49 +27,61 @@ namespace FriMav.Client.Printer.Pos
         public static string LF = Convert.ToString((char)10);
         public static string FF = Convert.ToString((char)12);
 
-        private string _buffer;
+        private StringBuilder _buffer;
         private int _lineLength;
-
+        
         public EpsonCommander(int lineLenght)
         {
             _lineLength = lineLenght;
-            _buffer = "";
-            Init();
+            _buffer = new StringBuilder();
+            _buffer.Clear();
+        }
+
+        public EpsonCommander Clear()
+        {
+            _buffer.Clear();
+            return this;
         }
 
         public EpsonCommander Init()
         {
-            _buffer += (ESC + "@");
+            _buffer.Append(ESC + "@");
             return this;
         }
 
         public EpsonCommander FormFeed()
         {
-            _buffer += FF;
+            _buffer.Append(FF);
             return this;
         }
 
         public EpsonCommander CarriageReturn()
         {
-            _buffer += CR;
+            _buffer.Append(CR);
             return this;
         }
 
         public EpsonCommander ReverseFeed(int lines)
         {
-            _buffer += (ESC + "e" + (char)lines);
+            _buffer.Append(ESC + "e" + (char)lines);
             return this;
         }
 
         public EpsonCommander Feed(int lines)
         {
-            _buffer += (ESC + "d" + (char)lines);
+            _buffer.Append(ESC + "d" + (char)lines);
             return this;
         }
 
         public EpsonCommander Cut(Cut mode, int lines)
         {
-            _buffer += (GS + "V" + ((char)(int)mode) + (char)lines);
+            _buffer.Append(GS + "V" + ((char)(int)mode) + (char)lines);
+            return this;
+        }
+
+        public EpsonCommander Line()
+        {
+            Line(_lineLength);
             return this;
         }
 
@@ -77,50 +89,50 @@ namespace FriMav.Client.Printer.Pos
         {
             Underline(true);
             for (int x = 0; x < length; ++x)
-                _buffer += ' ';
+                _buffer.Append(' ');
             Underline(false);
             return NewLine();
         }
 
         public EpsonCommander Text(string text)
         {
-            _buffer += text;
+            _buffer.Append(text);
             return this;
         }
 
         public EpsonCommander Align(Align align)
         {
-            _buffer += (ESC + "a" + (char)((int)align));
+            _buffer.Append(ESC + "a" + (char)((int)align));
             return this;
         }
 
         public EpsonCommander Underline(bool on)
         {
-            _buffer += (ESC + "-" + (on ? (char)1 : (char)0));
+            _buffer.Append(ESC + "-" + (on ? (char)1 : (char)0));
             return this;
         }
 
         public EpsonCommander Emphasis(bool on)
         {
-            _buffer += (ESC + "E" + (on ? (char)1 : (char)0));
+            _buffer.Append(ESC + (on ? "E" : "F"));
             return this;
         }
 
         public EpsonCommander Double(bool on)
         {
-            _buffer += (ESC + "G" + (on ? (char)1 : (char)0));
+            _buffer.Append(ESC + "G" + (on ? (char)1 : (char)0));
             return this;
         }
 
         public EpsonCommander NewLine()
         {
-            _buffer += (CR + LF);
+            _buffer.Append(CR + LF);
             return this;
         }
 
         public string Build()
         {
-            return _buffer;
+            return _buffer.ToString();
         }
     }
 }

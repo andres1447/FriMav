@@ -7,11 +7,9 @@ angular.module('client')
         link: function (scope, element, attrs) {
             element.bind('keydown', function (e) {
                 var $element = angular.element(this);
-                var codes = JSON.parse(attrs['aeKeyTab']);
+                var codes = JSON.parse(attrs.aeKeyTab);
                 if (codes.indexOf(e.keyCode) != -1 && e.target.type != 'submit') {
                     e.preventDefault();
-                    $(element[0]).change();
-                    $(element[0]).blur();
                     var redo = true, rtnValue, index = -1, formElements, auxElem, auxKeyCodes;
                     while (redo) {
                         redo = false;
@@ -50,6 +48,8 @@ angular.module('client')
                                     auxElem = angular.element(formElements[j]);
                                     auxKeyCodes = auxElem.attr("ae-key-tab");
                                     if (auxKeyCodes != null && JSON.parse(auxKeyCodes).indexOf(e.keyCode) != -1 && !auxElem[0].disabled) {
+                                        $(element[0]).change();
+                                        $(element[0]).blur();
                                         auxElem[0].focus();
                                         if (angular.isDefined(auxElem[0].select))
                                             auxElem[0].select();

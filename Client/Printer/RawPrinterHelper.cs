@@ -54,6 +54,7 @@ namespace FriMav.Client.Printer
             bool bSuccess = false; // Assume failure unless you specifically succeed.
 
             di.pDocName = "FriMav Raw Document";
+            di.pOutputFile = null;
             di.pDataType = "RAW";
 
             // Open the printer.

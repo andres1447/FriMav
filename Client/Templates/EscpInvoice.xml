@@ -1,40 +1,57 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<EscCommandTemplate>
-  <Line>40</Line>
-  <NewLine/>
-  <NewLine>
-    <Right>
-      <Text>@Model.Date.ToString("dd/MM/yyyy")</Text>
-    </Right>
-  </NewLine>
-  <NewLine>
-    <Center>
-      <Emphasis>
-        <Text>Frigorífico Malvinas</Text>
-      </Emphasis>
-    </Center>
-  </NewLine>
-  <Line>40</Line>
-  <NewLine/>
-  @foreach (var item in Model.Items)
-  {
-  <NewLine>
-    <Text>@item.Product</Text>
-  </NewLine>
-  <NewLine>
-    <Text>@item.Quantity.ToString("N2") x $@item.Price.ToString("N2")</Text>
-    <Right>
-      <Text>$@item.Amount().ToString("N2")</Text>
-    </Right>
-  </NewLine>
-  }
-  <Line>40</Line>
-  <NewLine/>
-  <NewLine>
-    <Right>
-      <Text>Total: $@Model.Total().ToString("N2")</Text>
-    </Right>
-  </NewLine>
-  <Line>40</Line>
-  <Feed>9</Feed>
+<EscCommandTemplate InlineCopies="1" CharactersPerLine="80" LinesPerPage="80">
+  <Header>
+    <Line/>
+    <NewLine>
+      <Text Align="R" Width="50">Factura N°:</Text>
+      <Text Align="R" Width="10">@Model.Number</Text>
+    </NewLine>
+    <NewLine>
+      <Text Align="R" Width="50">Fecha:</Text>
+      <Text Align="R" Width="10">@Model.Date.ToString("dd/MM/yyyy")</Text>
+    </NewLine>
+    <Emphasis>
+      <Center>
+        <Text>Frigorifico Malvinas</Text>
+      </Center>
+    </Emphasis>
+    <Text>@Model.CustomerCode - @Model.CustomerName</Text>
+    <Text>@Model.DeliveryAddress</Text>
+    <Line/>
+  </Header>
+  <Body MinLines="20">
+    <NewLine>
+      <Text Align="L" Width="30">Producto</Text>
+      <Text Align="R" Width="10">Cantidad</Text>
+      <Text Align="R" Width="10">Precio</Text>
+      <Text Align="R" Width="10">Importe</Text>
+    </NewLine>
+    @foreach (var item in Model.Items)
+    {
+    <NewLine>
+      <Text Align="L" Width="30">@item.Product</Text>
+      <Text Align="R" Width="10">@item.Quantity.ToString("N2")</Text>
+      <Text Align="R" Width="10">@item.Price.ToString("N2")</Text>
+      <Text Align="R" Width="10">@item.Amount().ToString("N2")</Text>
+    </NewLine>
+    }
+    <Line/>
+  </Body>
+  <Footer>
+    <NewLine/>
+    <NewLine>
+      <Text Align="R" Width="50">Monto</Text>
+      <Text Align="R" Width="10">@Model.Total().ToString("N2")</Text>
+    </NewLine>
+    <NewLine>
+      <Text Align="R" Width="50">Balance</Text>
+      <Text Align="R" Width="10">@Model.Balance.ToString("N2")</Text>
+    </NewLine>
+    <NewLine>
+      <Text Align="R" Width="50">Total</Text>
+      <Text Align="R" Width="10">@((Model.Balance - Model.Total()).ToString("N2"))</Text>
+    </NewLine>
+    <Line/>
+    <NewLine/>
+  </Footer>
 </EscCommandTemplate>

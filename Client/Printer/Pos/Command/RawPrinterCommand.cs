@@ -36,5 +36,7 @@ namespace FriMav.Client.Printer.Pos.Command
             }
             Revert(commander);
         }
+
+        public virtual bool HasNewLine { get { return false; } }
     }
 }

@@ -24,12 +24,20 @@ namespace FriMav.Client.Printer.Modes
 
         public override void PrintTemplate(string dest, string template)
         {
-            RawPrinterHelper.SendStringToPrinter(dest, PosTemplateProcessor.Build(template));
+            var pages = PosTemplateProcessor.Print(template);
+            foreach (var page in pages)
+            {
+                RawPrinterHelper.SendStringToPrinter(dest, page);
+            }
         }
 
         public override string ToString()
         {
             return PrintResource.Mode_PrintEpsonCommandsToPrinter;
+        }
+
+        public void Print(string text)
+        {
         }
     }
 }
