@@ -194,6 +194,7 @@
     <Content Include="App\app\scripts\controllers\zone\show.js" />
     <Content Include="App\app\scripts\controllers\zone\update.js" />
     <Content Include="App\app\scripts\controllers\family\show.js" />
+    <Content Include="App\app\scripts\directives\keyprev.js" />
     <Content Include="App\app\scripts\routes\zone.js" />
     <Content Include="App\app\scripts\services\zone.js" />
     <Content Include="App\app\scripts\services\healthcheck.js" />

@@ -44,11 +44,15 @@ angular.module('client')
       };
 
       $scope.create = function (delivery) {
-          delivery.invoices = getSelectedInvoicesIds();
-          Delivery.save(delivery, function (res) {
-              Notification.success('Envio creado correctamente');
-              $state.go('DeliveryIndex');
-          });
+          if (!$scope.sending) {
+              $scope.sending = true;
+              delivery.invoices = getSelectedInvoicesIds();
+              Delivery.save(delivery, function (res) {
+                  $scope.sending = false;
+                  Notification.success('Envio creado correctamente');
+                  $state.go('DeliveryIndex');
+              });
+          }
       };
 
       function getSelectedInvoicesIds() {

@@ -4,6 +4,6 @@
 <div class="row">
     <a ui-sref="EmployeeIndex" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i><span class="key-shortcut">esc</span></a>
 </div>
-<form class="form-horizontal" ng-submit="update(employee)">
+<form class="form-horizontal" ng-submit="update(employee)" ng-disabled="sending">
     <div ng-include="'views/employee/_form.html'"></div>
 </form>

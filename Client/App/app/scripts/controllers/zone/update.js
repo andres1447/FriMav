@@ -31,11 +31,16 @@ angular.module('client')
       $scope.init();
       
       $scope.update = function (zone) {
-          Zone.update(zone, function (res) {
-              Notification.success('Zona creada correctamente.');
-              $state.go('ZoneIndex');
-          }, function (err) {
-              Notification.error(err.data);
-          });
+          if (!$scope.sending) {
+              $scope.sending = true;
+              Zone.update(zone, function (res) {
+                  $scope.sending = false;
+                  Notification.success('Zona creada correctamente.');
+                  $state.go('ZoneIndex');
+              }, function (err) {
+                  $scope.sending = false;
+                  Notification.error(err.data);
+              });
+          }
       };
   });

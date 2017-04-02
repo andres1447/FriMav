@@ -17,5 +17,5 @@
         <label for="payment_total" class="control-label">Monto</label>
         <input id="payment_total" type="text" class="form-control" ng-model="transaction.total" ae-key-tab="[13]" autocomplete="off" disabled="disabled" />
     </div>
-    <button type="submit" class="btn btn-success">Guardar<span class="key-shortcut">F5</span></button>
+    <button type="submit" class="btn btn-success" ng-disabled="sending">Guardar<span class="key-shortcut">F5</span></button>
 </form>

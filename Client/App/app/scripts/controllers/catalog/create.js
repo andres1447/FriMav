@@ -38,16 +38,20 @@ angular.module('client')
       };
 
       $scope.submit = function (catalog) {
-          catalog.products = $.grep(catalog.products, function (it) {
-              return hasValue(it.product);
-          });
-          catalog.products = $.map(catalog.products, function (it) {
-              return it.product.productId;
-          });
-          Catalog.save(catalog, function (res) {
-              Notification.success('Lista de precios creada correctamente');
-              $state.go('CatalogIndex');
-          });
+          if (!$scope.sending) {
+              $scope.sending = true;
+              catalog.products = $.grep(catalog.products, function (it) {
+                  return hasValue(it.product);
+              });
+              catalog.products = $.map(catalog.products, function (it) {
+                  return it.product.productId;
+              });
+              Catalog.save(catalog, function (res) {
+                  $scope.sending = false;
+                  Notification.success('Lista de precios creada correctamente');
+                  $state.go('CatalogIndex');
+              });
+          }
       };
 
       $scope.validateProduct = function ($index) {

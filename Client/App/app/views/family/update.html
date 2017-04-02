@@ -4,6 +4,6 @@
 <div class="row">
     <a ui-sref="FamilyIndex" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i><span class="key-shortcut">esc</span></a>
 </div>
-<form class="form-horizontal" ng-submit="update(family)">
+<form class="form-horizontal" ng-submit="update(family)" ng-disabled="sending">
     <div ng-include="'views/family/_form.html'"></div>
 </form>

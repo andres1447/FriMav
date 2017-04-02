@@ -21,6 +21,14 @@ if (!String.prototype.format) {
     };
 }
 
+var DefaultPrintHelper = {
+    print: function (type, model) {
+        console.log(model);
+    }
+};
+
+var PrintHelper = typeof (PrintHelper) == 'undefined' ? DefaultPrintHelper : PrintHelper;
+
 angular.module('client', [
     'ngAnimate',
     'ngCookies',

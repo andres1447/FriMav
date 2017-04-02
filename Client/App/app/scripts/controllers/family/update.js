@@ -31,11 +31,16 @@ angular.module('client')
       $scope.init();
       
       $scope.update = function (family) {
-          ProductFamily.update(family, function (res) {
-              Notification.success('Familia de productos creada correctamente.');
-              $state.go('FamilyIndex');
-          }, function (err) {
-              Notification.error(err.data);
-          });
+          if (!$scope.sending) {
+              $scope.sending = true;
+              ProductFamily.update(family, function (res) {
+                  $scope.sending = false;
+                  Notification.success('Familia de productos creada correctamente.');
+                  $state.go('FamilyIndex');
+              }, function (err) {
+                  $scope.sending = false;
+                  Notification.error(err.data);
+              });
+          }
       };
   });

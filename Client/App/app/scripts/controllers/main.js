@@ -13,6 +13,26 @@ angular.module('client').controller('MainCtrl', function ($rootScope, $scope, $s
         { name: 'Efectivo', id: 1 },
         { name: 'Cuenta', id: 2 }
     ];
+
+    $scope.shippingView = function ($model) {
+        var text;
+        angular.forEach($scope.shippingOptions, function (it, index) {
+            if (it.id === $model) {
+                text = it.id + ' - ' + it.name;
+            }
+        });
+        return text;
+    };
+
+    $scope.paymentView = function ($model) {
+        var text;
+        angular.forEach($scope.paymentMethodOptions, function (it, index) {
+            if (it.id === $model) {
+                text = it.id + ' - ' + it.name;
+            }
+        });
+        return text;
+    };
     
     hotkeys.add({
         combo: 'ctrl+i',
@@ -42,7 +62,7 @@ angular.module('client').controller('MainCtrl', function ($rootScope, $scope, $s
 
     function RecursiveCheckBackendAlive() {
         checkBackendAlive();
-        $timeout(checkBackendAlive, 300000);
+        $timeout(RecursiveCheckBackendAlive, 300000);
     }
 
     $scope.init = function () {

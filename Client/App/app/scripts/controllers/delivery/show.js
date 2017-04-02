@@ -28,11 +28,16 @@ angular.module('client')
 
       $scope.init = function () {
           var products = {};
-          angular.forEach($.map($scope.delivery.invoices, function (i) { return i.items; }), function (it) {
-              if (!products[it.product.productId]) {
-                  products[it.product.productId] = { productId: it.productId, name: it.product.name, quantity: 0 };
-              }
-              products[it.product.productId].quantity += it.quantity;
+          $scope.invoiceTotals = { quantity: 0, amount: 0 };
+          angular.forEach($scope.delivery.invoices, function (invoice) {
+              $scope.invoiceTotals.quantity++;
+              $scope.invoiceTotals.amount += invoice.total;
+              angular.forEach(invoice.items, function (it) {
+                  if (!products[it.product.productId]) {
+                      products[it.product.productId] = { productId: it.productId, name: it.product.name, quantity: 0 };
+                  }
+                  products[it.product.productId].quantity += it.quantity;
+              });
           });
           $scope.products = [];
           angular.forEach(products, function (it) {

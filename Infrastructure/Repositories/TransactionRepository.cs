@@ -42,7 +42,7 @@ namespace FriMav.Infrastructure.Repositories
                                 Number = tre.Number
                             }
                         };
-            return query.ToList();
+            return query.OrderByDescending(x => x.Date).ToList();
         }
 
         public IEnumerable<UnpaidTransaction> GetUnpaidTransactionsByPersonId(int personId)

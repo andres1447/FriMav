@@ -31,14 +31,19 @@ angular.module('client')
       $scope.init();
       
       $scope.update = function (product) {
-          if (hasValue(product.family))
-              product.familyId = product.family.familyId;
-          Product.update(product, function (res) {
-              Notification.success('Producto editado correctamente.');
-              $state.go('ProductIndex');
-          }, function (err) {
-              Notification.error({ title: err.data.message, message: err.data.errors.join('</br>') });
-          });
+          if (!$scope.sending) {
+              $scope.sending = true;
+              if (hasValue(product.family))
+                  product.familyId = product.family.familyId;
+              Product.update(product, function (res) {
+                  $scope.sending = false;
+                  Notification.success('Producto editado correctamente.');
+                  $state.go('ProductIndex');
+              }, function (err) {
+                  $scope.sending = false;
+                  Notification.error({ title: err.data.message, message: err.data.errors.join('</br>') });
+              });
+          }
       };
 
       $scope.setFamilyId = function (product) {

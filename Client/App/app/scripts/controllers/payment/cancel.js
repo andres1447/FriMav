@@ -34,11 +34,16 @@ angular.module('client')
       $scope.init();
       
       $scope.cancel = function (cancelation) {
-          Transaction.cancel(cancelation, function (res) {
-              Notification.success('Pago cancelado correctamente.');
-              $state.go('CustomerShow', { personId: transaction.personId });
-          }, function (err) {
-              Notification.error(err.data);
-          });
+          if (!$scope.sending) {
+              $scope.sending = true;
+              Transaction.cancel(cancelation, function (res) {
+                  $scope.sending = false;
+                  Notification.success('Pago cancelado correctamente.');
+                  $state.go('CustomerShow', { personId: transaction.personId });
+              }, function (err) {
+                  $scope.sending = false;
+                  Notification.error(err.data);
+              });
+          }
       };
   });

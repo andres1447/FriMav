@@ -13,5 +13,5 @@
         <label for="payment_description" class="control-label">Descripcion</label>
         <textarea id="payment_description" type="text" class="form-control" ng-model="cancelation.description" ae-key-tab="[13]" autocomplete="off" ></textarea>
     </div>
-    <button type="submit" class="btn btn-success">Guardar<span class="key-shortcut">F5</span></button>
+    <button type="submit" class="btn btn-success" ng-disabled="sending">Guardar<span class="key-shortcut">F5</span></button>
 </form>

@@ -40,8 +40,9 @@ namespace FriMav.Api.Controllers
         [Route("")]
         public IHttpActionResult Create(InvoiceCreate invoice)
         {
-            _invoiceService.Create(invoice.ToDomain());
-            return Ok();
+            var transaction = invoice.ToDomain();
+            _invoiceService.Create(transaction);
+            return Ok(new { Number = transaction.Number, Balance = transaction.Balance, Total = transaction.Total });
         }
     }
 }

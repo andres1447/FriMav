@@ -31,11 +31,16 @@ angular.module('client')
       $scope.init();
       
       $scope.update = function (employee) {
-          Employee.update(employee, function (res) {
-              Notification.success('Empleado editado correctamente.');
-              $state.go('EmployeeIndex');
-          }, function (err) {
-              Notification.error({ title: err.data.message, message: err.data.errors.join('</br>') });
-          });
+          if (!$scope.sending) {
+              $scope.sending = true;
+              Employee.update(employee, function (res) {
+                  $scope.sending = false;
+                  Notification.success('Empleado editado correctamente.');
+                  $state.go('EmployeeIndex');
+              }, function (err) {
+                  $scope.sending = false;
+                  Notification.error({ title: err.data.message, message: err.data.errors.join('</br>') });
+              });
+          }
       };
   });

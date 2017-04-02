@@ -35,12 +35,17 @@ angular.module('client')
       $scope.init();
       
       $scope.update = function (customer) {
-          Customer.update(customer, function (res) {
-              Notification.success('Cliente editado correctamente.');
-              $state.go('CustomerIndex');
-          }, function (err) {
-              Notification.error({ title: err.data.message, message: err.data.errors.join('</br>') });
-          });
+          if (!$scope.sending) {
+              $scope.sending = true;
+              Customer.update(customer, function (res) {
+                  $scope.sending = false;
+                  Notification.success('Cliente editado correctamente.');
+                  $state.go('CustomerIndex');
+              }, function (err) {
+                  $scope.sending = false;
+                  Notification.error({ title: err.data.message, message: err.data.errors.join('</br>') });
+              });
+          }
       };
 
       $scope.setZoneId = function (customer) {

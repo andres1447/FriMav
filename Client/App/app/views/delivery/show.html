@@ -36,6 +36,12 @@
                 <td class="col-md-2">{{:: it.person.name }}</td>
                 <td class="col-md-2 number">{{:: it.total | number:2 }}</td>
             </tr>
+            <tr>
+                <td class="col-md-2"></td>
+                <td class="col-md-2"></td>
+                <td class="col-md-2 number">{{:: invoiceTotals.quantity }}</td>
+                <td class="col-md-2 number">{{:: invoiceTotals.amount | number:2 }}</td>
+            </tr>
         </tbody>
     </table>
 </div>

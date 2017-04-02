@@ -32,11 +32,16 @@ angular.module('client')
       $scope.init();
       
       $scope.create = function (zone) {
-          Zone.save(zone, function (res) {
-              Notification.success('Zona creada correctamente.');
-              $state.go('ZoneIndex');
-          }, function (err) {
-              Notification.error(err.data);
-          });
+          if (!$scope.sending) {
+              $scope.sending = true;
+              Zone.save(zone, function (res) {
+                  $scope.sending = false;
+                  Notification.success('Zona creada correctamente.');
+                  $state.go('ZoneIndex');
+              }, function (err) {
+                  $scope.sending = false;
+                  Notification.error(err.data);
+              });
+          }
       };
   });

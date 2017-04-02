@@ -34,11 +34,16 @@ angular.module('client')
       $scope.init();
       
       $scope.create = function (payment) {
-          Payment.save(payment, function (res) {
-              Notification.success('Pago creado correctamente.');
-              $state.go('CustomerShow', { personId: payment.personId });
-          }, function (err) {
-              Notification.error(err.data);
-          });
+          if (!$scope.sending) {
+              $scope.sending = true;
+              Payment.save(payment, function (res) {
+                  $scope.sending = false;
+                  Notification.success('Pago creado correctamente.');
+                  $state.go('CustomerShow', { personId: payment.personId });
+              }, function (err) {
+                  $scope.sending = false;
+                  Notification.error(err.data);
+              });
+          }
       };
   });

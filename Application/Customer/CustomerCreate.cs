@@ -14,7 +14,7 @@ namespace FriMav.Application
         public string Name { get; set; }
         public string Cuit { get; set; }
         public string Address { get; set; }
-        public int ZoneId { get; set; }
+        public Nullable<int> ZoneId { get; set; }
 
         public Customer ToDomain()
         {

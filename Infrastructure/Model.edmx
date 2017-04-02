@@ -479,7 +479,7 @@
           <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Shipping" Type="FriMav.Domain.Shipping" Nullable="false" />
           <Property Name="PaymentMethod" Type="FriMav.Domain.PaymentMethod" Nullable="false" />
-          <Property Name="ZoneId" Type="Int32" />
+          <Property Name="ZoneId" Type="Int32" Nullable="true" />
           <NavigationProperty Name="Zone" Relationship="FriMav.Domain.FK_Customer_Zone" FromRole="Customer" ToRole="Zone" />
         </EntityType>
         <EntityType Name="Delivery">

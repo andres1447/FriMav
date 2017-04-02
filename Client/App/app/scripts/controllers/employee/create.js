@@ -31,11 +31,16 @@ angular.module('client')
       $scope.init();
       
       $scope.create = function (employee) {
-          Employee.save(employee, function (res) {
-              Notification.success('Empleado creado correctamente.');
-              $state.go('EmployeeIndex');
-          }, function (err) {
-              Notification.error({ title: err.data.message, message: err.data.errors.join('</br>') });
-          });
+          if (!$scope.sending) {
+              $scope.sending = true;
+              Employee.save(employee, function (res) {
+                  $scope.sending = false;
+                  Notification.success('Empleado creado correctamente.');
+                  $state.go('EmployeeIndex');
+              }, function (err) {
+                  $scope.sending = false;
+                  Notification.error({ title: err.data.message, message: err.data.errors.join('</br>') });
+              });
+          }
       };
   });

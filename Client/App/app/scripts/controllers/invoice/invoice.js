@@ -89,14 +89,22 @@ angular.module('client')
       };
 
       $scope.submit = function (invoice) {
-          invoice.items = $.grep(invoice.items, function (it) {
-              return hasValue(it.product) && hasValue(it.quantity) && hasValue(it.price);
-          });
-          Invoice.save(invoice, function (result) {
-              Notification.success('Imprimiendo factura...');
-              PrintHelper.print('Invoice', JSON.stringify($scope.getPrintModel(invoice)));
-              $state.reload();
-          });
+          if (!$scope.sending) {
+              $scope.sending = true;
+              invoice.items = $.grep(invoice.items, function (it) {
+                  return hasValue(it.product) && hasValue(it.quantity) && hasValue(it.price);
+              });
+              Invoice.save(invoice, function (result) {
+                  $scope.sending = false;
+                  Notification.success('Imprimiendo factura...');
+                  var model = $scope.getPrintModel(invoice);
+                  model.number = result.number;
+                  model.total = result.total;
+                  model.balance = result.balance;
+                  PrintHelper.print('Invoice', JSON.stringify(model));
+                  $state.reload();
+              });
+          }
       };
 
       $scope.getMatchingProduct = function ($viewValue) {
