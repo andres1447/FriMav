@@ -21,13 +21,14 @@ if (!String.prototype.format) {
     };
 }
 
-var DefaultPrintHelper = {
-    print: function (type, model) {
-        console.log(model);
-    }
-};
-
-var PrintHelper = typeof (PrintHelper) == 'undefined' ? DefaultPrintHelper : PrintHelper;
+if (!PrintHelper) {
+    var PrintHelper;
+    PrintHelper = {
+        print: function (type, model) {
+            console.log(model);
+        }
+    };
+}
 
 angular.module('client', [
     'ngAnimate',
