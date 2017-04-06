@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Fecha</th>
+                <th>Numero</th>
                 <th>Empleado</th>
                 <th>Pedidos</th>
                 <th>Acciones</th>
@@ -17,8 +18,9 @@
         <tbody>
             <tr ng-repeat="it in deliveries" ng-class="{'alert-info': $index == deliveryIndex}">
                 <td class="col-md-2">{{::it.date | date:'dd/MM/yyyy'}}</td>
-                <td class="col-md-3">{{::it.employee}}</td>
-                <td class="col-md-3">{{::it.invoices}}</td>
+                <td class="col-md-2">{{::it.number}}</td>
+                <td class="col-md-2">{{::it.employee}}</td>
+                <td class="col-md-2">{{::it.invoices}}</td>
                 <td class="col-md-4">
                     <a ui-sref="DeliveryShow({ deliveryId: it.deliveryId })" class="btn btn-info"><i class="glyphicon glyphicon-th-list"></i><span class="key-shortcut">&crarr;</span></a>
                     <a ui-sref="DeliveryUpdate({ deliveryId: it.deliveryId })" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i><span class="key-shortcut">&midast;</span></a>

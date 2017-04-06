@@ -9,7 +9,7 @@ namespace FriMav.Application
         Invoice Get(int invoiceId);
         Invoice GetDisplay(int invoiceId);
         IEnumerable<Invoice> GetAll();
-        IEnumerable<Invoice> GetUndeliveredInvoices();
+        IEnumerable<UndeliveredInvoice> GetUndeliveredInvoices();
         void BeforeCreate(Invoice invoice);
         void Create(Invoice invoice);
         void Update(Invoice invoice);

@@ -17,12 +17,11 @@ namespace FriMav.Application
         public string Address { get; set; }
         public int ZoneId { get; set; }
 
-        public Customer ToDomain()
+        public Person ToDomain()
         {
-            return new Customer()
+            return new Person()
             {
                 PersonId = this.PersonId,
-                Code = this.Code,
                 Shipping = this.Shipping,
                 PaymentMethod = this.PaymentMethod,
                 Name = this.Name,

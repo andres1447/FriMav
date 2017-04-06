@@ -15,10 +15,10 @@ namespace FriMav.Domain
     public partial class Salary
     {
         public int SalaryId { get; set; }
-        public int EmployeeId { get; set; }
+        public int PersonId { get; set; }
         public System.DateTime Since { get; set; }
         public decimal Amount { get; set; }
     
-        public virtual Employee Employee { get; set; }
+        public virtual Person Person { get; set; }
     }
 }

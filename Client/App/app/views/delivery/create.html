@@ -27,7 +27,7 @@
                 <tr ng-repeat="it in delivery.invoices" ae-navigate>
                     <td class="col-md-4">
                         <input type="text" ng-model="it.invoice" class="form-control" ae-key-tab="[13, 9]"
-                               uib-typeahead="invoice as (invoice.person.code + ' - ' + invoice.person.name) for invoice in getMatchingInvoices($viewValue) | limitTo:8"
+                               uib-typeahead="invoice as (invoice.personCode + ' - ' + invoice.personName) for invoice in getMatchingInvoices($viewValue) | limitTo:8"
                                typeahead-select-on-blur="true" ae-select-on-click=""
                                typeahead-focus-on-select="false" typeahead-editable="false" ae-before-tab="AddItem($index)">
                     </td>

@@ -16,12 +16,12 @@ namespace FriMav.Domain
     {
         public Zone()
         {
-            this.Customer = new HashSet<Customer>();
+            this.Person = new HashSet<Person>();
         }
     
         public int ZoneId { get; set; }
         public string Name { get; set; }
     
-        public virtual ICollection<Customer> Customer { get; set; }
+        public virtual ICollection<Person> Person { get; set; }
     }
 }

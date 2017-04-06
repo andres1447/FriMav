@@ -5,13 +5,13 @@ namespace FriMav.Application
 {
     public interface ICustomerService
     {
-        IEnumerable<Customer> GetAll();
-        IEnumerable<Customer> GetAllInZone(int zoneId);
-        Customer Get(int personId);
-        void Create(Customer customer);
-        void Update(Customer customer);
+        IEnumerable<Person> GetAll();
+        IEnumerable<Person> GetAllInZone(int zoneId);
+        Person Get(int personId);
+        void Create(Person customer);
+        void Update(Person customer);
         void Delete(int personId);
-        void Delete(Customer customer);
+        void Delete(Person customer);
         bool Exists(string code);
     }
 }

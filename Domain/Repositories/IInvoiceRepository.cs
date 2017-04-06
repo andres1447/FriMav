@@ -7,6 +7,6 @@ namespace FriMav.Domain.Repositories
     public interface IInvoiceRepository : IBaseRepository<Invoice>
     {
         Invoice GetDisplay(int invoiceId);
-        IEnumerable<Invoice> GetUndeliveredInvoices();
+        IEnumerable<UndeliveredInvoice> GetUndeliveredInvoices();
     }
 }

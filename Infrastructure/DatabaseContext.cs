@@ -1,5 +1,4 @@
 ﻿using FriMav.Domain;
-using FriMav.Infrastructure.Mappings;
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -27,22 +26,6 @@ namespace FriMav.Infrastructure
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            /*modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-
-            var typesToRegister = Assembly.GetExecutingAssembly().GetTypes()
-            .Where(type => !String.IsNullOrEmpty(type.Namespace) && !type.IsAbstract &&
-                    type.BaseType != null && type.BaseType.IsGenericType &&
-                    type.BaseType.GetGenericTypeDefinition() == typeof(BaseMapping<>));
-
-            modelBuilder.Properties<decimal>().Configure(x => x.HasPrecision(13, 2));
-
-            foreach (var type in typesToRegister)
-            {
-                dynamic configurationInstance = Activator.CreateInstance(type);
-                modelBuilder.Configurations.Add(configurationInstance);
-            }
-
-            base.OnModelCreating(modelBuilder);*/
             throw new UnintentionalCodeFirstException();
         }
 

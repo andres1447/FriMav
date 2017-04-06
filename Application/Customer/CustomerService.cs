@@ -7,44 +7,47 @@ namespace FriMav.Application
 {
     public class CustomerService : ICustomerService
     {
-        private ICustomerRepository _customerRepository;
+        private IPersonRepository _personRepository;
+        private IZoneRepository _zoneRepository;
 
         public CustomerService(
-            ICustomerRepository customerRepository)
+            IPersonRepository personRepository,
+            IZoneRepository zoneRepository)
         {
-            _customerRepository = customerRepository;
+            _personRepository = personRepository;
+            _zoneRepository = zoneRepository;
         }
 
-        public void Create(Customer customer)
+        public void Create(Person customer)
         {
-            _customerRepository.Create(customer);
-            _customerRepository.Save();
+            _personRepository.Create(customer);
+            _personRepository.Save();
         }
 
         public void Delete(int personId)
         {
-            Customer customer = new Customer { PersonId = personId };
-            _customerRepository.Attach(customer);
+            Person customer = new Person { PersonId = personId };
+            _personRepository.Attach(customer);
             Delete(customer);
         }
 
-        public void Delete(Customer customer)
+        public void Delete(Person customer)
         {
-            _customerRepository.Delete(customer);
-            _customerRepository.Save();
+            _personRepository.Delete(customer);
+            _personRepository.Save();
         }
 
-        public Customer Get(int personId)
+        public Person Get(int personId)
         {
-            return _customerRepository.GetWithZone(personId);
+            return _personRepository.GetWithZone(personId);
         }
 
-        public IEnumerable<Customer> GetAll()
+        public IEnumerable<Person> GetAll()
         {
-            return _customerRepository.GetAll();
+            return _personRepository.GetAllByType(PersonType.Customer);
         }
 
-        public void Update(Customer customer)
+        public void Update(Person customer)
         {
             var saved = Get(customer.PersonId);
 
@@ -55,20 +58,25 @@ namespace FriMav.Application
             saved.PaymentMethod = customer.PaymentMethod;
             saved.Shipping = customer.Shipping;
             saved.ZoneId = customer.ZoneId;
+            if (customer.ZoneId.HasValue)
+            {
+                saved.Zone = new Zone { ZoneId = customer.ZoneId.Value };
+                _zoneRepository.Attach(saved.Zone);
+            }
 
-            _customerRepository.Update(saved);
-            _customerRepository.DetectChanges();
-            _customerRepository.Save();
+            _personRepository.Update(saved);
+            _personRepository.DetectChanges();
+            _personRepository.Save();
         }
 
         public bool Exists(string code)
         {
-            return _customerRepository.Exists(code);
+            return _personRepository.Exists(PersonType.Customer, code);
         }
 
-        public IEnumerable<Customer> GetAllInZone(int zoneId)
+        public IEnumerable<Person> GetAllInZone(int zoneId)
         {
-            return _customerRepository.GetAllInZone(zoneId);
+            return _personRepository.GetAllByTypeInZone(PersonType.Customer, zoneId);
         }
     }
 }

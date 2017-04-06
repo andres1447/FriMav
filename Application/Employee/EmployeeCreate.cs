@@ -13,10 +13,11 @@ namespace FriMav.Application
         public string Cuit { get; set; }
         public string Address { get; set; }
 
-        public Employee ToDomain()
+        public Person ToDomain()
         {
-            return new Employee()
+            return new Person()
             {
+                PersonType = PersonType.Employee,
                 Code = this.Code,
                 Name = this.Name,
                 Cuit = this.Cuit,

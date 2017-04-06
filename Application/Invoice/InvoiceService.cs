@@ -11,14 +11,14 @@ namespace FriMav.Application
     {
         private IInvoiceRepository _invoiceRepository;
         private IProductRepository _productRepository;
-        private ICustomerRepository _customerRepository;
+        private IPersonRepository _customerRepository;
         private IPriceForCustomerRepository _priceForCustomerRepository;
         private ITransactionService _transactionService;
 
         public InvoiceService(
             IInvoiceRepository invoiceRepository,
             IProductRepository productRepository,
-            ICustomerRepository customerRepository,
+            IPersonRepository customerRepository,
             IPriceForCustomerRepository priceForCustomerRepository,
             ITransactionService transactionService)
         {
@@ -50,7 +50,7 @@ namespace FriMav.Application
             return _invoiceRepository.GetAll();
         }
 
-        public IEnumerable<Invoice> GetUndeliveredInvoices()
+        public IEnumerable<UndeliveredInvoice> GetUndeliveredInvoices()
         {
             return _invoiceRepository.GetUndeliveredInvoices();
         }
@@ -85,7 +85,7 @@ namespace FriMav.Application
             _customerRepository.Update(customer);
         }
 
-        private void AddTransactions(Invoice invoice, Customer customer)
+        private void AddTransactions(Invoice invoice, Person customer)
         {
             var isPaid = invoice.PaymentMethod == PaymentMethod.Cash;
             _transactionService.CreateWithoutSaving(invoice, !isPaid);

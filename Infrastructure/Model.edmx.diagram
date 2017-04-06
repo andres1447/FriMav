@@ -4,25 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="593a254296bc4efca4d3e350554f5bc7" Name="Diagram1" ZoomLevel="55">
-        <EntityTypeShape EntityType="FriMav.Domain.Catalog" Width="1.5" PointX="8.875" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FriMav.Domain.Customer" Width="1.5" PointX="10" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="FriMav.Domain.Delivery" Width="1.5" PointX="0.75" PointY="13.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="FriMav.Domain.Employee" Width="1.5" PointX="12.25" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="FriMav.Domain.Invoice" PointX="2.375" PointY="7.375" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FriMav.Domain.InvoiceItem" Width="1.5" PointX="4.375" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="FriMav.Domain.NumberSequence" Width="1.5" PointX="0.5" PointY="2.5" IsExpanded="true" />
+      <Diagram DiagramId="593a254296bc4efca4d3e350554f5bc7" Name="Diagram1" ZoomLevel="63">
+        <EntityTypeShape EntityType="FriMav.Domain.Catalog" Width="1.5" PointX="9.75" PointY="6.25" IsExpanded="true" FillColor="0, 0, 192" />
+        <EntityTypeShape EntityType="FriMav.Domain.Delivery" Width="1.5" PointX="2.375" PointY="10.25" IsExpanded="true" FillColor="192, 0, 0" />
+        <EntityTypeShape EntityType="FriMav.Domain.Invoice" PointX="2.375" PointY="7.375" Width="1.5" IsExpanded="true" FillColor="255, 255, 128" />
+        <EntityTypeShape EntityType="FriMav.Domain.InvoiceItem" Width="1.5" PointX="4.625" PointY="7.375" IsExpanded="true" FillColor="255, 255, 128" />
+        <EntityTypeShape EntityType="FriMav.Domain.NumberSequence" Width="1.5" PointX="0.5" PointY="2.5" IsExpanded="true" FillColor="Fuchsia" />
         <EntityTypeShape EntityType="FriMav.Domain.Person" Width="1.5" PointX="11.125" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FriMav.Domain.PriceForCustomer" Width="1.5" PointX="6.625" PointY="10.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="FriMav.Domain.Product" Width="1.5" PointX="6.625" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="FriMav.Domain.ProductFamily" Width="1.5" PointX="8.875" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="FriMav.Domain.Salary" Width="1.5" PointX="14.5" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="FriMav.Domain.Transaction" Width="1.5" PointX="2.375" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FriMav.Domain.TransactionPayment" Width="1.5" PointX="4.875" PointY="4.25" IsExpanded="true" />
-        <AssociationConnector Association="FriMav.Domain.FK_dbo_PriceForCustomer_dbo_Customer_PersonId" ManuallyRouted="false" />
-        <AssociationConnector Association="FriMav.Domain.FK_dbo_Delivery_dbo_Employee_PersonId" ManuallyRouted="false" />
-        <AssociationConnector ManuallyRouted="false" Association="FriMav.Domain.FK_dbo_Invoice_dbo_Delivery_DeliveryId" />
-        <AssociationConnector Association="FriMav.Domain.FK_dbo_Salary_dbo_Employee_EmployeeId" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FriMav.Domain.PriceForCustomer" Width="1.5" PointX="9.125" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FriMav.Domain.Product" Width="1.5" PointX="7" PointY="7" IsExpanded="true" FillColor="0, 0, 192" />
+        <EntityTypeShape EntityType="FriMav.Domain.ProductFamily" Width="1.5" PointX="7" PointY="4.875" IsExpanded="true" FillColor="0, 0, 192" />
+        <EntityTypeShape EntityType="FriMav.Domain.Salary" Width="1.5" PointX="13.375" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="FriMav.Domain.Transaction" Width="1.5" PointX="2.375" PointY="2.5" IsExpanded="true" FillColor="Green" />
+        <EntityTypeShape EntityType="FriMav.Domain.TransactionPayment" Width="1.5" PointX="4.625" PointY="4.25" IsExpanded="true" FillColor="Green" />
         <AssociationConnector ManuallyRouted="false" Association="FriMav.Domain.FK_dbo_InvoiceItem_dbo_Invoice_TransactionId" />
         <AssociationConnector Association="FriMav.Domain.FK_dbo_InvoiceItem_dbo_Product_ProductId" ManuallyRouted="false" />
         <AssociationConnector Association="FriMav.Domain.FK_dbo_Transaction_dbo_Person_PersonId" ManuallyRouted="false" />
@@ -33,11 +27,12 @@
         <AssociationConnector Association="FriMav.Domain.FK_dbo_TransactionPayment_dbo_Transaction_TargetTransactionId" ManuallyRouted="false" />
         <AssociationConnector Association="FriMav.Domain.CatalogProduct" ManuallyRouted="false" />
         <InheritanceConnector EntityType="FriMav.Domain.Invoice" />
-        <InheritanceConnector EntityType="FriMav.Domain.Employee" />
-        <InheritanceConnector EntityType="FriMav.Domain.Employee" />
-        <InheritanceConnector EntityType="FriMav.Domain.Customer" />
-        <EntityTypeShape EntityType="FriMav.Domain.Zone" Width="1.5" PointX="6.625" PointY="12.625" />
-        <AssociationConnector Association="FriMav.Domain.FK_Customer_Zone" />
+        <EntityTypeShape EntityType="FriMav.Domain.Zone" Width="1.5" PointX="11.125" PointY="12.75" />
+        <AssociationConnector Association="FriMav.Domain.DeliveryInvoice" />
+        <AssociationConnector Association="FriMav.Domain.FK_dbo_Salary_dbo_Person_PersonId" />
+        <AssociationConnector Association="FriMav.Domain.FK_Person_Zone" />
+        <AssociationConnector Association="FriMav.Domain.FK_dbo_Delivery_dbo_Person_PersonId" />
+        <AssociationConnector Association="FriMav.Domain.FK_dbo_PriceForCustomer_dbo_Person_PersonId" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -58,12 +58,6 @@
     <Compile Include="Delivery.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Employee.cs">
-      <DependentUpon>Entities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Customer.cs">
-      <DependentUpon>Entities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Catalog.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
@@ -78,12 +72,16 @@
     <Compile Include="PaymentMethod.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
+    <Compile Include="PersonType.cs">
+      <DependentUpon>Entities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Proyections\DeliveryListing.cs" />
     <Compile Include="Proyections\PaymentDisplay.cs" />
     <Compile Include="Proyections\InvoiceDisplay.cs" />
     <Compile Include="Proyections\ProductPriceForCustomer.cs" />
     <Compile Include="Proyections\SurplusTransaction.cs" />
     <Compile Include="Proyections\TransactionEntry.cs" />
+    <Compile Include="Proyections\UndeliveredInvoice.cs" />
     <Compile Include="Proyections\UnpaidTransaction.cs" />
     <Compile Include="Proyections\UnpaidInvoice.cs" />
     <Compile Include="Repositories\INumberSequenceRepository.cs" />
@@ -91,9 +89,8 @@
     <Compile Include="Repositories\ITransactionPaymentRepository.cs" />
     <Compile Include="Repositories\ITransactionRepository.cs" />
     <Compile Include="Repositories\ICatalogRepository.cs" />
-    <Compile Include="Repositories\IEmployeeRepository.cs" />
     <Compile Include="Repositories\IDeliveryRepository.cs" />
-    <Compile Include="Repositories\ICustomerRepository.cs" />
+    <Compile Include="Repositories\IPersonRepository.cs" />
     <Compile Include="Repositories\IInvoiceRepository.cs" />
     <Compile Include="IPagedList.cs" />
     <Compile Include="Repositories\IPriceForCustomerRepository.cs" />

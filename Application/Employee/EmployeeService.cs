@@ -6,60 +6,60 @@ namespace FriMav.Application
 {
     public class EmployeeService : IEmployeeService
     {
-        private IEmployeeRepository _employeeRepository;
+        private IPersonRepository _personRepository;
 
         public EmployeeService(
-            IEmployeeRepository employeeRepository)
+            IPersonRepository personRepository)
         {
-            _employeeRepository = employeeRepository;
+            _personRepository = personRepository;
         }
 
-        public void Create(Employee employee)
+        public void Create(Person employee)
         {
-            _employeeRepository.Create(employee);
-            _employeeRepository.Save();
+            _personRepository.Create(employee);
+            _personRepository.Save();
         }
 
         public void Delete(int personId)
         {
-            Employee employee = new Employee { PersonId = personId };
-            _employeeRepository.Attach(employee);
+            Person employee = new Person { PersonId = personId };
+            _personRepository.Attach(employee);
             Delete(employee);
         }
 
-        public void Delete(Employee employee)
+        public void Delete(Person employee)
         {
-            _employeeRepository.Delete(employee);
-            _employeeRepository.Save();
+            _personRepository.Delete(employee);
+            _personRepository.Save();
         }
 
-        public Employee Get(int personId)
+        public Person Get(int personId)
         {
-            return _employeeRepository.FindBy(x => x.PersonId == personId);
+            return _personRepository.FindBy(x => x.PersonId == personId);
         }
 
-        public IEnumerable<Employee> GetAll()
+        public IEnumerable<Person> GetAll()
         {
-            return _employeeRepository.GetAll();
+            return _personRepository.GetAllByType(PersonType.Employee);
         }
 
-        public void Update(Employee employee)
+        public void Update(Person employee)
         {
-            var saved = _employeeRepository.FindBy(c => c.PersonId == employee.PersonId);
+            var saved = _personRepository.FindBy(c => c.PersonId == employee.PersonId);
 
             saved.Code = employee.Code;
             saved.Name = employee.Name;
             saved.Cuit = employee.Cuit;
             saved.Address = employee.Address;
 
-            _employeeRepository.Update(saved);
-            _employeeRepository.DetectChanges();
-            _employeeRepository.Save();
+            _personRepository.Update(saved);
+            _personRepository.DetectChanges();
+            _personRepository.Save();
         }
 
         public bool Exists(string code)
         {
-            return _employeeRepository.Exists(code);
+            return _personRepository.Exists(PersonType.Employee, code);
         }
     }
 }

@@ -22,9 +22,7 @@ namespace FriMav.Domain
         public Shipping Shipping { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
         public string DeliveryAddress { get; set; }
-        public Nullable<int> DeliveryId { get; set; }
     
-        public virtual Delivery Delivery { get; set; }
         public virtual ICollection<InvoiceItem> Items { get; set; }
     }
 }

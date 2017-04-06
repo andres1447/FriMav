@@ -13,6 +13,10 @@
             <td>{{:: delivery.date | date:'dd/MM/yyyy' }}</td>
         </tr>
         <tr>
+            <td>Numero</td>
+            <td>{{:: delivery.number }}</td>
+        </tr>
+        <tr>
             <td>Empleado</td>
             <td>{{:: delivery.employee.name }}</td>
         </tr>
@@ -39,8 +43,8 @@
             <tr>
                 <td class="col-md-2"></td>
                 <td class="col-md-2"></td>
-                <td class="col-md-2 number">{{:: invoiceTotals.quantity }}</td>
-                <td class="col-md-2 number">{{:: invoiceTotals.amount | number:2 }}</td>
+                <td class="col-md-2 number"><strong>{{:: invoiceTotals.quantity }}</strong></td>
+                <td class="col-md-2 number"><strong>{{:: invoiceTotals.amount | number:2 }}</strong></td>
             </tr>
         </tbody>
     </table>

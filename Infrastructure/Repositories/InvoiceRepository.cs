@@ -23,14 +23,23 @@ namespace FriMav.Infrastructure.Repositories
                         .ToList();
         }
 
-        public IEnumerable<Invoice> GetUndeliveredInvoices()
+        public IEnumerable<UndeliveredInvoice> GetUndeliveredInvoices()
         {
-            return _databaseContext.Set<Transaction>()
-                .AsNoTracking()
-                .OfType<Invoice>()
-                .Where(i => i.Shipping == Shipping.Delivery && !i.DeliveryId.HasValue && !i.IsRefunded)
-                .Include(i => i.Person)
-                .ToList();
+            var deliveries = _databaseContext.Set<Delivery>();
+
+            var q = _databaseContext.Set<Invoice>()
+                    .Where(i => i.Shipping == Shipping.Delivery && !i.IsRefunded && i.Person.PersonType == PersonType.Customer && !(deliveries.Any(d => d.Invoices.Contains(i) && !d.DeleteDate.HasValue)))
+                    .Select(i => new UndeliveredInvoice
+                     {
+                         TransactionId = i.TransactionId,
+                         Date = i.Date,
+                         Number = i.Number,
+                         PersonName = i.Person.Name,
+                         PersonId = i.PersonId,
+                         PersonCode = i.Person.Code
+                     });
+
+            return q.ToList();
         }
 
         public Invoice GetDisplay(int invoiceId)

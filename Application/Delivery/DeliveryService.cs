@@ -13,30 +13,38 @@ namespace FriMav.Application
     {
         private IDeliveryRepository _deliveryRepository;
         private IInvoiceRepository _invoiceRepository;
+        private INumberSequenceService _numberSequenceService;
 
         public DeliveryService(
             IDeliveryRepository deliveryRepository,
-            IInvoiceRepository invoiceReplository)
+            IInvoiceRepository invoiceReplository,
+            INumberSequenceService numberSequenceService)
         {
             _deliveryRepository = deliveryRepository;
             _invoiceRepository = invoiceReplository;
+            _numberSequenceService = numberSequenceService;
         }
 
         public void Create(DeliveryCreate command)
         {
-            var delivery = new Delivery
+            using (var scope = new System.Transactions.TransactionScope())
             {
-                Date = command.Date,
-                PersonId = command.EmployeeId,
-                Invoices = _invoiceRepository.FindAllBy(x => command.Invoices.Contains(x.TransactionId)).ToList()
-            };
-            _deliveryRepository.Create(delivery);
-            foreach (var invoice in delivery.Invoices)
-            {
-                invoice.Delivery = delivery;
+                var delivery = new Delivery
+                {
+                    Date = command.Date,
+                    Number = _numberSequenceService.NextOrInit("Delivery"),
+                    PersonId = command.EmployeeId,
+                    Invoices = command.Invoices.Select(x => new Invoice { TransactionId = x }).ToList()
+                };
+                foreach (var invoice in delivery.Invoices)
+                {
+                    _invoiceRepository.Attach(invoice);
+                }
+                _deliveryRepository.Create(delivery);
+                _deliveryRepository.DetectChanges();
+                _deliveryRepository.Save();
+                scope.Complete();
             }
-            _deliveryRepository.DetectChanges();
-            _deliveryRepository.Save();
         }
 
         public Delivery Get(int deliveryId)
@@ -51,9 +59,8 @@ namespace FriMav.Application
 
         public void Delete(Delivery delivery)
         {
-            delivery.Invoices.Clear();
-            _deliveryRepository.Delete(delivery);
-            _deliveryRepository.DetectChanges();
+            delivery.DeleteDate = DateTime.UtcNow;
+            _deliveryRepository.Update(delivery);
             _deliveryRepository.Save();
         }
 

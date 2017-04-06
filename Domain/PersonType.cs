@@ -10,17 +10,10 @@
 namespace FriMav.Domain
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Employee : Person
+    public enum PersonType : int
     {
-        public Employee()
-        {
-            this.Salaries = new HashSet<Salary>();
-        }
-    
-        public string Code { get; set; }
-    
-        public virtual ICollection<Salary> Salaries { get; set; }
+        Customer = 1,
+        Employee = 2
     }
 }

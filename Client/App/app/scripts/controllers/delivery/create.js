@@ -61,7 +61,7 @@ angular.module('client')
 
       $scope.getMatchingInvoices = function ($viewValue) {
           return $.grep($scope.invoices, function (it) {
-              return it.person.code.toLowerCase().indexOf($viewValue) == 0 && getSelectedInvoicesIds().indexOf(it.transactionId) == -1;
+              return it.personCode.toLowerCase().indexOf($viewValue) == 0 && getSelectedInvoicesIds().indexOf(it.transactionId) == -1;
           });
       };
 

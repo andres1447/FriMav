@@ -7,11 +7,11 @@ namespace FriMav.Application
     public class ZoneService : IZoneService
     {
         private IZoneRepository _zoneRepository;
-        private ICustomerRepository _customerRepository;
+        private IPersonRepository _customerRepository;
 
         public ZoneService(
             IZoneRepository zoneRepository,
-            ICustomerRepository customerRepository)
+            IPersonRepository customerRepository)
         {
             _zoneRepository = zoneRepository;
             _customerRepository = customerRepository;

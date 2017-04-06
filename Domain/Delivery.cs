@@ -20,10 +20,12 @@ namespace FriMav.Domain
         }
     
         public int DeliveryId { get; set; }
+        public int Number { get; set; }
         public System.DateTime Date { get; set; }
         public int PersonId { get; set; }
+        public Nullable<System.DateTime> DeleteDate { get; set; }
     
-        public virtual Employee Employee { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }
+        public virtual Person Employee { get; set; }
     }
 }

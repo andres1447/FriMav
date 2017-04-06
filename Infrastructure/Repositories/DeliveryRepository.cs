@@ -17,12 +17,12 @@ namespace FriMav.Infrastructure.Repositories
         public IEnumerable<DeliveryListing> GetListing()
         {
             return _databaseContext.Set<Delivery>()
-                .Include(x => x.Employee)
-                .Include(x => x.Invoices)
+                .Where(d => !d.DeleteDate.HasValue)
                 .Select(x => new DeliveryListing
                 {
                     DeliveryId = x.DeliveryId,
                     Date = x.Date,
+                    Number = x.Number,
                     Employee = x.Employee.Name,
                     Invoices = x.Invoices.Count
                 }).ToList();

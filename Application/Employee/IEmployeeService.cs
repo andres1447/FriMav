@@ -5,12 +5,12 @@ namespace FriMav.Application
 {
     public interface IEmployeeService
     {
-        IEnumerable<Employee> GetAll();
-        Employee Get(int personId);
-        void Create(Employee customer);
-        void Update(Employee customer);
+        IEnumerable<Person> GetAll();
+        Person Get(int personId);
+        void Create(Person customer);
+        void Update(Person customer);
         void Delete(int personId);
-        void Delete(Employee customer);
+        void Delete(Person customer);
         bool Exists(string code);
     }
 }

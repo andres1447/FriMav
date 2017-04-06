@@ -11,14 +11,14 @@ namespace FriMav.Application
     {
         private INumberSequenceService _numberSequenceService;
         private ITransactionRepository _transactionRepository;
-        private ICustomerRepository _customerRepository;
+        private IPersonRepository _customerRepository;
         private ITransactionPaymentRepository _transactionPaymentRepository;
 
         public TransactionService(
             INumberSequenceService numberSequenceService,
             ITransactionRepository transactionRepository,
             ITransactionPaymentRepository transactionPaymentRepository,
-            ICustomerRepository customerRepository)
+            IPersonRepository customerRepository)
         {
             _numberSequenceService = numberSequenceService;
             _transactionRepository = transactionRepository;
@@ -187,7 +187,7 @@ namespace FriMav.Application
 
         protected void AdjustCustomerBalance(Transaction transaction)
         {
-            Customer customer = _customerRepository.FindBy(x => x.PersonId == transaction.PersonId);
+            Person customer = _customerRepository.FindBy(x => x.PersonId == transaction.PersonId);
             customer.Balance += transaction.Total;
             transaction.Balance = customer.Balance;
             _customerRepository.Update(customer);

@@ -14,10 +14,23 @@ namespace FriMav.Domain
     
     public partial class Person
     {
+        public Person()
+        {
+            this.Salary = new HashSet<Salary>();
+        }
+    
         public int PersonId { get; set; }
+        public PersonType PersonType { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
         public string Cuit { get; set; }
         public string Address { get; set; }
         public decimal Balance { get; set; }
+        public Nullable<Shipping> Shipping { get; set; }
+        public Nullable<PaymentMethod> PaymentMethod { get; set; }
+        public Nullable<int> ZoneId { get; set; }
+    
+        public virtual ICollection<Salary> Salary { get; set; }
+        public virtual Zone Zone { get; set; }
     }
 }
