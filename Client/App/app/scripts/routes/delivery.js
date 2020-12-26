@@ -27,12 +27,12 @@ angular
             }
         })
         .state('DeliveryShow', {
-            url: '/delivery/:deliveryId',
+          url: '/delivery/:id',
             templateUrl: 'views/delivery/show.html',
             controller: 'DeliveryShowCtrl',
             resolve: {
                 delivery: function (Delivery, $stateParams) {
-                    return Delivery.get({ deliveryId: $stateParams.deliveryId }).$promise;
+                return Delivery.get({ id: $stateParams.id }).$promise;
                 }
             }
         });

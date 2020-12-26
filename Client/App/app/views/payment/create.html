@@ -1,9 +1,25 @@
-<div class="row">
-    <h4>Nuevo pago</h4>
-</div>
-<div class="row">
-    <a ui-sref="CustomerShow({personId: payment.personId})" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i><span class="key-shortcut">esc</span></a>
-</div>
-<form class="form-horizontal" ng-submit="create(payment)" ng-disabled="sending">
-    <div ng-include="'views/payment/_form.html'"></div>
+<header>
+  <h3>Nuevo pago</h3>
+  <div>
+    <a class="btn btn-default" href="" ng-click="reload()"><i class="glyphicon glyphicon-refresh"></i> <span class="key-shortcut">ESC</span></a>
+  </div>
+</header>
+<form class="form" ng-submit="create(payment)" ng-disabled="sending">
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-6">
+        <label class="control-label" for="payment_customer">Cliente</label>
+        <input id="payment_customer" type="text" ng-model="payment.person" class="form-control" ae-key-tab="[13, 9]" autocomplete="off"
+               uib-typeahead="customer as (customer.code + ' - ' + customer.name) for customer in getMatchingCustomer($viewValue) | limitTo:8"
+               typeahead-select-on-blur="true" typeahead-on-select="setPerson()" ae-select-on-click=""
+               typeahead-focus-on-select="false" typeahead-editable="false" ae-key-prev="[37, 38]"
+               clear-on-backspace="clearPerson()" ae-tab-validator="payment.person != null" ae-autofocus="InitPaymentCreate">
+      </div>
+      <div class="col-md-6" ng-show="payment.person != null">
+        <label class="control-label">Balance</label>
+        <div class="form-control-static" ng-class="{'text-danger': payment.person.balance > 0, 'text-success': payment.person.balance < 0}">${{payment.person.balance}}</div>
+      </div>
+    </div>
+  </div>
+  <div ng-include="'views/payment/_form.html'"></div>
 </form>

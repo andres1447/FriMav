@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('client').factory('Transaction', function ($resource, ApiConfig) {
-    return $resource(ApiConfig.host + 'transaction/:transactionId', null, {
+  return $resource(ApiConfig.host + 'transaction/:id', null, {
         account: {
-            url: ApiConfig.host + 'transaction/person/:personId',
+        url: ApiConfig.host + 'transaction/person/:id',
             method: 'GET',
             isArray: true
         },

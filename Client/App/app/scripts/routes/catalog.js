@@ -24,12 +24,12 @@ angular
             }
         })
         .state('CatalogShow', {
-            url: '/catalog/:catalogId',
+          url: '/catalog/:id',
             templateUrl: 'views/catalog/show.html',
             controller: 'CatalogShowCtrl',
             resolve: {
                 catalog: function (Catalog, $stateParams) {
-                    return Catalog.get({ catalogId: $stateParams.catalogId }).$promise;
+                return Catalog.get({ id: $stateParams.id }).$promise;
                 }
             }
         });

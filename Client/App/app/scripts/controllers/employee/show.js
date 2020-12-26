@@ -12,7 +12,7 @@ angular.module('client')
           description: 'Nuevo pago',
           persistent: false,
           callback: function (e) {
-              $state.go('PaymentCreate', { personId: customer.personId });
+            $state.go('PaymentCreate', { id: customer.id });
           }
         })
         .add({
@@ -70,25 +70,25 @@ angular.module('client')
 
       $scope.description = function (entry) {
           switch (entry.transactionType) {
-              case 1: return 'Factura #' + entry.entryId;
-              case 2: return 'Pago #' + entry.entryId;
+              case 1: return 'Factura #' + entry.number;
+              case 2: return 'Pago #' + entry.number;
               case 3: return 'Reembolso de factura #' + entry.referenceId;
           }
       };
 
       $scope.showEntry = function (entry) {
           switch (entry.transactionType) {
-              case 1: $state.go('InvoiceShow', { invoiceId: entry.entryId }); break;
-              case 2: $state.go('PaymentShow', { paymentId: entry.entryId }); break;
-              case 3: $state.go('PaymentShow', { paymentId: entry.entryId }); break;
+            case 1: $state.go('InvoiceShow', { id: entry.id }); break;
+            case 2: $state.go('PaymentShow', { id: entry.id }); break;
+            case 3: $state.go('PaymentShow', { id: entry.id }); break;
           }
       };
 
       $scope.refund = function (entry) {
           switch (entry.transactionType) {
-              case 1: $state.go('InvoiceRefund', { invoiceId: entry.entryId }); break;
-              case 2: $state.go('PaymentCancel', { paymentId: entry.entryId }); break;
-              case 3: $state.go('PaymentCancel', { paymentId: entry.entryId }); break;
+            case 1: $state.go('InvoiceRefund', { id: entry.id }); break;
+            case 2: $state.go('PaymentCancel', { id: entry.id }); break;
+            case 3: $state.go('PaymentCancel', { id: entry.id }); break;
           }
       };
   });

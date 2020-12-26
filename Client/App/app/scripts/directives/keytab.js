@@ -13,7 +13,7 @@ angular.module('client')
                     var redo = true, rtnValue, index = -1, formElements, auxElem, auxKeyCodes;
                     while (redo) {
                         redo = false;
-                        formElements = this.form.elements;
+                        formElements = Array.from(this.form.elements).filter(e => e.type != 'button');
                         for (var i = 0; i < formElements.length; ++i) {
                             if (element[0] == formElements[i]) {
                                 index = i;
@@ -37,11 +37,17 @@ angular.module('client')
                                     return;
                                 }
                             }
+                            if (!$element.valid()) {
+                              $element.focus();
+                              $element.select();
+                              return;
+                            }
                             if (angular.isDefined(attrs.aeBeforeTab)) {
                                 scope.$apply(function () {
                                     rtnValue = scope.$eval(attrs.aeBeforeTab);
                                     redo = angular.isDefined(rtnValue) ? rtnValue : false;
                                 });
+                                formElements = Array.from(this.form.elements).filter(e => e.type != 'button');
                             }
                             if (!redo && index < formElements.length - 1) {
                                 for (var j = index + 1; j < formElements.length; ++j) {

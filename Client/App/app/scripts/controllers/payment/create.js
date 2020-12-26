@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('client')
-  .controller('PaymentCreateCtrl', function ($scope, $state, $timeout, hotkeys, Notification, Payment, customer) {
+  .controller('PaymentCreateCtrl', function ($scope, $state, hotkeys, Notification, Payment, customers) {
+      $scope.customers = customers;
+
       $scope.payment = {
-          date: new Date(),
-          personId: customer.personId
+        date: new Date()
       };
 
       hotkeys.bindTo($scope)
@@ -22,7 +23,7 @@ angular.module('client')
           allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
           persistent: false,
           callback: function (e) {
-              $state.go('CustomerShow', { personId: customer.personId });
+            $state.go('CustomerShow', { id: customer.id });
               e.preventDefault();
           }
       });
@@ -39,11 +40,26 @@ angular.module('client')
               Payment.save(payment, function (res) {
                   $scope.sending = false;
                   Notification.success('Pago creado correctamente.');
-                  $state.go('CustomerShow', { personId: payment.personId });
+                $state.go('CustomerShow', { id: payment.personId });
               }, function (err) {
                   $scope.sending = false;
                   Notification.error(err.data);
               });
           }
-      };
-  });
+    };
+
+    $scope.getMatchingCustomer = function ($viewValue) {
+      return $.grep($scope.customers, function (it) {
+        return it.name.toLowerCase().indexOf($viewValue) != -1 || it.code.toLowerCase().indexOf($viewValue) == 0;
+      });
+    };
+
+    $scope.setPerson = function () {
+      $scope.payment.personId = $scope.payment.person.id;
+    };
+
+    $scope.clearPerson = function () {
+      $scope.payment.personId = null;
+      $scope.payment.person = null;
+    }
+});

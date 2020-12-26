@@ -1,4 +1,5 @@
-﻿using FriMav.Domain.Repositories;
+﻿using FriMav.Domain;
+using FriMav.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +10,16 @@ namespace FriMav.Application
 {
     public class HealthCheckService : IHealthCheckService
     {
-        IProductRepository _productRepository;
+        private readonly IRepository<Product> _productRepository;
 
-        public HealthCheckService(IProductRepository productRepository)
+        public HealthCheckService(IRepository<Product> productRepository)
         {
             _productRepository = productRepository;
         }
 
         public void KeepAlive()
         {
-            _productRepository.Count();
+            _productRepository.GetAll();
         }
     }
 }

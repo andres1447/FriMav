@@ -38,7 +38,7 @@ angular.module('client')
           description: 'Detalles',
           persistent: false,
           callback: function (e) {
-              $state.go('CustomerShow', { personId: $scope.customers[$scope.customerIndex].personId });
+            $state.go('CustomerShow', { id: $scope.customers[$scope.customerIndex].id });
               e.preventDefault();
           }
       })
@@ -47,7 +47,7 @@ angular.module('client')
           description: 'Editar cliente',
           persistent: false,
           callback: function (e) {
-              $state.go('CustomerUpdate', { personId: $scope.customers[$scope.customerIndex].personId });
+            $state.go('CustomerUpdate', { id: $scope.customers[$scope.customerIndex].id });
               e.preventDefault();
           }
       })
@@ -89,12 +89,12 @@ angular.module('client')
       };
 
       $scope.goToCustomer = function (customer) {
-          $state.go('CustomerShow', { personId: customer.personId });
+        $state.go('CustomerShow', { id: customer.id });
       }
       
       $scope.delete = function (index) {
           ModalService.show({ title: 'Clientes', message: 'Desea borrar al cliente?' }).then(function (res) {
-              Customer.delete({ personId: $scope.customers[index].personId }, function (res) {
+            Customer.delete({ id: $scope.customers[index].id }, function (res) {
                   Notification.success('Cliente borrado correctamente.');
                   $state.reload();
               }, function (err) {

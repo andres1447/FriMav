@@ -29,7 +29,7 @@ angular.module('client')
           description: 'Detalles',
           persistent: false,
           callback: function (e) {
-              $state.go('EmployeeShow', { personId: $scope.employees[$scope.index].personId });
+            $state.go('EmployeeShow', { id: $scope.employees[$scope.index].id });
               e.preventDefault();
           }
       })
@@ -38,7 +38,7 @@ angular.module('client')
           description: 'Editar empleado',
           persistent: false,
           callback: function (e) {
-              $state.go('EmployeeUpdate', { personId: $scope.employees[$scope.index].personId });
+            $state.go('EmployeeUpdate', { id: $scope.employees[$scope.index].id });
               e.preventDefault();
           }
       })
@@ -75,7 +75,7 @@ angular.module('client')
       
       $scope.delete = function (index) {
           ModalService.show({ title: 'Empleados', message: 'Desea borrar al empleado?' }).then(function (res) {
-              Employee.delete({ personId: $scope.employees[index].personId }, function (res) {
+            Employee.delete({ id: $scope.employees[index].id }, function (res) {
                   Notification.success('Empleado borrado correctamente.');
                   $state.reload();
               }, function (err) {

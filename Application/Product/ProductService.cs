@@ -1,6 +1,5 @@
 ﻿using FriMav.Domain;
-using FriMav.Domain.Proyections;
-using FriMav.Domain.Repositories;
+using FriMav.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,85 +8,104 @@ namespace FriMav.Application
 {
     public class ProductService : IProductService
     {
-        private IProductRepository _productRepository;
-        private IPriceForCustomerRepository _priceForCustomerRepository;
+        private readonly IRepository<Product> _productRepository;
+        private readonly IRepository<ProductType> _productTypeRepository;
+        private readonly IRepository<CustomerPrice> _customerPriceRepository;
 
         public ProductService(
-            IProductRepository productRepository,
-            IPriceForCustomerRepository priceForCustomerRepository)
+            IRepository<Product> productRepository,
+            IRepository<ProductType> productTypeRepository,
+            IRepository<CustomerPrice> customerPriceRepository)
         {
             _productRepository = productRepository;
-            _priceForCustomerRepository = priceForCustomerRepository;
+            _productTypeRepository = productTypeRepository;
+            _customerPriceRepository = customerPriceRepository;
         }
 
-        public Product Get(int id)
+        public ProductResponse Get(int id)
         {
-            return _productRepository.GetWithFamily(id);
+            var product = GetById(id);
+            return ProductResponse.Mapper(product);
         }
 
-        public IEnumerable<Product> FindAllByIds(IEnumerable<int> ids)
+        private Product GetById(int id)
         {
-            return _productRepository.FindAllBy(x => ids.Contains(x.ProductId));
+            var product = _productRepository.Get(id, x => x.Type);
+            if (product == null)
+                throw new NotFoundException();
+            return product;
         }
 
-        public IEnumerable<ProductPriceForCustomer> GetAllProductPriceForCustomer(int customerId)
+        public IEnumerable<ProductResponse> GetAll()
         {
-            return _priceForCustomerRepository.GetAllProductPriceForCustomer(customerId);
+            return _productRepository.Query().Select(ProductResponse.Expression).ToList();
         }
 
-        public IEnumerable<Product> GetAll()
+
+        public void Create(ProductCreate request)
         {
-            return _productRepository.GetAll();
+            var type = request.ProductTypeId.HasValue ? _productTypeRepository.Get(request.ProductTypeId.Value) : null;
+            var product = new Product
+            {
+                Code = request.Code,
+                Name = request.Name,
+                Price = request.Price,
+                ProductTypeId = request.ProductTypeId,
+                Type = type
+            };
+            _productRepository.Add(product);
         }
 
-        public void Create(Product product)
+        public void Update(ProductUpdate product)
         {
-            _productRepository.Create(product);
-            _productRepository.Save();
-        }
-
-        public void Update(Product product)
-        {
-            var saved = Get(product.ProductId);
+            var saved = GetById(product.Id);
             saved.Name = product.Name;
-            saved.FamilyId = product.FamilyId;
+            saved.ProductTypeId = product.ProductTypeId;
             if (saved.Price != product.Price)
             {
-                saved.PriceDate = DateTime.Now;
+                saved.PriceDate = DateTime.UtcNow;
             }
             saved.Price = product.Price;
             saved.Code = product.Code;
-            saved.Active = product.Active;
-            _productRepository.Update(saved);
-            _productRepository.DetectChanges();
-            _productRepository.Save();
+            if (!product.Active)
+                saved.Delete();
         }
 
-        public void Delete(Product product)
+        public void Delete(int id)
         {
-            product.Active = false;
-            _productRepository.Update(product);
-            _productRepository.Save();
+            var product = GetById(id);
+            product.Delete();
         }
 
-        public IPagedList<Product> GetPaged(string code, string name, int pageIndex = 0, int pageSize = int.MaxValue)
+        public IPagedList<ProductResponse> GetPaged(string code, string name, int pageIndex = 0, int pageSize = int.MaxValue)
         {
-            return _productRepository.GetPaged(code, name, pageIndex, pageSize);
+            return null;
         }
 
-        public bool ExistsActiveCode(string code)
+        public IEnumerable<ProductResponse> GetAllActive()
         {
-            return _productRepository.ExistsActiveCode(code);
+            return _productRepository.Query().Where(x => !x.DeleteDate.HasValue).Select(ProductResponse.Expression).ToList();
         }
 
-        public IEnumerable<Product> GetAllActive()
+        public IEnumerable<ProductResponse> GetAllActiveInFamily(int typeId)
         {
-            return _productRepository.GetAllActive();
+            return _productRepository.Query()
+                .Where(x => x.DeleteDate.HasValue && x.ProductTypeId == typeId)
+                .Select(ProductResponse.Expression).ToList();
         }
 
-        public IEnumerable<Product> GetAllActiveInFamily(int familyId)
+        public IEnumerable<PriceListItem> GetPriceList(int id)
         {
-            return _productRepository.GetAllActiveInFamily(familyId);
+            return _productRepository.Query()
+                .GroupJoin(_customerPriceRepository.Query().Where(x => x.CustomerId == id),
+                x => x.Id, x => x.ProductId,
+                (x, y) => new PriceListItem
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Code = x.Code,
+                    Price = y.Select(c => c.Price).DefaultIfEmpty(x.Price).FirstOrDefault()
+                }).ToList();
         }
     }
 }

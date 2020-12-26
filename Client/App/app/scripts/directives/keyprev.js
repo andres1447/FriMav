@@ -11,7 +11,7 @@ angular.module('client')
                 if (codes.indexOf(e.keyCode) != -1 && e.target.type != 'submit') {
                     e.preventDefault();
                     var index = 0;
-                    var formElements = this.form.elements;
+                    var formElements = Array.from(this.form.elements).filter(e => e.type != 'button');
                     for (var i = 0; i < formElements.length; ++i) {
                         if (element[0] == formElements[i]) {
                             index = i;

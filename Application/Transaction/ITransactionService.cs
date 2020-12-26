@@ -1,4 +1,5 @@
 ﻿using FriMav.Domain;
+using FriMav.Domain.Entities;
 using FriMav.Domain.Proyections;
 using System.Collections.Generic;
 
@@ -6,13 +7,13 @@ namespace FriMav.Application
 {
     public interface ITransactionService
     {
+        IEnumerable<TransactionDocument> GetAll();
+
+        TransactionDocument Get(int transactionId);
+
+        IEnumerable<TransactionEntry> GetAllByPersonId(int personId, int offset = 0, int count = 20);
+
+        [Transactional]
         void Create(CreatePayment payment);
-        void Create(Transaction transaction);
-        void CreateWithoutSaving(Transaction transaction, bool managePayments);
-        IEnumerable<Transaction> GetAll();
-        Transaction Get(int transactionId);
-        IEnumerable<TransactionEntry> FindAllWithReferenceByPersonId(int personId);
-        void Cancel(CancelTransaction cancelation);
-        bool IsReferenced(int transactionId);
     }
 }

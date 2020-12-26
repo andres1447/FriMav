@@ -19,25 +19,25 @@ angular
             controller: 'EmployeeCreateCtrl'
         })
         .state('EmployeeUpdate', {
-            url: '/employee/:personId/update',
+          url: '/employee/:id/update',
             templateUrl: 'views/employee/update.html',
             controller: 'EmployeeUpdateCtrl',
             resolve: {
                 employee: function ($stateParams, Employee) {
-                    return Employee.get({ personId: $stateParams.personId }).$promise;
+                return Employee.get({ id: $stateParams.id }).$promise;
                 }
             }
         })
         .state('EmployeeShow', {
-            url: '/employee/:personId/show',
+          url: '/employee/:id/show',
             templateUrl: 'views/employee/show.html',
             controller: 'EmployeeShowCtrl',
             resolve: {
                 employee: function ($stateParams, Employee) {
-                    return Employee.get({ personId: $stateParams.personId }).$promise;
+                return Employee.get({ id: $stateParams.id }).$promise;
                 },
                 accountEntries: function (customer, AccountEntry) {
-                    return AccountEntry.query({ personId: customer.personId }).$promise;
+                  return AccountEntry.query({ id: customer.id }).$promise;
                 }
             }
         })

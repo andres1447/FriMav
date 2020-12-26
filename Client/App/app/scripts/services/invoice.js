@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('client').factory('Invoice', function ($resource, ApiConfig) {
-    return $resource(ApiConfig.host + 'invoice/:invoiceId', null, {
+  return $resource(ApiConfig.host + 'invoice/:id', null, {
         update: {
             method: 'PUT'
         },

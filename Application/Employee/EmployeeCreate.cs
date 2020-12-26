@@ -12,17 +12,6 @@ namespace FriMav.Application
         public string Name { get; set; }
         public string Cuit { get; set; }
         public string Address { get; set; }
-
-        public Person ToDomain()
-        {
-            return new Person()
-            {
-                PersonType = PersonType.Employee,
-                Code = this.Code,
-                Name = this.Name,
-                Cuit = this.Cuit,
-                Address = this.Address
-            };
-        }
+        public int? ZoneId { get; set; }
     }
 }

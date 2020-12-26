@@ -1,48 +1,107 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using FriMav.Domain;
-using FriMav.Domain.Proyections;
-using FriMav.Domain.Repositories;
+using FriMav.Domain.Entities;
 
 namespace FriMav.Application
 {
     public class InvoiceService : IInvoiceService
     {
-        private IInvoiceRepository _invoiceRepository;
-        private IProductRepository _productRepository;
-        private IPersonRepository _customerRepository;
-        private IPriceForCustomerRepository _priceForCustomerRepository;
-        private ITransactionService _transactionService;
+        private readonly IRepository<Invoice> _invoiceRepository;
+        private readonly IRepository<Product> _productRepository;
+        private readonly IRepository<Customer> _customerRepository;
+        private readonly IRepository<CustomerPrice> _customerPriceRepository;
+        private readonly IRepository<Payment> _paymentRepository;
+        private readonly IDocumentNumberGenerator _documentNumberGenerator;
 
         public InvoiceService(
-            IInvoiceRepository invoiceRepository,
-            IProductRepository productRepository,
-            IPersonRepository customerRepository,
-            IPriceForCustomerRepository priceForCustomerRepository,
-            ITransactionService transactionService)
+            IRepository<Invoice> invoiceRepository,
+            IRepository<Product> productRepository,
+            IRepository<Customer> customerRepository,
+            IRepository<CustomerPrice> priceForCustomerRepository,
+            IDocumentNumberGenerator documentNumberGenerator,
+            IRepository<Payment> paymentRepository)
         {
             _invoiceRepository = invoiceRepository;
             _productRepository = productRepository;
             _customerRepository = customerRepository;
-            _priceForCustomerRepository = priceForCustomerRepository;
-            _transactionService = transactionService;
+            _customerPriceRepository = priceForCustomerRepository;
+            _documentNumberGenerator = documentNumberGenerator;
+            _paymentRepository = paymentRepository;
         }
 
-        public void BeforeCreate(Invoice invoice)
+        public InvoiceResult Create(InvoiceCreate request)
         {
-            invoice.Total = invoice.Items.Sum(it => it.Quantity * it.Price);
-            UpdateCustomer(invoice);
-        }
+            var customer = GetRequestCustomerOrDefault(request);
 
-        public void Create(Invoice invoice)
-        {
-            using (var scope = new System.Transactions.TransactionScope())
+            var invoice = MapInvoice(request, customer);
+
+            customer.Accept(invoice);
+
+            _invoiceRepository.Add(invoice);
+
+            if (request.PaymentMethod == PaymentMethod.Cash)
             {
-                BeforeCreate(invoice);
-                _invoiceRepository.Save();
-                scope.Complete();
+                Payment payment = CreateCancellingPayment(invoice);
+
+                customer.Accept(payment);
+
+                _paymentRepository.Add(payment);
             }
+
+            UpdateCustomer(customer, invoice);
+
+            return new InvoiceResult(invoice.Number, invoice.Total, invoice.Balance);
+        }
+
+        private Payment CreateCancellingPayment(Invoice invoice)
+        {
+            var number = _documentNumberGenerator.NextForPayment();
+            return invoice.CreateCancellingPayment(number);
+        }
+
+        private Invoice MapInvoice(InvoiceCreate request, Customer customer)
+        {
+            var invoice = new Invoice
+            {
+                Person = customer,
+                PersonId = customer.Id,
+                CustomerName = request.CustomerName,
+                Shipping = request.Shipping ?? customer.Shipping ?? Shipping.Self,
+                PaymentMethod = request.PaymentMethod ?? customer.PaymentMethod ?? PaymentMethod.Cash,
+                Number = _documentNumberGenerator.NextForInvoice(),
+                DeliveryAddress = request.DeliveryAddress,
+                Items = MapInvoiceItems(request)
+            };
+            invoice.Total = invoice.CalculateTotal();
+            return invoice;
+        }
+
+        private List<InvoiceItem> MapInvoiceItems(InvoiceCreate request)
+        {
+            var products = GetInvoiceProducts(request);
+            return request.Items.Join(products, x => x.ProductId, x => x.Id, (x, y) => new InvoiceItem
+            {
+                Price = x.Price,
+                Quantity = x.Quantity,
+                ProductId = x.ProductId,
+                ProductName = y.Name
+            }).ToList();
+        }
+
+        private IEnumerable<Product> GetInvoiceProducts(InvoiceCreate request)
+        {
+            var productIds = request.Items.Select(x => x.ProductId).ToList();
+            return _productRepository.Query().Where(x => productIds.Contains(x.Id)).ToList();
+        }
+
+        private Customer GetRequestCustomerOrDefault(InvoiceCreate request)
+        {
+            var customerId = request.CustomerId ?? Customer.DefaultCustomerId;
+            var customer = _customerRepository.Get(customerId, x => x.CustomerPrices);
+            if (customer == null)
+                throw new NotFoundException();
+            return customer;
         }
 
         public IEnumerable<Invoice> GetAll()
@@ -50,100 +109,48 @@ namespace FriMav.Application
             return _invoiceRepository.GetAll();
         }
 
-        public IEnumerable<UndeliveredInvoice> GetUndeliveredInvoices()
+        public Invoice Get(int id)
         {
-            return _invoiceRepository.GetUndeliveredInvoices();
+            return _invoiceRepository.Get(id, x => x.Person, x => x.Items);
         }
 
-        public Invoice Get(int invoiceId)
+        public Invoice GetDisplay(int id)
         {
-            return _invoiceRepository.FindBy(x => x.TransactionId == invoiceId);
+            return _invoiceRepository.Get(id, x => x.Person, x => x.Items);
         }
 
-        public void Update(Invoice invoice)
+        private void UpdateCustomer(Customer customer, Invoice invoice)
         {
-            _invoiceRepository.Update(invoice);
-            _invoiceRepository.DetectChanges();
-            _invoiceRepository.Save();
-        }
-
-        public Invoice GetDisplay(int invoiceId)
-        {
-            return _invoiceRepository.GetDisplay(invoiceId);
-        }
-
-        #region Private
-
-        private void UpdateCustomer(Invoice invoice)
-        {
-            var customer = _customerRepository.FindBy(c => c.PersonId == invoice.PersonId);
-
             customer.Shipping = invoice.Shipping;
-            customer.PaymentMethod = invoice.PaymentMethod;
-            AddTransactions(invoice, customer);
-            UpdateCustomerPrices(invoice);
-            _customerRepository.Update(customer);
+            UpdateCustomerPrices(customer, invoice);
         }
 
-        private void AddTransactions(Invoice invoice, Person customer)
+        private void UpdateCustomerPrices(Customer customer, Invoice invoice)
         {
-            var isPaid = invoice.PaymentMethod == PaymentMethod.Cash;
-            _transactionService.CreateWithoutSaving(invoice, !isPaid);
-
-            if (isPaid)
-            {
-                var payment = new Transaction()
-                {
-                    Date = invoice.Date,
-                    PersonId = invoice.PersonId,
-                    Total = invoice.Total,
-                    TransactionType = TransactionType.Payment
-                };
-                invoice.Payments.Add(new TransactionPayment()
-                {
-                    Amount = -invoice.Total,
-                    TargetTransaction = invoice
-                });
-                _transactionService.CreateWithoutSaving(payment, !isPaid);
-            }
-        }
-
-        private void UpdateCustomerPrices(Invoice invoice)
-        {
-            var productIds = invoice.Items.Select(it => it.ProductId);
-            var products = _productRepository.FindAllBy(p => productIds.Contains(p.ProductId));
-            var prices = _priceForCustomerRepository.FindAllBy(p => productIds.Contains(p.ProductId) && p.PersonId == invoice.PersonId);
-
-            PriceForCustomer custom;
-            Product product;
             foreach (var item in invoice.Items)
             {
-                custom = prices.FirstOrDefault(x => x.ProductId == item.ProductId);
-                product = products.FirstOrDefault(x => x.ProductId == item.ProductId);
+                var custom = customer.CustomerPrices.FirstOrDefault(x => x.ProductId == item.ProductId);
                 if (custom != null)
                 {
-                    if (product.Price == item.Price)
+                    if (item.Product.Price == item.Price)
                     {
-                        _priceForCustomerRepository.Delete(custom);
+                        _customerPriceRepository.Delete(custom);
                     }
                     else if (custom.Price != item.Price)
                     {
                         custom.Price = item.Price;
-                        _priceForCustomerRepository.Update(custom);
                     }
                 }
-                else if (product.Price != item.Price)
+                else if (item.Product.Price != item.Price)
                 {
-                    _priceForCustomerRepository.Create(new PriceForCustomer()
+                    _customerPriceRepository.Add(new CustomerPrice()
                     {
                         ProductId = item.ProductId,
                         Price = item.Price,
-                        PersonId = invoice.PersonId
+                        CustomerId = invoice.PersonId
                     });
                 }
             }
         }
-
-        #endregion
     }
 }

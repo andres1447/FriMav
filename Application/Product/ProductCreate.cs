@@ -12,19 +12,6 @@ namespace FriMav.Application
         public string Name { get; set; }
         public decimal Price { get; set; }
         public bool Active { get; set; }
-        public int? FamilyId { get; set; }
-
-        public Product ToDomain()
-        {
-            return new Product()
-            {
-                Code = this.Code,
-                Name = this.Name,
-                Price = this.Price,
-                FamilyId = this.FamilyId,
-                PriceDate = DateTime.Now,
-                Active = this.Active
-            };
-        }
+        public int? ProductTypeId { get; set; }
     }
 }

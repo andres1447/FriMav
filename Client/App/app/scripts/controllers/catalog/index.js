@@ -31,7 +31,7 @@ angular.module('client')
           description: 'Detalles',
           persistent: false,
           callback: function (e) {
-              $state.go('CatalogShow', { catalogId: $scope.catalogs[$scope.catalogIndex].catalogId });
+            $state.go('CatalogShow', { id: $scope.catalogs[$scope.catalogIndex].id });
               e.preventDefault();
           }
       })
@@ -40,7 +40,7 @@ angular.module('client')
           description: 'Editar lista de precios',
           persistent: false,
           callback: function (e) {
-              $state.go('CatalogUpdate', { catalogId: $scope.catalogs[$scope.catalogIndex].catalogId });
+            $state.go('CatalogUpdate', { id: $scope.catalogs[$scope.catalogIndex].id });
               e.preventDefault();
           }
       })
@@ -69,7 +69,7 @@ angular.module('client')
       
       $scope.delete = function (index) {
           ModalService.show({ title: 'Lista de precios', message: 'Desea borrar la lista de precios?' }).then(function (res) {
-              Catalog.delete({ catalogId: $scope.catalogs[index].catalogId }, function (res) {
+            Catalog.delete({ id: $scope.catalogs[index].id }, function (res) {
                   Notification.success('Lista de precios borrada correctamente.');
                   $state.reload();
               }, function (err) {

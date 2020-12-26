@@ -9,6 +9,6 @@ namespace FriMav.Application
     public class CatalogCreate
     {
         public string Name { get; set; }
-        public virtual ICollection<int> Products { get; set; }
+        public List<int> Products { get; set; }
     }
 }

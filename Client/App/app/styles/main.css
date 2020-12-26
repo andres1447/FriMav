@@ -9,29 +9,54 @@
   padding: 0.2em 0;
 }
 
+html, body {
+    height: 100%;
+}
+
 body {
   padding: 0;
 }
-
+header {
+  background-color: cornflowerblue;
+  color: whitesmoke;
+}
+header > h1, header > h2, header > h3 {
+    margin-top: 10px;
+}
+.layout {
+  height: 100%;
+  width: 100%;
+}
+.side-bar {
+  width: 180px;
+  height: 100%;
+  position: absolute;
+}
+.side-bar h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 40px;
+  padding-bottom: 19px;
+}
+.side-bar .navbar {
+  margin-bottom: 0;
+  height: 100%;
+}
+.side-bar .navbar-nav>li {
+  float: none !important;
+}
+.content {
+  margin-left: 180px;
+}
+.content > * {
+  padding: 20px 30px;
+}
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,
 .footer {
   padding-left: 15px;
   padding-right: 15px;
-}
-
-/* Custom page header */
-.header {
-  border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 10px;
-}
-/* Make the masthead heading the same height as the navigation */
-.header h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
-  padding-bottom: 19px;
 }
 
 /* Custom page footer */
@@ -62,7 +87,22 @@ body {
 .marketing p + h4 {
   margin-top: 28px;
 }
-
+.form-control, form-control-static {
+  height: 30px;
+  padding: 2px 6px;
+}
+.form-group {
+    margin-bottom: 5px !important;
+}
+.form-actions {
+  margin-top: 15px !important;
+}
+.text-success {
+    color: limegreen !important;
+}
+text-danger {
+    color: orangered !important;
+}
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
@@ -110,9 +150,12 @@ table {
     margin-top: 10px;
 }
 table > tbody > tr > td {
-    padding: 4px !important;
+    padding: 2px 10px !important;
     vertical-align: middle !important;
 }
-table > tbody > tr > td.number {
+  table > tbody > tr > td.number, table > tbody > tr > th.number {
     text-align: right;
+  }
+table .btn {
+    padding: 4px 8px !important;
 }

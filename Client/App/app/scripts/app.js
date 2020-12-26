@@ -1,5 +1,9 @@
 'use strict';
 
+$.validator.setDefaults({
+  errorPlacement: function (error, element) { }
+});
+
 function hasValue(s) {
     return angular.isDefined(s) && s != null && s != 0;
 }

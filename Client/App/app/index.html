@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="es-ar">
   <head>
     <meta charset="utf-8">
@@ -19,13 +19,13 @@
   </head>
   <body ng-app="client" ng-controller="MainCtrl" ng-cloak>
     <!--[if lte IE 8]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
     <!-- Add your site or application content here -->
-    <div class="header">
-      <div class="navbar navbar-default" role="navigation">
-        <div class="frimav-container">
+    <div class="layout">
+      <div class="clearfix"></div>
+      <div class="side-bar">
+        <div class="navbar navbar-default" role="navigation">
           <div class="navbar-header">
 
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
@@ -41,34 +41,35 @@
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
             <ul class="nav navbar-nav">
-                <li><a ui-sref="TicketCreate">Ticket</a></li>
-                <li><a ui-sref="InvoiceCreate">Factura</a></li>
-                <li><a ui-sref="DeliveryIndex">Envio</a></li>
-                <li><a ui-sref="CatalogIndex">Listas de precio</a></li>
-                <li uib-dropdown>
-                    <a uib-dropdown-toggle>Maestros <span class="caret"></span></a>
-                    <ul uib-dropdown-menu>
-                        <li><a ui-sref="ProductIndex">Productos</a></li>
-                        <li><a ui-sref="FamilyIndex">Familias</a></li>
-                        <li><a ui-sref="CustomerIndex">Clientes</a></li>
-                        <li><a ui-sref="EmployeeIndex">Empleados</a></li>
-                        <li><a ui-sref="ZoneIndex">Zonas</a></li>
-                    </ul>
-                </li>
-                <li><a ui-sref="PrintSettings">Configuracion</a></li>
+              <li><a ui-sref="TicketCreate">Ticket</a></li>
+              <li><a ui-sref="InvoiceCreate">Factura</a></li>
+              <li><a ui-sref="PaymentCreate">Pago</a></li>
+              <li><a ui-sref="DeliveryIndex">Envio</a></li>
+              <li uib-dropdown>
+                <a uib-dropdown-toggle>Administración <span class="caret"></span></a>
+                <ul uib-dropdown-menu>
+                  <li><a ui-sref="ProductIndex">Productos</a></li>
+                  <li><a ui-sref="FamilyIndex">Categorías</a></li>
+                  <li><a ui-sref="CatalogIndex">Listas de precio</a></li>
+                  <li class="divider"></li>
+                  <li><a ui-sref="CustomerIndex">Clientes</a></li>
+                  <li><a ui-sref="EmployeeIndex">Empleados</a></li>
+                  <li><a ui-sref="ZoneIndex">Zonas</a></li>
+                </ul>
+              </li>
+              <li><a ui-sref="PrintSettings">Configuracion</a></li>
             </ul>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="frimav-container">
-        <div ui-view=""></div>
+      <div class="content" ui-view="">
+      </div>
     </div>
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/jquery-validation/dist/jquery.validate.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
@@ -82,70 +83,71 @@
     <script src="bower_components/angular-ui-notification/dist/angular-ui-notification.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
-
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/catalog/create.js"></script>
-        <script src="scripts/controllers/catalog/index.js"></script>
-        <script src="scripts/controllers/catalog/show.js"></script>
-        <script src="scripts/controllers/customer/create.js"></script>
-        <script src="scripts/controllers/customer/index.js"></script>
-        <script src="scripts/controllers/customer/update.js"></script>
-        <script src="scripts/controllers/customer/show.js"></script>
-        <script src="scripts/controllers/delivery/create.js"></script>
-        <script src="scripts/controllers/delivery/index.js"></script>
-        <script src="scripts/controllers/delivery/show.js"></script>
-        <script src="scripts/controllers/employee/create.js"></script>
-        <script src="scripts/controllers/employee/index.js"></script>
-        <script src="scripts/controllers/employee/update.js"></script>
-        <script src="scripts/controllers/employee/show.js"></script>
-        <script src="scripts/controllers/family/create.js"></script>
-        <script src="scripts/controllers/family/index.js"></script>
-        <script src="scripts/controllers/family/show.js"></script>
-        <script src="scripts/controllers/family/update.js"></script>
-        <script src="scripts/controllers/invoice/ticket.js"></script>
-        <script src="scripts/controllers/invoice/invoice.js"></script>
-        <script src="scripts/controllers/invoice/show.js"></script>
-        <script src="scripts/controllers/product/create.js"></script>
-        <script src="scripts/controllers/product/index.js"></script>
-        <script src="scripts/controllers/product/update.js"></script>
-        <script src="scripts/controllers/payment/create.js"></script>
-        <script src="scripts/controllers/transaction/refund.js"></script>
-        <script src="scripts/controllers/settings/print.js"></script>
-        <script src="scripts/controllers/zone/create.js"></script>
-        <script src="scripts/controllers/zone/index.js"></script>
-        <script src="scripts/controllers/zone/show.js"></script>
-        <script src="scripts/controllers/zone/update.js"></script>
-        <script src="scripts/directives/autofocus.js"></script>
-        <script src="scripts/directives/keyprev.js"></script>
-        <script src="scripts/directives/keytab.js"></script>
-        <script src="scripts/directives/navigate.js"></script>
-        <script src="scripts/directives/selectonclick.js"></script>
-        <script src="scripts/routes/catalog.js"></script>
-        <script src="scripts/routes/customer.js"></script>
-        <script src="scripts/routes/delivery.js"></script>
-        <script src="scripts/routes/employee.js"></script>
-        <script src="scripts/routes/family.js"></script>
-        <script src="scripts/routes/invoice.js"></script>
-        <script src="scripts/routes/product.js"></script>
-        <script src="scripts/routes/payment.js"></script>
-        <script src="scripts/routes/settings.js"></script>
-        <script src="scripts/routes/transaction.js"></script>
-        <script src="scripts/routes/zone.js"></script>
-        <script src="scripts/services/delivery.js"></script>
-        <script src="scripts/services/catalog.js"></script>
-        <script src="scripts/services/customer.js"></script>
-        <script src="scripts/services/employee.js"></script>
-        <script src="scripts/services/family.js"></script>
-        <script src="scripts/services/healthcheck.js"></script>
-        <script src="scripts/services/invoice.js"></script>
-        <script src="scripts/services/product.js"></script>
-        <script src="scripts/services/payment.js"></script>
-        <script src="scripts/services/transaction.js"></script>
-        <script src="scripts/services/zone.js"></script>
-        <script src="scripts/services/config.js"></script>
-        <script src="scripts/services/confirm.js"></script>
-        <!-- endbuild -->
-</body>
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/catalog/create.js"></script>
+    <script src="scripts/controllers/catalog/index.js"></script>
+    <script src="scripts/controllers/catalog/show.js"></script>
+    <script src="scripts/controllers/customer/create.js"></script>
+    <script src="scripts/controllers/customer/index.js"></script>
+    <script src="scripts/controllers/customer/update.js"></script>
+    <script src="scripts/controllers/customer/show.js"></script>
+    <script src="scripts/controllers/delivery/create.js"></script>
+    <script src="scripts/controllers/delivery/index.js"></script>
+    <script src="scripts/controllers/delivery/show.js"></script>
+    <script src="scripts/controllers/employee/create.js"></script>
+    <script src="scripts/controllers/employee/index.js"></script>
+    <script src="scripts/controllers/employee/update.js"></script>
+    <script src="scripts/controllers/employee/show.js"></script>
+    <script src="scripts/controllers/family/create.js"></script>
+    <script src="scripts/controllers/family/index.js"></script>
+    <script src="scripts/controllers/family/show.js"></script>
+    <script src="scripts/controllers/family/update.js"></script>
+    <script src="scripts/controllers/invoice/ticket.js"></script>
+    <script src="scripts/controllers/invoice/invoice.js"></script>
+    <script src="scripts/controllers/invoice/show.js"></script>
+    <script src="scripts/controllers/product/create.js"></script>
+    <script src="scripts/controllers/product/index.js"></script>
+    <script src="scripts/controllers/product/update.js"></script>
+    <script src="scripts/controllers/payment/create.js"></script>
+    <script src="scripts/controllers/transaction/refund.js"></script>
+    <script src="scripts/controllers/settings/print.js"></script>
+    <script src="scripts/controllers/zone/create.js"></script>
+    <script src="scripts/controllers/zone/index.js"></script>
+    <script src="scripts/controllers/zone/show.js"></script>
+    <script src="scripts/controllers/zone/update.js"></script>
+    <script src="scripts/directives/autofocus.js"></script>
+    <script src="scripts/directives/clear-on-backspace.js"></script>
+    <script src="scripts/directives/keyprev.js"></script>
+    <script src="scripts/directives/keytab.js"></script>
+    <script src="scripts/directives/navigate.js"></script>
+    <script src="scripts/directives/selectonclick.js"></script>
+    <script src="scripts/directives/restrict-decimal.js"></script>
+    <script src="scripts/routes/catalog.js"></script>
+    <script src="scripts/routes/customer.js"></script>
+    <script src="scripts/routes/delivery.js"></script>
+    <script src="scripts/routes/employee.js"></script>
+    <script src="scripts/routes/family.js"></script>
+    <script src="scripts/routes/invoice.js"></script>
+    <script src="scripts/routes/product.js"></script>
+    <script src="scripts/routes/payment.js"></script>
+    <script src="scripts/routes/settings.js"></script>
+    <script src="scripts/routes/transaction.js"></script>
+    <script src="scripts/routes/zone.js"></script>
+    <script src="scripts/services/delivery.js"></script>
+    <script src="scripts/services/catalog.js"></script>
+    <script src="scripts/services/customer.js"></script>
+    <script src="scripts/services/employee.js"></script>
+    <script src="scripts/services/family.js"></script>
+    <script src="scripts/services/healthcheck.js"></script>
+    <script src="scripts/services/invoice.js"></script>
+    <script src="scripts/services/product.js"></script>
+    <script src="scripts/services/payment.js"></script>
+    <script src="scripts/services/transaction.js"></script>
+    <script src="scripts/services/zone.js"></script>
+    <script src="scripts/services/config.js"></script>
+    <script src="scripts/services/confirm.js"></script>
+    <!-- endbuild -->
+  </body>
 </html>

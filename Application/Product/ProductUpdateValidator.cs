@@ -6,7 +6,7 @@ using System.Web;
 
 namespace FriMav.Application
 {
-    public class ProductUpdateValidator : AbstractValidator<ProductUpdate>
+    /*public class ProductUpdateValidator : AbstractValidator<ProductUpdate>
     {
         private IContainerContext _container;
 
@@ -28,5 +28,5 @@ namespace FriMav.Application
             var saved = service.Get(productId);
             return saved.Code == code || !service.ExistsActiveCode(code);
         }
-    }
+    }*/
 }

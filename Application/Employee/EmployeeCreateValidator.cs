@@ -6,7 +6,7 @@ using System.Web;
 
 namespace FriMav.Application
 {
-    public class EmployeeCreateValidator : AbstractValidator<EmployeeCreate>
+    /*public class EmployeeCreateValidator : AbstractValidator<EmployeeCreate>
     {
         private IContainerContext _container;
 
@@ -26,5 +26,5 @@ namespace FriMav.Application
         {
             return !_container.Resolve<IEmployeeService>().Exists(code);
         }
-    }
+    }*/
 }

@@ -1,24 +1,24 @@
 ﻿using FriMav.Domain;
-using FriMav.Domain.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FriMav.Domain.Proyections;
+using FriMav.Domain.Entities;
 
 namespace FriMav.Application
 {
     public class DeliveryService : IDeliveryService
     {
-        private IDeliveryRepository _deliveryRepository;
-        private IInvoiceRepository _invoiceRepository;
-        private INumberSequenceService _numberSequenceService;
+        private IRepository<Delivery> _deliveryRepository;
+        private IRepository<Invoice> _invoiceRepository;
+        private IDocumentNumberGenerator _numberSequenceService;
 
         public DeliveryService(
-            IDeliveryRepository deliveryRepository,
-            IInvoiceRepository invoiceReplository,
-            INumberSequenceService numberSequenceService)
+            IRepository<Delivery> deliveryRepository,
+            IRepository<Invoice> invoiceReplository,
+            IDocumentNumberGenerator numberSequenceService)
         {
             _deliveryRepository = deliveryRepository;
             _invoiceRepository = invoiceReplository;
@@ -27,29 +27,24 @@ namespace FriMav.Application
 
         public void Create(DeliveryCreate command)
         {
-            using (var scope = new System.Transactions.TransactionScope())
+            var invoices = _invoiceRepository.Query().Where(x => command.Invoices.Contains(x.Id)).ToList();
+            var delivery = new Delivery
             {
-                var delivery = new Delivery
-                {
-                    Date = command.Date,
-                    Number = _numberSequenceService.NextOrInit("Delivery"),
-                    PersonId = command.EmployeeId,
-                    Invoices = command.Invoices.Select(x => new Invoice { TransactionId = x }).ToList()
-                };
-                foreach (var invoice in delivery.Invoices)
-                {
-                    _invoiceRepository.Attach(invoice);
-                }
-                _deliveryRepository.Create(delivery);
-                _deliveryRepository.DetectChanges();
-                _deliveryRepository.Save();
-                scope.Complete();
-            }
+                Date = command.Date,
+                Number = _numberSequenceService.NextForDelivery(),
+                EmployeeId = command.EmployeeId,
+                Invoices = invoices
+            };
+            _deliveryRepository.Add(delivery);
         }
 
-        public Delivery Get(int deliveryId)
+        public Delivery Get(int id)
         {
-            return _deliveryRepository.GetWithInvoices(deliveryId);
+            var delivery = _deliveryRepository.Get(id, x => x.Invoices);
+            if (delivery == null)
+                throw new NotFoundException();
+
+            return delivery;
         }
 
         public IEnumerable<Delivery> GetAll()
@@ -57,16 +52,40 @@ namespace FriMav.Application
             return _deliveryRepository.GetAll();
         }
 
-        public void Delete(Delivery delivery)
+        public void Delete(int id)
         {
-            delivery.DeleteDate = DateTime.UtcNow;
-            _deliveryRepository.Update(delivery);
-            _deliveryRepository.Save();
+            var delivery = Get(id);
+            delivery.Delete();
         }
 
-        public IEnumerable<DeliveryListing> GetListing()
+        public List<DeliveryListing> GetListing()
         {
-            return _deliveryRepository.GetListing();
+            return _deliveryRepository
+                .Query(x => x.Invoices, x => x.Employee)
+                .Select(x => new DeliveryListing
+                {
+                    Id = x.Id,
+                    Date = x.Date,
+                    Employee = x.Employee.Name,
+                    Number = x.Number,
+                    Invoices = x.Invoices.Count()
+                }).ToList();
+        }
+
+        public IEnumerable<UndeliveredInvoice> GetUndeliveredInvoices()
+        {
+            var deliveries = _deliveryRepository.Query();
+
+            return _invoiceRepository.Query().Where(x => !deliveries.Any(d => d.DeleteDate.HasValue && d.Invoices.Contains(x)))
+            .Select(x => new UndeliveredInvoice
+            {
+                Id = x.Id,
+                Date = x.Date,
+                Number = x.Number,
+                PersonCode = x.Person.Code,
+                PersonId = x.PersonId,
+                PersonName = x.Person.Name
+            }).ToList();
         }
     }
 }

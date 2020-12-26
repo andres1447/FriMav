@@ -1,198 +1,92 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using FriMav.Domain.Entities;
 using FriMav.Domain;
-using FriMav.Domain.Repositories;
+using System.Linq;
 using FriMav.Domain.Proyections;
 
 namespace FriMav.Application
 {
     public class TransactionService : ITransactionService
     {
-        private INumberSequenceService _numberSequenceService;
-        private ITransactionRepository _transactionRepository;
-        private IPersonRepository _customerRepository;
-        private ITransactionPaymentRepository _transactionPaymentRepository;
+        private IDocumentNumberGenerator _numberSequenceService;
+        private IRepository<TransactionDocument> _transactionRepository;
+        private IRepository<Customer> _customerRepository;
+        private IRepository<Payment> _paymentRepository;
 
         public TransactionService(
-            INumberSequenceService numberSequenceService,
-            ITransactionRepository transactionRepository,
-            ITransactionPaymentRepository transactionPaymentRepository,
-            IPersonRepository customerRepository)
+            IDocumentNumberGenerator numberSequenceService,
+            IRepository<TransactionDocument> transactionRepository,
+            IRepository<Customer> customerRepository,
+            IRepository<Payment> paymentRepository)
         {
             _numberSequenceService = numberSequenceService;
             _transactionRepository = transactionRepository;
-            _transactionPaymentRepository = transactionPaymentRepository;
             _customerRepository = customerRepository;
+            _paymentRepository = paymentRepository;
         }
 
-        public IEnumerable<Transaction> GetAll()
+        public IEnumerable<TransactionDocument> GetAll()
         {
             return _transactionRepository.GetAll();
         }
 
-        public Transaction Get(int transactionId)
+        public TransactionDocument Get(int id)
         {
-            return _transactionRepository.GetWithReference(x => x.TransactionId == transactionId);
+            return _transactionRepository.Get(id);
         }
 
-        public void Create(CreatePayment payment)
+        public void Create(CreatePayment request)
         {
-            Create(new Transaction()
+            var customer = _customerRepository.Get(request.PersonId);
+            if (customer == null)
+                throw new NotFoundException();
+
+            var number = _numberSequenceService.NextForPayment();
+            var payment = new Payment()
             {
-                Date = payment.Date,
-                Total = -payment.Total,
-                TransactionType = TransactionType.Payment,
-                PersonId = payment.PersonId,
-                Description = payment.Description
-            });
+                Total = -request.Total,
+                PersonId = request.PersonId,
+                Person = customer,
+                Description = request.Description,
+                Number = number
+            };
+            customer.Accept(payment);
+            _paymentRepository.Add(payment);
         }
 
-        public void CreateWithoutSaving(Transaction transaction, bool managePayments)
+        public IEnumerable<TransactionEntry> GetAllByPersonId(int personId, int offset = 0, int count = 20)
         {
-            transaction.Number = _numberSequenceService.NextOrInit(transaction.TransactionType.ToString());
-            transaction.FiscalYear = transaction.Date.Year;
-            _transactionRepository.Create(transaction);
-            AdjustCustomerBalance(transaction);
-            if (managePayments)
-            {
-                ManageTransactionPayments(transaction);
-            }
-        }
-
-        public void Create(Transaction transaction)
-        {
-            using (var scope = new System.Transactions.TransactionScope())
-            {
-                CreateWithoutSaving(transaction, true);
-                _transactionRepository.Save();
-                scope.Complete();
-            }
-        }
-
-        public IEnumerable<TransactionEntry> FindAllWithReferenceByPersonId(int personId)
-        {
-            return _transactionRepository.FindAllWithReferenceByPersonId(personId);
-        }
-
-        public void Cancel(CancelTransaction cancelation)
-        {
-            using (var scope = new System.Transactions.TransactionScope())
-            {
-                var tran = _transactionRepository.FindBy(x => x.TransactionId == cancelation.TransactionId);
-                CreateWithoutSaving(new Transaction()
+            return _transactionRepository.Query()
+                .Where(x => x.PersonId == personId)
+                .OrderByDescending(x => x.Date)
+                .Skip(offset * count)
+                .Take(count)
+                .Select(x => new TransactionEntry
                 {
-                    Date = DateTime.UtcNow,
-                    Description = cancelation.Description,
-                    Total = -tran.Total,
-                    TransactionType = GetInverseTransactionType(tran.TransactionType),
-                    PersonId = tran.PersonId,
-                    ReferenceId = tran.TransactionId
-                }, true);
-                tran.IsRefunded = true;
-                _transactionRepository.Update(tran);
-                _transactionRepository.Save();
-                scope.Complete();
-            }
-        }
-
-        public bool IsReferenced(int transactionId)
-        {
-            return _transactionRepository.IsReferenced(transactionId);
-        }
-
-        #region Private
-
-        protected TransactionType GetInverseTransactionType(TransactionType type)
-        {
-            switch (type)
-            {
-                case TransactionType.Invoice: return TransactionType.CreditNote;
-                case TransactionType.Payment: return TransactionType.DebitNote;
-                case TransactionType.CreditNote: return TransactionType.DebitNote;
-                case TransactionType.DebitNote: return TransactionType.CreditNote;
-                default: return TransactionType.Adjustment;
-            }
-        }
-
-        protected void ManageTransactionPayments(Transaction transaction)
-        {
-            if (transaction.Total > 0)
-            {
-                PayUnpaidTransactions(transaction);
-            }
-            else if (transaction.Total < 0)
-            {
-                PayTransactionWithSurplus(transaction);
-            }
-        }
-
-        protected void PayUnpaidTransactions(Transaction transaction)
-        {
-            decimal amount = transaction.Total;
-            decimal remaining;
-            foreach (var unpaidTransaction in _transactionRepository.GetUnpaidTransactionsByPersonId(transaction.PersonId))
-            {
-                remaining = unpaidTransaction.Remaining();
-                if (amount > remaining)
-                {
-                    amount -= remaining;
-                    _transactionPaymentRepository.Create(new TransactionPayment
+                    Id = x.Id,
+                    Date = x.Date,
+                    PersonId = x.PersonId,
+                    TransactionType = x is Invoice ? TransactionDocumentType.Invoice :
+                                      x is Payment ? TransactionDocumentType.Payment :
+                                      x is DebitNote ? TransactionDocumentType.DebitNote :
+                                      TransactionDocumentType.CreditNote,
+                    Number = x.Number,
+                    Description = x.Description,
+                    RefundDocument = x.IsRefunded ? new TransactionEntryReference
                     {
-                        Amount = remaining,
-                        TargetTransactionId = unpaidTransaction.TransactionId,
-                        SourceTransaction = transaction
-                    });
-                }
-                else
-                {
-                    _transactionPaymentRepository.Create(new TransactionPayment
-                    {
-                        Amount = amount,
-                        TargetTransactionId = unpaidTransaction.TransactionId,
-                        SourceTransaction = transaction
-                    });
-                    break;
-                }
-            }
+                        Number = x.RefundDocument.Number,
+                        Id = x.RefundDocument.Id,
+                        TransactionType = x.RefundDocument is Invoice ? TransactionDocumentType.Invoice :
+                                          x.RefundDocument is Payment ? TransactionDocumentType.Payment :
+                                          x.RefundDocument is DebitNote ? TransactionDocumentType.DebitNote :
+                                          TransactionDocumentType.CreditNote
+                    } : null,
+                    Total = x.Total,
+                    Balance = x.Balance
+                })
+                .OrderBy(x => x.Date)
+                .ToList();
         }
-
-        protected void PayTransactionWithSurplus(Transaction transaction)
-        {
-            decimal amount = -transaction.Total;
-            decimal surplus;
-            foreach (var surplusTransaction in _transactionRepository.GetTransactionsWithSurplusByPersonId(transaction.PersonId))
-            {
-                surplus = surplusTransaction.Surplus();
-                if (amount > surplus)
-                {
-                    amount -= surplus;
-                    transaction.Payments.Add(new TransactionPayment
-                    {
-                        Amount = surplus,
-                        SourceTransactionId = surplusTransaction.TransactionId
-                    });
-                }
-                else
-                {
-                    transaction.Payments.Add(new TransactionPayment
-                    {
-                        Amount = amount,
-                        SourceTransactionId = surplusTransaction.TransactionId
-                    });
-                    break;
-                }
-            }
-        }
-
-        protected void AdjustCustomerBalance(Transaction transaction)
-        {
-            Person customer = _customerRepository.FindBy(x => x.PersonId == transaction.PersonId);
-            customer.Balance += transaction.Total;
-            transaction.Balance = customer.Balance;
-            _customerRepository.Update(customer);
-        }
-
-        #endregion
     }
 }

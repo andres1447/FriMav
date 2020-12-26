@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('client')
-  .controller('ProductUpdateCtrl', function ($scope, $state, $timeout, hotkeys, Notification, Product, productFamilies, product) {
-      $scope.productFamilies = productFamilies;
+  .controller('ProductUpdateCtrl', function ($scope, $state, $timeout, hotkeys, Notification, Product, productTypes, product) {
+      $scope.productTypes = productTypes;
       $scope.product = product;
 
       hotkeys.bindTo($scope).add({
@@ -33,8 +33,8 @@ angular.module('client')
       $scope.update = function (product) {
           if (!$scope.sending) {
               $scope.sending = true;
-              if (hasValue(product.family))
-                  product.familyId = product.family.familyId;
+              if (hasValue(product.type))
+                product.id = product.type.id;
               Product.update(product, function (res) {
                   $scope.sending = false;
                   Notification.success('Producto editado correctamente.');
@@ -46,7 +46,12 @@ angular.module('client')
           }
       };
 
-      $scope.setFamilyId = function (product) {
-          product.familyId = product.family.familyId;
+      $scope.setProductTypeId = function (product) {
+        product.productTypeId = product.type.id;
       };
+
+      $scope.clearProductType = function () {
+        product.productTypeId = null;
+        product.type = null;
+      }
   });

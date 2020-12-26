@@ -31,7 +31,7 @@ angular.module('client')
           description: 'Detalles',
           persistent: false,
           callback: function (e) {
-              $state.go('DeliveryShow', { deliveryId: $scope.deliveries[$scope.deliveryIndex].deliveryId });
+            $state.go('DeliveryShow', { id: $scope.deliveries[$scope.deliveryIndex].id });
               e.preventDefault();
           }
       })
@@ -40,7 +40,7 @@ angular.module('client')
           description: 'Editar envio',
           persistent: false,
           callback: function (e) {
-              $state.go('DeliveryUpdate', { deliveryId: $scope.deliveries[$scope.deliveryIndex].deliveryId });
+            $state.go('DeliveryUpdate', { id: $scope.deliveries[$scope.deliveryIndex].id });
               e.preventDefault();
           }
       })
@@ -69,7 +69,7 @@ angular.module('client')
       
       $scope.delete = function (index) {
           ModalService.show({ title: 'Lista de precios', message: 'Desea borrar el envio?' }).then(function (res) {
-              Delivery.delete({ deliveryId: $scope.deliveries[index].deliveryId }, function (res) {
+            Delivery.delete({ id: $scope.deliveries[index].id }, function (res) {
                   Notification.success('Envio borrado correctamente.');
                   $state.reload();
               }, function (err) {

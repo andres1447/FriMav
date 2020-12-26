@@ -1,69 +1,82 @@
 <div class="row">
-    <a class="btn btn-default" href="" ng-click="reload()"><i class="glyphicon glyphicon-refresh"></i><span class="key-shortcut">ESC</span></a>
+    <a class="btn btn-default" href="" ng-click="reload()"><i class="glyphicon glyphicon-refresh"></i> <span class="key-shortcut">ESC</span></a>
 </div>
 <form class="form" ng-submit="submit(invoice)">
-    <div class="row">
-        <h4>Datos</h4>
-        <div class="form-group col-md-2">
-            <label for="invoice_date">Fecha</label>
-            <input id="invoice_date"type="date" class="form-control" ng-model="invoice.date" ng-model-options="{timezone: 'UTC'}" ng-required="true" ae-autofocus="InitInvoice" ae-key-tab="[13]">
-        </div>
-        <div class="form-group col-md-5">
-            <label for="invoice_customer">Cliente</label>
-            <input id="invoice_customer" type="text" ng-model="invoice.customer" class="form-control" ae-key-tab="[13, 9]" autocomplete="off"
-                   uib-typeahead="customer as (customer.code + ' - ' + customer.name) for customer in getMatchingCustomer($viewValue) | limitTo:8"
-                   typeahead-select-on-blur="true" typeahead-on-select="setCustomer(invoice)" ae-select-on-click=""
-                   typeahead-focus-on-select="false" typeahead-editable="false" ae-key-prev="[37, 38]">
-        </div>
-        <div class="form-group col-md-5">
-            <label for="invoice_address">Direccion</label>
-            <input id="invoice_address" type="text" class="form-control" ae-key-tab="[13, 9]" ng-model="invoice.deliveryAddress" ae-key-prev="[37, 38]" />
-        </div>
-        <div class="form-group col-md-2">
-            <label for="invoice_shipping">Forma de envio</label>
-            <input id="invoice_shipping" type="text" class="form-control" ae-key-tab="[13, 9]" ng-model="invoice.shipping" uib-typeahead="option.id as (option.id + ' - ' + option.name) for option in shippingOptions"
-                   typeahead-select-on-blur="true" ae-select-on-click="" typeahead-input-formatter="shippingView($model)"
-                   typeahead-focus-on-select="false" typeahead-editable="false" autocomplete="off" ae-key-prev="[37, 38]"/>
-        </div>
-        <div class="form-group col-md-2">
-            <label for="invoice_payment">Forma de pago</label>
-            <input id="invoice_payment" class="form-control" ae-key-tab="[13, 9]" ng-model="invoice.paymentMethod" uib-typeahead="option.id as (option.id + ' - ' + option.name) for option in paymentMethodOptions"
-                   typeahead-select-on-blur="true" ae-select-on-click="" typeahead-input-formatter="paymentView($model)"
-                   typeahead-focus-on-select="false" typeahead-editable="false" autocomplete="off" ae-key-prev="[37, 38]"/>
-        </div>
+  <div class="row">
+    <h4>Factura</h4>
+    <div class="form-group col-md-4">
+      <label for="invoice_customer">Cliente</label>
+      <input id="invoice_customer" type="text" ng-model="invoice.customer" class="form-control" ae-key-tab="[13, 9]" autocomplete="off"
+             uib-typeahead="customer as (customer.code + ' - ' + customer.name) for customer in getMatchingCustomer($viewValue) | limitTo:8"
+             typeahead-select-on-blur="true" typeahead-on-select="setCustomer(invoice)" ae-select-on-click=""
+             typeahead-focus-on-select="false" typeahead-editable="false" ae-key-prev="[37, 38]"
+             clear-on-backspace="clearCustomer()" ae-tab-validator="invoice.customer != null" ae-autofocus="InitInvoice">
     </div>
+    <div class="form-group col-md-4">
+      <label for="invoice_customer_name">Nombre</label>
+      <input id="invoice_customer_name" type="text" class="form-control" ae-key-tab="[13, 9]" ng-model="invoice.customerName" ae-key-prev="[37, 38]" />
+    </div>
+    <div class="form-group col-md-4">
+      <label for="invoice_address">Direccion</label>
+      <input id="invoice_address" type="text" class="form-control" ae-key-tab="[13, 9]" ng-model="invoice.deliveryAddress" ae-key-prev="[37, 38]" />
+    </div>
+    <div class="form-group col-md-2">
+      <label for="invoice_shipping">Forma de envio</label>
+      <input id="invoice_shipping" type="text" class="form-control" ae-key-tab="[13, 9]" ng-model="invoice.shipping"
+             uib-typeahead="option.id as (option.id + ' - ' + option.name) for option in shippingOptions"
+             typeahead-select-on-blur="true" ae-select-on-click="" typeahead-input-formatter="shippingView($model)"
+             typeahead-focus-on-select="false" typeahead-editable="false" autocomplete="off" ae-key-prev="[37, 38]"
+             clear-on-backspace="invoice.shipping = null" />
+    </div>
+    <div class="form-group col-md-2">
+      <label for="invoice_payment">Forma de pago</label>
+      <input id="invoice_payment" class="form-control" ae-key-tab="[13, 9]" ng-model="invoice.paymentMethod"
+             uib-typeahead="option.id as (option.id + ' - ' + option.name) for option in paymentMethodOptions"
+             typeahead-select-on-blur="true" ae-select-on-click="" typeahead-input-formatter="paymentView($model)"
+             typeahead-focus-on-select="false" typeahead-editable="false" autocomplete="off" ae-key-prev="[37, 38]"
+             clear-on-backspace="invoice.paymentMethod = null" />
+    </div>
+  </div>
     <div class="row">
         <h4>Detalle</h4>
         <table class="table table-bordered">
             <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio</th>
-                    <th>Dif. precio</th>
-                    <th>Importe</th>
-                </tr>
+              <tr>
+                <th class="col-md-1"></th>
+                <th class="col-md-3">Producto</th>
+                <th class="col-md-2">Cantidad</th>
+                <th class="col-md-2">Precio</th>
+                <th class="col-md-2">Dif. precio</th>
+                <th class="col-md-2">Importe</th>
+              </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="it in invoice.items" ae-navigate>
-                    <td class="col-md-4">
-                        <input type="text" ng-model="it.product" class="form-control" ae-key-tab="[13, 9]" ae-tab-validator="lineProductValidation($index)"
-                               uib-typeahead="product as (product.code + ' - ' + product.name) for product in getMatchingProduct($viewValue) | limitTo:8"
-                               typeahead-select-on-blur="true" typeahead-on-select="setListPrice($index)" ae-select-on-click=""
-                               typeahead-focus-on-select="false" typeahead-editable="false">
-                    </td>
-                    <td class="col-md-2"><input type="text" class="form-control" ng-model="it.quantity" ae-key-tab="[13, 9]" ae-tab-validator="validateQuantity($index)"></td>
-                    <td class="col-md-2"><input type="text" class="form-control" step="0.01" ng-model="it.price" ae-key-tab="[13, 9]" ae-before-tab="AddItem($index)"></td>
-                    <td class="col-md-2">{{it.price - it.basePrice | number:2}}</td>
-                    <td class="col-md-2">{{it.quantity*it.price}}</td>
-                </tr>
-                <tr>
-                    <td>{{totals.count}}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>{{totals.subtotal | number:2}}</td>
-                </tr>
+              <tr ng-repeat="it in invoice.items" ae-navigate>
+                <td>
+                  <button ng-if="$index < invoice.items.length - 1" type="button" class="btn btn-danger" ng-click="deleteItem($index)">
+                    <i class="glyphicon glyphicon-trash"></i>
+                    <span class="key-shortcut">supr</span>
+                  </button>
+                </td>
+                <td>
+                  <input type="text" ng-model="it.product" class="form-control" ae-key-tab="[13, 9]" ae-tab-validator="hasProduct(it)"
+                         uib-typeahead="product as (product.code + ' - ' + product.name) for product in getMatchingProduct($viewValue) | limitTo:8"
+                         typeahead-select-on-blur="true" typeahead-on-select="setListPrice(it)" ae-select-on-click
+                         typeahead-focus-on-select="false" typeahead-editable="false" clear-on-backspace on-clear="clearProduct(it)">
+                </td>
+                <td><input type="text" class="form-control" ng-model="it.quantity" ae-key-tab="[13, 9]" ae-tab-validator="hasQuantity(it)" restrict-decimal></td>
+                <td><input type="text" class="form-control" step="0.01" ng-model="it.price" ae-key-tab="[13, 9]" ae-before-tab="AddItem(it)" restrict-decimal></td>
+                <td>${{it.price - it.basePrice | number:2}}</td>
+                <td>${{it.quantity*it.price | number:2}}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>{{totals.count}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>${{totals.subtotal | number:2}}</td>
+              </tr>
             </tbody>
         </table>
     </div>

@@ -189,25 +189,49 @@
     <Compile Include="Utils\CefHelper.cs" />
     <Compile Include="Utils\ClientConfig.cs" />
     <Compile Include="Utils\SelectItem.cs" />
+    <Content Include="App\app\scripts\controllers\payment\create.js" />
     <Content Include="App\app\scripts\controllers\zone\create.js" />
     <Content Include="App\app\scripts\controllers\zone\index.js" />
     <Content Include="App\app\scripts\controllers\zone\show.js" />
     <Content Include="App\app\scripts\controllers\zone\update.js" />
     <Content Include="App\app\scripts\controllers\family\show.js" />
+    <Content Include="App\app\scripts\directives\clear-on-backspace.js" />
     <Content Include="App\app\scripts\directives\keyprev.js" />
+    <Content Include="App\app\scripts\directives\restrict-decimal.js" />
     <Content Include="App\app\scripts\routes\zone.js" />
     <Content Include="App\app\scripts\services\zone.js" />
     <Content Include="App\app\scripts\services\healthcheck.js" />
     <Content Include="App\app\views\delivery\show.html" />
+    <Content Include="App\app\views\payment\create.html" />
     <Content Include="App\app\views\zone\create.html" />
     <Content Include="App\app\views\zone\index.html" />
     <Content Include="App\app\views\zone\show.html" />
     <Content Include="App\app\views\zone\update.html" />
     <Content Include="App\app\views\zone\_form.html" />
     <Content Include="App\app\views\family\show.html" />
-    <Content Include="App\dist\scripts\scripts.5614ed04.js">
+    <Content Include="App\dist\scripts\scripts.4be9b9f8.js" />
+    <Content Include="App\dist\scripts\vendor.90d71e31.js" />
+    <Content Include="App\dist\styles\main.d92349e0.css" />
+    <Content Include="App\dist\styles\vendor.16c1ee70.css" />
+    <Content Include="bin\x86\Debug\App\dist\404.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="bin\x86\Debug\App\dist\favicon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\x86\Debug\App\dist\images\yeoman.c582c4d1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\x86\Debug\App\dist\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\x86\Debug\App\dist\robots.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\x86\Debug\App\dist\scripts\scripts.4be9b9f8.js" />
+    <Content Include="bin\x86\Debug\App\dist\scripts\vendor.90d71e31.js" />
+    <Content Include="bin\x86\Debug\App\dist\styles\main.d92349e0.css" />
+    <Content Include="bin\x86\Debug\App\dist\styles\vendor.16c1ee70.css" />
     <Content Include="Templates\EscpInvoice.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -255,6 +279,21 @@
     <None Include="App\dist\fonts\glyphicons-halflings-regular.woff2">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="bin\x86\Debug\App\dist\fonts\glyphicons-halflings-regular.eot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="bin\x86\Debug\App\dist\fonts\glyphicons-halflings-regular.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="bin\x86\Debug\App\dist\fonts\glyphicons-halflings-regular.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="bin\x86\Debug\App\dist\fonts\glyphicons-halflings-regular.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="bin\x86\Debug\App\dist\fonts\glyphicons-halflings-regular.woff2">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -296,7 +335,7 @@
     <Content Include="App\app\scripts\controllers\family\index.js" />
     <Content Include="App\app\scripts\controllers\family\update.js" />
     <Content Include="App\app\scripts\controllers\payment\cancel.js" />
-    <Content Include="App\app\scripts\controllers\payment\create.js" />
+    <Content Include="App\app\scripts\controllers\payment\customer-payment-create.js" />
     <Content Include="App\app\scripts\controllers\product\create.js" />
     <Content Include="App\app\scripts\controllers\product\index.js" />
     <Content Include="App\app\scripts\controllers\product\update.js" />
@@ -353,7 +392,7 @@
     <Content Include="App\app\views\family\_form.html" />
     <Content Include="App\app\views\partials\modal.html" />
     <Content Include="App\app\views\payment\cancel.html" />
-    <Content Include="App\app\views\payment\create.html" />
+    <Content Include="App\app\views\payment\customer-payment-create.html" />
     <Content Include="App\app\views\payment\_form.html" />
     <Content Include="App\app\views\product\create.html" />
     <Content Include="App\app\views\product\index.html" />
@@ -376,15 +415,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App\dist\robots.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App\dist\scripts\vendor.bf4ad30b.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App\dist\styles\main.2cdc908c.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App\dist\styles\vendor.7b778be6.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

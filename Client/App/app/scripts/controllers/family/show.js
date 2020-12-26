@@ -49,7 +49,7 @@ angular.module('client')
 
       $scope.delete = function () {
           ModalService.show({ title: 'Familia de productos', message: 'Desea borrar la familia de productos?' }).then(function (res) {
-              ProductFamily.delete({ familyId: $scope.family.familyId }, function (res) {
+              ProductFamily.delete({ id: $scope.family.id }, function (res) {
                   Notification.success('Familia de productos borrada correctamente.');
                   $state.go('FamilyIndex');
               }, function (err) {

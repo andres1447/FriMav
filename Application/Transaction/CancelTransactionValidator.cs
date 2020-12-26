@@ -6,7 +6,7 @@ using System.Web;
 
 namespace FriMav.Application
 {
-    public class CancelTransactionValidator : AbstractValidator<CancelTransaction>
+    /*public class CancelTransactionValidator : AbstractValidator<CancelTransaction>
     {
         private IContainerContext _container;
 
@@ -21,5 +21,5 @@ namespace FriMav.Application
         {
             return !_container.Resolve<ITransactionService>().IsReferenced(transactionId);
         }
-    }
+    }*/
 }

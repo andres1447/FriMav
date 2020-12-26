@@ -68,12 +68,14 @@
     <Compile Include="HealthCheck\IHealthCheckService.cs" />
     <Compile Include="IContainerContext.cs" />
     <Compile Include="Invoice\InvoiceCreate.cs" />
-    <Compile Include="NumberSequence\INumberSequenceService.cs" />
-    <Compile Include="NumberSequence\NumberSequenceService.cs" />
+    <Compile Include="Invoice\InvoiceResult.cs" />
+    <Compile Include="NotFoundException.cs" />
+    <Compile Include="Product\PriceListItem.cs" />
     <Compile Include="Product\ProductCreate.cs" />
     <Compile Include="Product\ProductCreateValidator.cs" />
-    <Compile Include="Product\ProductFamilyService.cs" />
-    <Compile Include="Product\IProductFamilyService.cs" />
+    <Compile Include="Product\ProductResponse.cs" />
+    <Compile Include="Product\ProductTypeService.cs" />
+    <Compile Include="Product\IProductTypeService.cs" />
     <Compile Include="Customer\ICustomerService.cs" />
     <Compile Include="Invoice\IInvoiceService.cs" />
     <Compile Include="Customer\CustomerService.cs" />
@@ -100,6 +102,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

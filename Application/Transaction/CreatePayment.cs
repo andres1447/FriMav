@@ -8,7 +8,6 @@ namespace FriMav.Application
 {
     public class CreatePayment
     {
-        public DateTime Date { get; set; }
         public decimal Total { get; set; }
         public string Description { get; set; }
         public int PersonId { get; set; }

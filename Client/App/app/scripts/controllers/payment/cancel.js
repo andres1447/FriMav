@@ -4,7 +4,7 @@ angular.module('client')
   .controller('PaymentCancelCtrl', function ($scope, $state, $timeout, hotkeys, Notification, Transaction, transaction) {
       $scope.cancelation = {
           date: new Date(),
-          transactionId: transaction.transactionId
+        id: transaction.id
       };
 
       hotkeys.bindTo($scope)
@@ -22,7 +22,7 @@ angular.module('client')
           allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
           persistent: false,
           callback: function (e) {
-              $state.go('CustomerShow', { personId: transaction.personId });
+            $state.go('CustomerShow', { id: transaction.personId });
               e.preventDefault();
           }
       });
@@ -39,7 +39,7 @@ angular.module('client')
               Transaction.cancel(cancelation, function (res) {
                   $scope.sending = false;
                   Notification.success('Pago cancelado correctamente.');
-                  $state.go('CustomerShow', { personId: transaction.personId });
+                $state.go('CustomerShow', { id: transaction.personId });
               }, function (err) {
                   $scope.sending = false;
                   Notification.error(err.data);

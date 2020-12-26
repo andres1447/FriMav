@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('client')
-  .controller('ProductCreateCtrl', function ($scope, $state, $timeout, hotkeys, Notification, Product, productFamilies) {
-      $scope.productFamilies = productFamilies;
+  .controller('ProductCreateCtrl', function ($scope, $state, $timeout, hotkeys, Notification, Product, productTypes) {
+      $scope.productTypes = productTypes;
 
       hotkeys.bindTo($scope).add({
           combo: 'f5',
@@ -44,7 +44,12 @@ angular.module('client')
           }
       };
 
-      $scope.setFamilyId = function (product) {
-          product.familyId = product.family.familyId;
-      };
+    $scope.setProductTypeId = function (product) {
+        product.productTypeId = product.type.id;
+    };
+
+    $scope.clearProductType = function () {
+      $scope.product.productTypeId = null;
+      $scope.product.type = null;
+    }
   });

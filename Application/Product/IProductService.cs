@@ -1,22 +1,25 @@
 ﻿using FriMav.Domain;
-using FriMav.Domain.Proyections;
-using FriMav.Domain.Repositories;
+using FriMav.Domain.Entities;
 using System.Collections.Generic;
 
 namespace FriMav.Application
 {
     public interface IProductService
     {
-        Product Get(int id);
-        IEnumerable<Product> FindAllByIds(IEnumerable<int> ids);
-        IEnumerable<Product> GetAllActive();
-        IEnumerable<Product> GetAllActiveInFamily(int familyId);
-        IEnumerable<Product> GetAll();
-        IEnumerable<ProductPriceForCustomer> GetAllProductPriceForCustomer(int customerId);
-        IPagedList<Product> GetPaged(string code, string name, int pageIndex, int pageSize);
-        void Create(Product product);
-        void Update(Product product);
-        void Delete(Product product);
-        bool ExistsActiveCode(string code);
+        ProductResponse Get(int id);
+        IEnumerable<ProductResponse> GetAllActive();
+        IEnumerable<ProductResponse> GetAllActiveInFamily(int typeId);
+        IEnumerable<ProductResponse> GetAll();
+        IPagedList<ProductResponse> GetPaged(string code, string name, int pageIndex, int pageSize);
+        IEnumerable<PriceListItem> GetPriceList(int id);
+
+        [Transactional]
+        void Create(ProductCreate product);
+
+        [Transactional]
+        void Update(ProductUpdate product);
+
+        [Transactional]
+        void Delete(int id);
     }
 }

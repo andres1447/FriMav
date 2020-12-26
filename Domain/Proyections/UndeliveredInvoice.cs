@@ -8,7 +8,7 @@ namespace FriMav.Domain.Proyections
 {
     public class UndeliveredInvoice
     {
-        public int TransactionId { get; set; }
+        public int Id { get; set; }
         public int Number { get; set; }
         public int PersonId { get; set; }
         public DateTime Date { get; set; }

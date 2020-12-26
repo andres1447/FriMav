@@ -31,7 +31,7 @@ angular.module('client')
       $scope.init();
 
       $scope.AddItem = function ($index) {
-          if (hasValue($scope.catalog.products[$index].product) && hasValue($scope.catalog.products[$index].product.productId)) {
+        if (hasValue($scope.catalog.products[$index].product) && hasValue($scope.catalog.products[$index].product.id)) {
               $scope.catalog.products.push({ quantity: 0, price: 0 });
               return false;
           }
@@ -44,7 +44,7 @@ angular.module('client')
                   return hasValue(it.product);
               });
               catalog.products = $.map(catalog.products, function (it) {
-                  return it.product.productId;
+                return it.product.id;
               });
               Catalog.save(catalog, function (res) {
                   $scope.sending = false;
@@ -55,7 +55,7 @@ angular.module('client')
       };
 
       $scope.validateProduct = function ($index) {
-          if (!hasValue($scope.catalog.products[$index].product.productId)) {
+        if (!hasValue($scope.catalog.products[$index].product.id)) {
               return -1;
           }
       };

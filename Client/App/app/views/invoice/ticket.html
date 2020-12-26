@@ -1,5 +1,5 @@
 <div class="row">
-    <a class="btn btn-default" href="" ng-click="reload()"><i class="glyphicon glyphicon-refresh"></i><span class="key-shortcut">ESC</span></a>
+    <a class="btn btn-default" href="" ng-click="reload()"><i class="glyphicon glyphicon-refresh"></i> <span class="key-shortcut">ESC</span></a>
 </div>
 <form class="form" ng-submit="submit(ticket)">
     <div class="row">
@@ -13,31 +13,39 @@
         <h4>Detalle</h4>
         <table class="table table-bordered">
             <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio</th>
-                    <th>Importe</th>
-                </tr>
+              <tr>
+                <th></th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Importe</th>
+              </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="it in ticket.items" ae-navigate>
-                    <td class="col-md-3">
-                        <input type="text" ng-model="it.product" class="form-control" ae-key-tab="[13]" ae-tab-validator="lineProductValidation($index)"
-                               uib-typeahead="product as (product.code + ' - ' + product.name) for product in getMatchingProduct($viewValue) | limitTo:8"
-                               typeahead-on-select="setListPrice($index)" typeahead-focus-on-select="false" ae-select-on-click=""
-                               typeahead-editable="false" typeahead-select-on-blur="true">
-                    </td>
-                    <td class="col-md-2"><input type="text" class="form-control" ng-model="it.quantity" ae-key-tab="[13]" ae-tab-validator="validateQuantity($index)"></td>
-                    <td class="col-md-2"><input type="text" class="form-control" step="0.01" ng-model="it.price" ae-key-tab="[13]" ae-before-tab="AddItem($index)"></td>
-                    <td class="col-md-3">{{it.quantity*it.price}}</td>
-                </tr>
-                <tr>
-                    <td>{{totals.count}}</td>
-                    <td></td>
-                    <td></td>
-                    <td>{{totals.subtotal | number:2}}</td>
-                </tr>
+              <tr ng-repeat="it in ticket.items" ae-navigate>
+                <td class="col-md-1">
+                  <button ng-if="$index < ticket.items.length - 1" type="button" class="btn btn-danger" ng-click="deleteItem($index)">
+                    <i class="glyphicon glyphicon-trash"></i>
+                    <span class="key-shortcut">supr</span>
+                  </button>
+                </td>
+                <td class="col-md-4">
+                  <input type="text" ng-model="it.product" class="form-control" ae-key-tab="[13, 9]" ae-tab-validator="hasProduct(it)"
+                         uib-typeahead="product as (product.code + ' - ' + product.name) for product in getMatchingProduct($viewValue) | limitTo:8"
+                         typeahead-select-on-blur="true" typeahead-on-select="setListPrice(it)" ae-select-on-click
+                         typeahead-focus-on-select="false" typeahead-editable="false" clear-on-backspace on-clear="clearProduct(it)">
+                </td>
+                <td class="col-md-2"><input type="text" class="form-control" ng-model="it.quantity" ae-key-tab="[13, 9]" ae-tab-validator="hasQuantity(it)" restrict-decimal></td>
+                <td class="col-md-2"><input type="text" class="form-control" step="0.01" ng-model="it.price" ae-key-tab="[13, 9]" ae-before-tab="AddItem(it)" restrict-decimal></td>
+                <td class="col-md-3">${{it.quantity*it.price | number:2}}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>{{totals.count}}</td>
+                <td></td>
+                <td></td>
+                <td>${{totals.subtotal | number:2}}</td>
+              </tr>
             </tbody>
         </table>
     </div>

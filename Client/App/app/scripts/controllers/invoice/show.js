@@ -10,7 +10,7 @@ angular.module('client')
           description: 'Reembolzar factura',
           persistent: false,
           callback: function (e) {
-              $state.go('InvoiceRefund', { invoiceId: $scope.invoice.transactionId });
+            $state.go('InvoiceRefund', { id: $scope.invoice.id });
               e.preventDefault();
           }
       })
@@ -20,7 +20,7 @@ angular.module('client')
           allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
           persistent: false,
           callback: function (e) {
-              $state.go('CustomerShow', { personId: $scope.invoice.personId });
+            $state.go('CustomerShow', { id: $scope.invoice.personId });
               e.preventDefault();
           }
       })

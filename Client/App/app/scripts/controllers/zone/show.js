@@ -28,7 +28,7 @@ angular.module('client')
 
       $scope.delete = function () {
           ModalService.show({ title: 'Zona', message: 'Desea borrar la zona?' }).then(function (res) {
-              Zone.delete({ zoneId: $scope.zone.zoneId }, function (res) {
+            Zone.delete({ id: $scope.zone.id }, function (res) {
                   Notification.success('Zona borrada correctamente.');
                   $state.go('ZoneIndex');
               }, function (err) {

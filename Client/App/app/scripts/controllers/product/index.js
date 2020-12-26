@@ -41,7 +41,7 @@ angular.module('client')
           description: 'Editar producto',
           persistent: false,
           callback: function (e) {
-              $state.go('ProductUpdate', { productId: $scope.products[$scope.productIndex].productId });
+            $state.go('ProductUpdate', { id: $scope.products[$scope.productIndex].id });
               e.preventDefault();
           }
       })
@@ -83,12 +83,12 @@ angular.module('client')
       };
 
       $scope.goToProduct = function (product) {
-          $state.go('ProductUpdate', { productId: product.productId });
+        $state.go('ProductUpdate', { id: product.id });
       }
       
       $scope.delete = function (index) {
           ModalService.show({ title: 'Productos', message: 'Desea borrar el producto?' }).then(function (res) {
-              Product.delete({ productId: $scope.products[index].productId }, function (res) {
+            Product.delete({ id: $scope.products[index].id }, function (res) {
                   Notification.success('Producto borrado correctamente.');
                   $state.reload();
               }, function (err) {

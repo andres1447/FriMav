@@ -8,23 +8,10 @@ namespace FriMav.Application
 {
     public class EmployeeUpdate
     {
-        public int PersonId { get; set; }
+        public int Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
         public string Cuit { get; set; }
         public string Address { get; set; }
-
-        public Person ToDomain()
-        {
-            return new Person()
-            {
-                PersonType = PersonType.Employee,
-                PersonId = this.PersonId,
-                Code = this.Code,
-                Name = this.Name,
-                Cuit = this.Cuit,
-                Address = this.Address
-            };
-        }
     }
 }

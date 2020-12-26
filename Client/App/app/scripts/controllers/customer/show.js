@@ -88,11 +88,11 @@ angular.module('client')
 
       $scope.showEntry = function (transaction) {
           if (transaction.transactionType == 1) {
-              $state.go('InvoiceShow', { transactionId: transaction.transactionId });
+              $state.go('InvoiceShow', { id: transaction.id });
           }
       };
 
       $scope.refund = function (transaction) {
-          $state.go('TransactionRefund', { transactionId: transaction.transactionId });
+          $state.go('TransactionRefund', { id: transaction.id });
       };
   });

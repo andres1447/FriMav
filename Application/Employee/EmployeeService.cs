@@ -1,65 +1,70 @@
 ﻿using System.Collections.Generic;
 using FriMav.Domain;
-using FriMav.Domain.Repositories;
+using FriMav.Domain.Entities;
 
 namespace FriMav.Application
 {
     public class EmployeeService : IEmployeeService
     {
-        private IPersonRepository _personRepository;
+        private IRepository<Employee> _employeeRepository;
+        private IRepository<Zone> _zoneRepository;
 
         public EmployeeService(
-            IPersonRepository personRepository)
+            IRepository<Employee> employeeRepository,
+            IRepository<Zone> zoneRepository)
         {
-            _personRepository = personRepository;
+            _employeeRepository = employeeRepository;
+            _zoneRepository = zoneRepository;
         }
 
-        public void Create(Person employee)
+        public void Create(EmployeeCreate request)
         {
-            _personRepository.Create(employee);
-            _personRepository.Save();
+            var employee = new Employee
+            {
+                Code = request.Code,
+                Name = request.Name,
+                Cuit = request.Cuit,
+                Shipping = Shipping.Self,
+                Address = request.Address,
+                PaymentMethod = PaymentMethod.Credit,
+                ZoneId = request.ZoneId,
+                Zone = request.ZoneId.HasValue ? _zoneRepository.Get(request.ZoneId.Value) : null,
+            };
+            _employeeRepository.Add(employee);
         }
 
-        public void Delete(int personId)
+        public void Delete(int id)
         {
-            Person employee = new Person { PersonId = personId };
-            _personRepository.Attach(employee);
-            Delete(employee);
+            var employee = _employeeRepository.Get(id);
+            if (employee == null)
+                throw new NotFoundException();
+
+            _employeeRepository.Delete(employee);
         }
 
-        public void Delete(Person employee)
+        public Person Get(int id)
         {
-            _personRepository.Delete(employee);
-            _personRepository.Save();
+            return _employeeRepository.Get(id);
         }
 
-        public Person Get(int personId)
+        public List<Employee> GetAll()
         {
-            return _personRepository.FindBy(x => x.PersonId == personId);
+            return _employeeRepository.GetAll();
         }
 
-        public IEnumerable<Person> GetAll()
+        public void Update(EmployeeUpdate employee)
         {
-            return _personRepository.GetAllByType(PersonType.Employee);
-        }
-
-        public void Update(Person employee)
-        {
-            var saved = _personRepository.FindBy(c => c.PersonId == employee.PersonId);
+            var saved = _employeeRepository.Get(employee.Id);
 
             saved.Code = employee.Code;
             saved.Name = employee.Name;
             saved.Cuit = employee.Cuit;
             saved.Address = employee.Address;
-
-            _personRepository.Update(saved);
-            _personRepository.DetectChanges();
-            _personRepository.Save();
         }
 
         public bool Exists(string code)
         {
-            return _personRepository.Exists(PersonType.Employee, code);
+            return _employeeRepository.Exists(x => x.Code.EndsWith(code));
         }
     }
 }

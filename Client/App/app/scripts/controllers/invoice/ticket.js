@@ -19,7 +19,30 @@ angular.module('client')
           callback: function () {
               $scope.reload();
           }
-      });
+      })
+      .add({
+      combo: 'del',
+      allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+      description: 'Delete Row',
+      callback: function (event, hotkey) {
+        var $elem = $(event.srcElement).parents("tr:first");
+        if (!$elem) return;
+
+        event.preventDefault();
+        if ($scope.ticket.items.length > 1) {
+          var nextInput = $elem.closest('tr').nextAll('tr').filter(function (index, element) {
+            return $(element).find(':text').length > 0;
+          }).first().find(':text');
+
+          // if next input exists go there, else go to the first one
+          if (nextInput.length > 0) {
+            nextInput.first().focus();
+          }
+
+          $scope.deleteItem($elem.index());
+        }
+      }
+    })
 
       $scope.init = function () {
           $scope.ticket = {
@@ -41,15 +64,26 @@ angular.module('client')
           }
       };
 
-      $scope.setListPrice = function ($index) {
-          var it = $scope.ticket.items[$index];
-          if (it) {
-              var res = $filter('filter')($scope.products, { productId: it.product.productId }, true);
-              if (res.length > 0) {
-                  it.price = res[0].price;
-              }
-          }
+      $scope.setListPrice = function (item) {
+        var res = $filter('filter')($scope.products, { id: item.product.id }, true);
+        if (res.length > 0) {
+          var product = res[0];
+          item.price = product.price;
+          item.basePrice = product.basePrice || product.price;
+          item.productId = product.id;
+        }
       };
+
+      $scope.clearProduct = function (item) {
+        item.product = null;
+        item.productId = null;
+        item.price = 0;
+        item.basePrice = 0;
+      }
+
+      $scope.deleteItem = function (index) {
+        $scope.ticket.items.splice(index, 1);
+      }
 
       $scope.print = function (ticket) {
           ticket.items = $.grep(ticket.items, function (it) {
@@ -71,30 +105,20 @@ angular.module('client')
           return printModel;
       };
 
-      $scope.validateProduct = function ($index) {
-          if (!hasValue($scope.ticket.items[$index].product.productId)) {
-              return -1;
-          }
+      $scope.hasQuantity = function (item) {
+        return hasValue(item.quantity);
       };
 
-      $scope.validateQuantity = function ($index) {
-          if (!hasValue($scope.ticket.items[$index].quantity)) {
-              return false;
-          }
-      }
+      $scope.hasProduct = function (item) {
+        return hasValue(item.product) && hasValue(item.productId)
+      };
 
-      $scope.lineProductValidation = function ($index) {
-          if (hasValue($scope.ticket.items[$index].product) && hasValue($scope.ticket.items[$index].product.productId))
-              return true;
+      $scope.AddItem = function (item) {
+        if ($scope.hasProduct(item) && $scope.hasQuantity(item) && hasValue(item.price)) {
+          $scope.addItem();
           return false;
-      }
-
-      $scope.AddItem = function ($index) {
-          if (hasValue($scope.ticket.items[$index].product) && hasValue($scope.ticket.items[$index].product.productId) && hasValue($scope.ticket.items[$index].quantity) && hasValue($scope.ticket.items[$index].price)) {
-              $scope.addItem();
-              return false;
-          }
-      }
+        }
+      };
 
       $scope.getMatchingProduct = function ($viewValue) {
           return $.grep($scope.products, function (it) {

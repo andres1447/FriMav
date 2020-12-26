@@ -4,7 +4,7 @@ angular.module('client')
   .controller('TransactionRefundCtrl', function ($scope, $state, $timeout, hotkeys, Notification, Transaction, transaction) {
       $scope.createRefund = {
           date: new Date(),
-          transactionId: transaction.transactionId
+        id: transaction.id
       };
 
       $scope.transaction = transaction;
@@ -24,7 +24,7 @@ angular.module('client')
           allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
           persistent: false,
           callback: function (e) {
-              $state.go('CustomerShow', { personId: transaction.personId });
+            $state.go('CustomerShow', { id: transaction.personId });
               e.preventDefault();
           }
       });
@@ -50,7 +50,7 @@ angular.module('client')
               Transaction.cancel(createRefund, function (res) {
                   $scope.sending = false;
                   Notification.success('Cancelacion creada correctamente.');
-                  $state.go('CustomerShow', { personId: transaction.personId });
+                $state.go('CustomerShow', { id: transaction.personId });
               }, function (err) {
                   $scope.sending = false;
                   Notification.error({ title: err.data.message, message: err.data.errors.join('</br>') });

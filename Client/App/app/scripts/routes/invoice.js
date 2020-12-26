@@ -27,22 +27,22 @@ angular
             }
         })
         .state('InvoiceShow', {
-            url: '/invoice/:transactionId',
+          url: '/invoice/:id',
             templateUrl: 'views/invoice/show.html',
             controller: 'InvoiceShowCtrl',
             resolve: {
-                invoice: function (Transaction, $stateParams) {
-                    return Transaction.get({ transactionId: $stateParams.transactionId }).$promise;
+                invoice: function (Invoice, $stateParams) {
+                  return Invoice.get({ id: $stateParams.id }).$promise;
                 }
             }
         })
         .state('InvoiceRefund', {
-            url: '/invoice/:transactionId/refund',
+          url: '/invoice/:id/refund',
             templateUrl: 'views/invoice/refund.html',
             controller: 'InvoiceRefundCtrl',
             resolve: {
                 transaction: function (Transaction, $stateParams) {
-                    return Transaction.get({ transactionId: $stateParams.transactionId }).$promise;
+                return Transaction.get({ id: $stateParams.id }).$promise;
                 }
             }
         });

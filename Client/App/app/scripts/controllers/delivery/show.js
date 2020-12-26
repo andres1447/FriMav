@@ -33,10 +33,10 @@ angular.module('client')
               $scope.invoiceTotals.quantity++;
               $scope.invoiceTotals.amount += invoice.total;
               angular.forEach(invoice.items, function (it) {
-                  if (!products[it.product.productId]) {
-                      products[it.product.productId] = { productId: it.productId, name: it.product.name, quantity: 0 };
+                if (!products[it.product.id]) {
+                  products[it.product.id] = { productId: it.productId, name: it.product.name, quantity: 0 };
                   }
-                  products[it.product.productId].quantity += it.quantity;
+                products[it.product.id].quantity += it.quantity;
               });
           });
           $scope.products = [];
@@ -70,7 +70,7 @@ angular.module('client')
 
       $scope.delete = function () {
           ModalService.show({ title: 'Envio', message: 'Desea borrar el envio?' }).then(function (res) {
-              Delivery.delete({ deliveryId: delivery.deliveryId }, function (res) {
+            Delivery.delete({ id: delivery.id }, function (res) {
                   Notification.success('Envio borrado correctamente.');
                   $state.go('DeliveryIndex');
               }, function (err) {

@@ -55,26 +55,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Delivery.cs">
-      <DependentUpon>Entities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Catalog.cs">
-      <DependentUpon>Entities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Entities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="NumberSequence.cs">
-      <DependentUpon>Entities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PaymentMethod.cs">
-      <DependentUpon>Entities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PersonType.cs">
-      <DependentUpon>Entities.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Entities\Catalog.cs" />
+    <Compile Include="Entities\CreditNote.cs" />
+    <Compile Include="Entities\Customer.cs" />
+    <Compile Include="Entities\CustomerPrice.cs" />
+    <Compile Include="Entities\DebitNote.cs" />
+    <Compile Include="Entities\Delivery.cs" />
+    <Compile Include="Entities\Employee.cs" />
+    <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\Invoice.cs" />
+    <Compile Include="Entities\InvoiceItem.cs" />
+    <Compile Include="Entities\NumberSequence.cs" />
+    <Compile Include="Entities\Payment.cs" />
+    <Compile Include="Entities\PaymentMethod.cs" />
+    <Compile Include="Entities\Person.cs" />
+    <Compile Include="Entities\PersonType.cs" />
+    <Compile Include="Entities\Product.cs" />
+    <Compile Include="Entities\ProductType.cs" />
+    <Compile Include="Entities\Shipping.cs" />
+    <Compile Include="Entities\TransactionDocument.cs" />
+    <Compile Include="Entities\TransactionDocumentType.cs" />
+    <Compile Include="Entities\Zone.cs" />
+    <Compile Include="IDocumentNumberGenerator.cs" />
+    <Compile Include="IRepository.cs" />
     <Compile Include="Proyections\DeliveryListing.cs" />
     <Compile Include="Proyections\PaymentDisplay.cs" />
     <Compile Include="Proyections\InvoiceDisplay.cs" />
@@ -84,56 +87,9 @@
     <Compile Include="Proyections\UndeliveredInvoice.cs" />
     <Compile Include="Proyections\UnpaidTransaction.cs" />
     <Compile Include="Proyections\UnpaidInvoice.cs" />
-    <Compile Include="Repositories\INumberSequenceRepository.cs" />
-    <Compile Include="Repositories\IZoneRepository.cs" />
-    <Compile Include="Repositories\ITransactionPaymentRepository.cs" />
-    <Compile Include="Repositories\ITransactionRepository.cs" />
-    <Compile Include="Repositories\ICatalogRepository.cs" />
-    <Compile Include="Repositories\IDeliveryRepository.cs" />
-    <Compile Include="Repositories\IPersonRepository.cs" />
-    <Compile Include="Repositories\IInvoiceRepository.cs" />
     <Compile Include="IPagedList.cs" />
-    <Compile Include="Repositories\IPriceForCustomerRepository.cs" />
-    <Compile Include="Repositories\IProductFamilyRepository.cs" />
-    <Compile Include="Repositories\IProductRepository.cs" />
-    <Compile Include="Salary.cs">
-      <DependentUpon>Entities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Shipping.cs">
-      <DependentUpon>Entities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PriceForCustomer.cs">
-      <DependentUpon>Entities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ProductFamily.cs">
-      <DependentUpon>Entities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Invoice.cs">
-      <DependentUpon>Entities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="InvoiceItem.cs">
-      <DependentUpon>Entities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Person.cs">
-      <DependentUpon>Entities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Product.cs">
-      <DependentUpon>Entities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\IBaseRepository.cs" />
-    <Compile Include="Transaction.cs">
-      <DependentUpon>Entities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TransactionPayment.cs">
-      <DependentUpon>Entities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TransactionType.cs">
-      <DependentUpon>Entities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Zone.cs">
-      <DependentUpon>Entities.tt</DependentUpon>
-    </Compile>
+    <Compile Include="TransactionalAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
@@ -146,12 +102,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Entities.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Entities.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

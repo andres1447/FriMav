@@ -18,21 +18,21 @@ angular
             templateUrl: 'views/product/create.html',
             controller: 'ProductCreateCtrl',
             resolve: {
-                productFamilies: function (ProductFamily) {
+                productTypes: function (ProductFamily) {
                     return ProductFamily.query().$promise;
                 }
             }
         })
         .state('ProductUpdate', {
-            url: '/product/:productId/update',
+          url: '/product/:id/update',
             templateUrl: 'views/product/update.html',
             controller: 'ProductUpdateCtrl',
             resolve: {
-                productFamilies: function (ProductFamily) {
+                productTypes: function (ProductFamily) {
                     return ProductFamily.query().$promise;
                 },
                 product: function ($stateParams, Product) {
-                    return Product.get({ productId: $stateParams.productId }).$promise;
+                  return Product.get({ id: $stateParams.id }).$promise;
                 }
             }
         });

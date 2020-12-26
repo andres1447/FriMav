@@ -11,7 +11,7 @@ angular.module('client')
           description: 'Detalles',
           persistent: false,
           callback: function (e) {
-              $state.go('FamilyShow', { familyId: $scope.families[$scope.familyIndex].familyId });
+            $state.go('FamilyShow', { id: $scope.families[$scope.familyIndex].id });
               e.preventDefault();
           }
       })
@@ -39,7 +39,7 @@ angular.module('client')
           description: 'Editar familia de productos',
           persistent: false,
           callback: function (e) {
-              $state.go('FamilyUpdate', { familyId: $scope.families[$scope.familyIndex].familyId });
+              $state.go('FamilyUpdate', { id: $scope.families[$scope.familyIndex].id });
               e.preventDefault();
           }
       })
@@ -68,7 +68,7 @@ angular.module('client')
       
       $scope.delete = function (index) {
           ModalService.show({ title: 'Familia de productos', message: 'Desea borrar la familia de productos?' }).then(function (res) {
-              ProductFamily.delete({ familyId: $scope.families[index].familyId }, function (res) {
+              ProductFamily.delete({ id: $scope.families[index].id }, function (res) {
                   Notification.success('Familia borrada correctamente.');
                   $state.reload();
               }, function (err) {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FriMav.Domain.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace FriMav.Domain.Proyections

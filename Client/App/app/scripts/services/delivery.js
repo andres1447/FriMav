@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('client').factory('Delivery', function ($resource, ApiConfig) {
-    return $resource(ApiConfig.host + 'delivery/:deliveryId', null, {
+  return $resource(ApiConfig.host + 'delivery/:id', null, {
         update: {
             method: 'PUT'
         }

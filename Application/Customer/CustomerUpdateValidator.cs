@@ -6,7 +6,7 @@ using System.Web;
 
 namespace FriMav.Application
 {
-    public class CustomerUpdateValidator : AbstractValidator<CustomerUpdate>
+    /*public class CustomerUpdateValidator : AbstractValidator<CustomerUpdate>
     {
         private IContainerContext _container;
 
@@ -18,7 +18,7 @@ namespace FriMav.Application
             RuleFor(c => c.Code).NotEmpty().WithMessage("El codigo es requerido.");
             
             RuleFor(c => c.Code)
-                .Must((c, code) => { return CustomerCodeNotExists(c.PersonId, code); }).WithMessage("El codigo de usuario ya está registrado.")
+                .Must((c, code) => { return CustomerCodeNotExists(c.Id, code); }).WithMessage("El codigo de usuario ya está registrado.")
                 .Unless(c => string.IsNullOrEmpty(c.Code));
         }
 
@@ -28,5 +28,5 @@ namespace FriMav.Application
             var saved = service.Get(personId);
             return saved.Code == code || !service.Exists(code);
         }
-    }
+    }*/
 }

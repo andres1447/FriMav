@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using FriMav.Domain;
+using FriMav.Domain.Entities;
 using FriMav.Domain.Proyections;
-using FriMav.Domain.Repositories;
 
 namespace FriMav.Application
 {
     public class CatalogService : ICatalogService
     {
-        private ICatalogRepository _catalogRepository;
-        private IProductRepository _productRepository;
+        private IRepository<Catalog> _catalogRepository;
+        private IRepository<Product> _productRepository;
 
         public CatalogService(
-            ICatalogRepository catalogRepository,
-            IProductRepository productRepository)
+            IRepository<Catalog> catalogRepository,
+            IRepository<Product> productRepository)
         {
             _catalogRepository = catalogRepository;
             _productRepository = productRepository;
@@ -23,21 +23,21 @@ namespace FriMav.Application
         public void Create(CatalogCreate command)
         {
             var catalog = new Catalog { Name = command.Name };
-            Product product;
-            foreach (var productId in command.Products)
+            var products = _productRepository.Query().Where(x => command.Products.Contains(x.Id)).ToList();
+            foreach (var product in products)
             {
-                product = new Product { ProductId = productId };
-                _productRepository.Attach(product);
                 catalog.Products.Add(product);
             }
-            _catalogRepository.Create(catalog);
-            _catalogRepository.Save();
+            _catalogRepository.Add(catalog);
         }
 
-        public void Delete(Catalog catalog)
+        public void Delete(int id)
         {
+            var catalog = _catalogRepository.Get(id, x => x.Products);
+            if (catalog == null)
+                throw new NotFoundException();
+
             _catalogRepository.Delete(catalog);
-            _catalogRepository.Save();
         }
 
         public IEnumerable<Catalog> GetAll()
@@ -45,21 +45,19 @@ namespace FriMav.Application
             return _catalogRepository.GetAll();
         }
 
-        public Catalog Get(int catalogId)
+        public Catalog Get(int id)
         {
-            return _catalogRepository.GetByIdWithProducts(catalogId);
+            return _catalogRepository.Get(id, x => x.Products);
         }
 
         public void Update(Catalog catalog)
         {
-            var saved = _catalogRepository.GetByIdWithProducts(catalog.CatalogId);
+            var saved = _catalogRepository.Get(catalog.Id, x => x.Products);
+            if (saved == null)
+                throw new NotFoundException();
             saved.Name = catalog.Name;
             saved.Products.Clear();
             saved.Products = catalog.Products;
-
-            _catalogRepository.Update(saved);
-            _catalogRepository.DetectChanges();
-            _catalogRepository.Save();
         }
     }
 }

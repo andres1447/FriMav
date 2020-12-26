@@ -53,7 +53,7 @@ angular.module('client')
 
       $scope.delete = function (catalog) {
           ModalService.show({ title: 'Lista de precios', message: 'Desea borrar la lista de precios?' }).then(function (res) {
-              Catalog.delete({ catalogId: catalog.catalogId }, function (res) {
+            Catalog.delete({ id: catalog.id }, function (res) {
                   Notification.success('Lista de precios borrada correctamente.');
                   $state.go('CatalogIndex');
               }, function (err) {

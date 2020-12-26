@@ -1,0 +1,45 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FriMav.Domain.Entities
+{
+    public abstract class Person : Entity
+    {
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public string Cuit { get; set; }
+        public string Address { get; set; }
+        public decimal Balance { get; protected set; }
+        public Shipping? Shipping { get; set; }
+        public PaymentMethod? PaymentMethod { get; set; }
+        public int? ZoneId { get; set; }
+        public Zone Zone { get; set; }
+        public DateTime? DeleteDate { get; set; }
+
+        public void Delete()
+        {
+            DeleteDate = DateTime.Now;
+        }
+
+        public bool IsDeleted()
+        {
+            return DeleteDate.HasValue;
+        }
+
+        public void WithoutZone()
+        {
+            Zone = null;
+            ZoneId = null;
+        }
+
+        public void Accept(TransactionDocument document)
+        {
+            document.PreviousBalance = Balance;
+            Balance += document.Total;
+            document.Balance = Balance;
+        }
+    }
+}

@@ -13,31 +13,31 @@ angular
                 }
             }
         })
-        .state('FamilyShow', {
-            url: '/family/:familyId',
-            templateUrl: 'views/family/show.html',
-            controller: 'FamilyShowCtrl',
-            resolve: {
-                family: function (ProductFamily, $stateParams) {
-                    return ProductFamily.get({ familyId: $stateParams.familyId }).$promise;
-                },
-                products: function (ProductFamily, $stateParams) {
-                    return ProductFamily.products({ familyId: $stateParams.familyId }).$promise;
-                }
-            }
-        })
         .state('FamilyCreate', {
             url: '/family/create',
             templateUrl: 'views/family/create.html',
             controller: 'FamilyCreateCtrl'
         })
+        .state('FamilyShow', {
+            url: '/family/:id',
+            templateUrl: 'views/family/show.html',
+            controller: 'FamilyShowCtrl',
+            resolve: {
+                family: function (ProductFamily, $stateParams) {
+                    return ProductFamily.get({ id: $stateParams.id }).$promise;
+                },
+                products: function (ProductFamily, $stateParams) {
+                    return ProductFamily.products({ id: $stateParams.id }).$promise;
+                }
+            }
+        })
         .state('FamilyUpdate', {
-            url: '/family/:familyId/update',
+            url: '/family/:id/update',
             templateUrl: 'views/family/update.html',
             controller: 'FamilyUpdateCtrl',
             resolve: {
                 family: function ($stateParams, ProductFamily) {
-                    return ProductFamily.get({ familyId: $stateParams.familyId }).$promise;
+                    return ProductFamily.get({ id: $stateParams.id }).$promise;
                 }
             }
         });

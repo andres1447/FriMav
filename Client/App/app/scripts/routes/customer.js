@@ -24,12 +24,12 @@ angular
             }
         })
         .state('CustomerUpdate', {
-            url: '/customer/:personId/update',
+          url: '/customer/:id/update',
             templateUrl: 'views/customer/update.html',
             controller: 'CustomerUpdateCtrl',
             resolve: {
                 customer: function ($stateParams, Customer) {
-                    return Customer.get({ personId: $stateParams.personId }).$promise;
+                return Customer.get({ id: $stateParams.id }).$promise;
                 },
                 zones: function (Zone) {
                     return Zone.query().$promise;
@@ -37,15 +37,15 @@ angular
             }
         })
         .state('CustomerShow', {
-            url: '/customer/:personId/show',
+          url: '/customer/:id/show',
             templateUrl: 'views/customer/show.html',
             controller: 'CustomerShowCtrl',
             resolve: {
                 customer: function ($stateParams, Customer) {
-                    return Customer.get({ personId: $stateParams.personId }).$promise;
+                return Customer.get({ id: $stateParams.id }).$promise;
                 },
                 transactions: function (customer, Transaction) {
-                    return Transaction.account({ personId: customer.personId }).$promise;
+                  return Transaction.account({ id: customer.id }).$promise;
                 }
             }
         })

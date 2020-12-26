@@ -1,56 +1,71 @@
 ﻿using System;
 using System.Collections.Generic;
 using FriMav.Domain;
-using FriMav.Domain.Repositories;
+using FriMav.Domain.Entities;
 
 namespace FriMav.Application
 {
     public class CustomerService : ICustomerService
     {
-        private IPersonRepository _personRepository;
-        private IZoneRepository _zoneRepository;
+        private IRepository<Customer> _customerRepository;
+        private IRepository<Zone> _zoneRepository;
 
         public CustomerService(
-            IPersonRepository personRepository,
-            IZoneRepository zoneRepository)
+            IRepository<Customer> customerRepository,
+            IRepository<Zone> zoneRepository)
         {
-            _personRepository = personRepository;
+            _customerRepository = customerRepository;
             _zoneRepository = zoneRepository;
         }
 
-        public void Create(Person customer)
+        public void Create(CustomerCreate request)
         {
-            _personRepository.Create(customer);
-            _personRepository.Save();
+            var customer = new Customer
+            {
+                Code = request.Code,
+                Name = request.Name,
+                Cuit = request.Cuit,
+                Shipping = request.Shipping,
+                Address = request.Address,
+                PaymentMethod = request.PaymentMethod,
+                ZoneId = request.ZoneId
+            };
+            _customerRepository.Add(customer);
         }
 
-        public void Delete(int personId)
+        public void Delete(int id)
         {
-            Person customer = new Person { PersonId = personId };
-            _personRepository.Attach(customer);
-            Delete(customer);
+            var customer = _customerRepository.Get(id);
+            if (customer == null)
+                throw new NotFoundException();
+
+            customer.Delete();
         }
 
-        public void Delete(Person customer)
+        public bool Exists(string code)
         {
-            _personRepository.Delete(customer);
-            _personRepository.Save();
+            throw new NotImplementedException();
         }
 
-        public Person Get(int personId)
+        public Customer Get(int personId)
         {
-            return _personRepository.GetWithZone(personId);
+            return _customerRepository.Get(personId, x => x.Zone);
         }
 
-        public IEnumerable<Person> GetAll()
+        public IEnumerable<Customer> GetAll()
         {
-            return _personRepository.GetAllByType(PersonType.Customer);
+            return _customerRepository.GetAll();
         }
 
-        public void Update(Person customer)
+        public IEnumerable<Customer> GetAllInZone(int zoneId)
         {
-            var saved = Get(customer.PersonId);
+            throw new NotImplementedException();
+        }
 
+        public void Update(CustomerUpdate customer)
+        {
+            var saved = _customerRepository.Get(customer.Id, x => x.Zone);
+            var zone = customer.ZoneId.HasValue ? _zoneRepository.Get(customer.ZoneId.Value) : null;
             saved.Code = customer.Code;
             saved.Name = customer.Name;
             saved.Cuit = customer.Cuit;
@@ -58,25 +73,7 @@ namespace FriMav.Application
             saved.PaymentMethod = customer.PaymentMethod;
             saved.Shipping = customer.Shipping;
             saved.ZoneId = customer.ZoneId;
-            if (customer.ZoneId.HasValue)
-            {
-                saved.Zone = new Zone { ZoneId = customer.ZoneId.Value };
-                _zoneRepository.Attach(saved.Zone);
-            }
-
-            _personRepository.Update(saved);
-            _personRepository.DetectChanges();
-            _personRepository.Save();
-        }
-
-        public bool Exists(string code)
-        {
-            return _personRepository.Exists(PersonType.Customer, code);
-        }
-
-        public IEnumerable<Person> GetAllInZone(int zoneId)
-        {
-            return _personRepository.GetAllByTypeInZone(PersonType.Customer, zoneId);
+            saved.Zone = zone;
         }
     }
 }

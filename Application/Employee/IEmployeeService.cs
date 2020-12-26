@@ -1,16 +1,23 @@
 ﻿using FriMav.Domain;
+using FriMav.Domain.Entities;
 using System.Collections.Generic;
 
 namespace FriMav.Application
 {
     public interface IEmployeeService
     {
-        IEnumerable<Person> GetAll();
+
+        [Transactional]
+        void Create(EmployeeCreate request);
+
+        [Transactional]
+        void Update(EmployeeUpdate request);
+
+        [Transactional]
+        void Delete(int id);
+
+        List<Employee> GetAll();
         Person Get(int personId);
-        void Create(Person customer);
-        void Update(Person customer);
-        void Delete(int personId);
-        void Delete(Person customer);
         bool Exists(string code);
     }
 }

@@ -54,8 +54,8 @@ namespace FriMav.Client
 
         private void loaded(object sender, LoadingStateChangedEventArgs e)
         {
-            /*if (e.IsLoading == true)
-                helper.showDevTools();*/
+            if (e.IsLoading == true)
+                helper.showDevTools();
         }
 
         private void ClientContainer_FormClosing(object sender, FormClosingEventArgs e)

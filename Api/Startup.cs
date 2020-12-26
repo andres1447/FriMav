@@ -9,9 +9,6 @@ using Microsoft.Owin;
 using FluentValidation.WebApi;
 using System.Web.Http.Validation;
 using FriMav.Api.Utils.Filters;
-using FriMav.Domain.Repositories;
-
-[assembly: OwinStartup(typeof(FriMav.Api.Startup))]
 
 namespace FriMav.Api
 {
@@ -21,7 +18,7 @@ namespace FriMav.Api
         {
             var container = new WindsorContainer().Install(
                 new DatabaseInstaller(),
-                new DefaultInstaller(),
+                new ApplicationInstaller(),
                 new ControllerInstaller());
 
             HttpConfiguration config = new HttpConfiguration();

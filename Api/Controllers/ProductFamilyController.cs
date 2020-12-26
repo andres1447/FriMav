@@ -7,11 +7,11 @@ namespace FriMav.Api.Controllers
     [RoutePrefix("api/family")]
     public class ProductFamilyController : ApiController
     {
-        private IProductFamilyService _productFamilyService;
+        private IProductTypeService _productFamilyService;
         private IProductService _productService;
 
         public ProductFamilyController(
-            IProductFamilyService productFamilyService,
+            IProductTypeService productFamilyService,
             IProductService productService)
         {
             _productFamilyService = productFamilyService;

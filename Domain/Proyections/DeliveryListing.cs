@@ -8,7 +8,7 @@ namespace FriMav.Domain.Proyections
 {
     public class DeliveryListing
     {
-        public int DeliveryId { get; set; }
+        public int Id { get; set; }
         public int Number { get; set; }
         public DateTime Date { get; set; }
         public string Employee { get; set; }

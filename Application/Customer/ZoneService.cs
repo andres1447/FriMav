@@ -1,44 +1,42 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FriMav.Domain;
-using FriMav.Domain.Repositories;
+using FriMav.Domain.Entities;
 
 namespace FriMav.Application
 {
     public class ZoneService : IZoneService
     {
-        private IZoneRepository _zoneRepository;
-        private IPersonRepository _customerRepository;
+        private IRepository<Zone> _zoneRepository;
+        private IRepository<Person> _personRepository;
 
         public ZoneService(
-            IZoneRepository zoneRepository,
-            IPersonRepository customerRepository)
+            IRepository<Zone> zoneRepository,
+            IRepository<Person> personRepository)
         {
             _zoneRepository = zoneRepository;
-            _customerRepository = customerRepository;
+            _personRepository = personRepository;
         }
 
         public void Create(Zone zone)
         {
-            _zoneRepository.Create(zone);
-            _zoneRepository.Save();
+            _zoneRepository.Add(zone);
         }
 
-        public void Delete(Zone zone)
+        public void Delete(int id)
         {
-            var customers = _customerRepository.FindAllBy(x => x.ZoneId == zone.ZoneId);
-            foreach (var customer in customers)
+            var zone = _zoneRepository.Get(id);
+            var people = _personRepository.Query().Where(x => x.ZoneId == id);
+            foreach (var person in people)
             {
-                customer.Zone = null;
-                customer.ZoneId = null;
-                _customerRepository.Update(customer);
+                person.WithoutZone();
             }
             _zoneRepository.Delete(zone);
-            _zoneRepository.Save();
         }
 
-        public Zone Get(int zoneId)
+        public Zone Get(int id)
         {
-            return _zoneRepository.FindBy(x => x.ZoneId == zoneId);
+            return _zoneRepository.Get(id);
         }
 
         public IEnumerable<Zone> GetAll()
@@ -48,9 +46,8 @@ namespace FriMav.Application
 
         public void Update(Zone zone)
         {
-            _zoneRepository.Update(zone);
-            _zoneRepository.DetectChanges();
-            _zoneRepository.Save();
+            var saved = _zoneRepository.Get(zone.Id);
+            saved.Name = zone.Name;
         }
     }
 }

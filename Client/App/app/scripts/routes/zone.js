@@ -29,15 +29,15 @@ angular
             }
         })
         .state('ZoneShow', {
-            url: '/zone/:zoneId',
+          url: '/zone/:id',
             templateUrl: 'views/zone/show.html',
             controller: 'ZoneShowCtrl',
             resolve: {
                 zone: function (Zone, $stateParams) {
-                    return Zone.get({ zoneId: $stateParams.zoneId }).$promise;
+                return Zone.get({ id: $stateParams.id }).$promise;
                 },
                 customers: function (Zone, $stateParams) {
-                    return Zone.customers({ zoneId: $stateParams.zoneId }).$promise;
+                  return Zone.customers({ id: $stateParams.id }).$promise;
                 }
             }
         });

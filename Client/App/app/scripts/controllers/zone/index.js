@@ -11,7 +11,7 @@ angular.module('client')
           description: 'Detalles',
           persistent: false,
           callback: function (e) {
-              $state.go('ZoneShow', { zoneId: $scope.zones[$scope.zoneIndex].zoneId });
+            $state.go('ZoneShow', { id: $scope.zones[$scope.zoneIndex].id });
               e.preventDefault();
           }
       })
@@ -39,7 +39,7 @@ angular.module('client')
           description: 'Editar zona',
           persistent: false,
           callback: function (e) {
-              $state.go('ZoneUpdate', { zoneId: $scope.zones[$scope.zoneIndex].zoneId });
+            $state.go('ZoneUpdate', { id: $scope.zones[$scope.zoneIndex].id });
               e.preventDefault();
           }
       })
@@ -68,7 +68,7 @@ angular.module('client')
       
       $scope.delete = function (index) {
           ModalService.show({ title: 'Zona', message: 'Desea borrar la zona?' }).then(function (res) {
-              Zone.delete({ zoneId: $scope.zones[index].zoneId }, function (res) {
+            Zone.delete({ id: $scope.zones[index].id }, function (res) {
                   Notification.success('Zona borrada correctamente.');
                   $state.reload();
               }, function (err) {

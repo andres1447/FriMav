@@ -46,6 +46,6 @@ angular.module('client')
       };
 
       $scope.setZoneId = function (customer) {
-          customer.zoneId = customer.zone.zoneId;
+        customer.zoneId = customer.zone.id;
       };
   });

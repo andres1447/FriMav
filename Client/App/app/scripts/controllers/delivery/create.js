@@ -33,14 +33,14 @@ angular.module('client')
       $scope.init();
 
       $scope.AddItem = function ($index) {
-          if (hasValue($scope.delivery.invoices[$index].invoice.transactionId)) {
+        if (hasValue($scope.delivery.invoices[$index].invoice.id)) {
               $scope.delivery.invoices.push({});
               return false;
           }
       };
 
       $scope.setEmployee = function (delivery) {
-          $scope.delivery.employeeId = delivery.employee.personId;
+        $scope.delivery.employeeId = delivery.employee.id;
       };
 
       $scope.create = function (delivery) {
@@ -56,12 +56,12 @@ angular.module('client')
       };
 
       function getSelectedInvoicesIds() {
-          return $.map($.grep($scope.delivery.invoices, function (it) { return it.invoice ? it.invoice.transactionId : it.invoice; }), function (it) { return it.invoice.transactionId; });
+        return $.map($.grep($scope.delivery.invoices, function (it) { return it.invoice ? it.invoice.id : it.invoice; }), function (it) { return it.invoice.id; });
       }
 
       $scope.getMatchingInvoices = function ($viewValue) {
           return $.grep($scope.invoices, function (it) {
-              return it.personCode.toLowerCase().indexOf($viewValue) == 0 && getSelectedInvoicesIds().indexOf(it.transactionId) == -1;
+            return it.personCode.toLowerCase().indexOf($viewValue) == 0 && getSelectedInvoicesIds().indexOf(it.id) == -1;
           });
       };
 
