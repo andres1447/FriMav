@@ -1,12 +1,10 @@
-<div class="row">
-    <h4>Productos</h4>
-</div>
-<div class="row">
-    <div class="form-group">
-        <a ui-sref="ProductCreate" class="btn btn-success">Nuevo<span class="key-shortcut">+</span></a>
-    </div>
-</div>
-<div class="row">
+<header>
+  <h3>Productos</h3>
+  <div>
+    <a ui-sref="ProductCreate" class="btn btn-success">Nuevo<span class="key-shortcut">+</span></a>
+  </div>
+</header>
+<div>
     <div class="form-group">
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-search"></i><span class="key-shortcut">F2</span></span>
@@ -16,25 +14,25 @@
                    typeahead-editable="false" ae-autofocus="SearchProduct" clear-on-backspace>
         </div>
     </div>
-    <table class="table table-bordered">
+    <table class="table table-bordered table-condensed">
         <thead>
             <tr>
-                <th>Codigo</th>
-                <th>Nombre</th>
-                <th>Categoría</th>
-                <th>Precio</th>
-                <th>Activo</th>
-                <th>Acciones</th>
+                <th class="col-md-2">Codigo</th>
+                <th class="col-md-2">Nombre</th>
+                <th class="col-md-2">Categoría</th>
+                <th class="col-md-2">Precio</th>
+                <th class="col-md-2">Activo</th>
+                <th class="col-md-2">Acciones</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="it in products" ng-class="{'alert-info': $index == productIndex}">
-                <td class="col-md-2">{{::it.code}}</td>
-                <td class="col-md-2">{{::it.name}}</td>
-                <td class="col-md-2">{{::it.type.name}}</td>
-                <td class="col-md-2">{{::it.price | number:2 }}</td>
-                <td class="col-md-2">{{:: it.active ? 'Si' : 'No' }}</td>
-                <td class="col-md-2">
+                <td>{{::it.code}}</td>
+                <td>{{::it.name}}</td>
+                <td>{{::it.type.name}}</td>
+                <td>{{::it.price | number:2 }}</td>
+                <td>{{:: it.active ? 'Si' : 'No' }}</td>
+                <td>
                     <a ui-sref="ProductUpdate({id: it.id})" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i><span class="key-shortcut">&midast;</span></a>
                     <button type="button" class="btn btn-danger" ng-click="delete($index)"><i class="glyphicon glyphicon-trash"></i><span class="key-shortcut">&minus;</span></button>
                 </td>

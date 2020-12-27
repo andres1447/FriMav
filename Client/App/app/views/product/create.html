@@ -1,9 +1,9 @@
-<div class="row">
-    <h4>Nuevo producto</h4>
-</div>
-<div class="row">
+<header>
+  <h3>Nuevo producto</h3>
+  <div>
     <a ui-sref="ProductIndex" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i><span class="key-shortcut">esc</span></a>
-</div>
-<form class="form-horizontal" ng-submit="create(product)" ng-disabled="sending" novalidate>
-    <div ng-include="'views/product/_form.html'"></div>
+  </div>
+</header>
+<form class="form" name="form" ng-submit="form.$valid && create(product)" ng-disabled="sending">
+  <div ng-include="'views/product/_form.html'" onload="init()"></div>
 </form>

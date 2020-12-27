@@ -34,13 +34,45 @@ angular.module('client').controller('MainCtrl', function ($rootScope, $scope, $s
         return text;
     };
     
-    hotkeys.add({
+    hotkeys.bindTo($scope).add({
         combo: 'ctrl+i',
         description: 'DevTools',
         allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
         callback: function () {
             CefHelper.showDevTools();
         }
+    })
+    .add({
+      combo: 'f1',
+      description: 'Ticket',
+      allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+      callback: function () {
+        $state.go("TicketCreate");
+      }
+    })
+    .add({
+      combo: 'f2',
+      description: 'Factura',
+      allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+      callback: function () {
+        $state.go("InvoiceCreate");
+      }
+    })
+    .add({
+      combo: 'f3',
+      description: 'Pago',
+      allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+      callback: function () {
+        $state.go("PaymentCreate");
+      }
+    })
+    .add({
+      combo: 'f4',
+      description: 'Reparto',
+      allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+      callback: function () {
+        $state.go("DeliveryCreate");
+      }
     });
 
     $scope.reload = function () {

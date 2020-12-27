@@ -12,7 +12,10 @@ namespace FriMav.Domain.Proyections
         public int Number { get; set; }
         public int PersonId { get; set; }
         public DateTime Date { get; set; }
-        public string PersonCode { get; set; }
-        public string PersonName { get; set; }
+        public string CustomerCode { get; set; }
+        public decimal Total { get; set; }
+        public string CustomerName { get; set; }
+        public string DeliveryAddress { get; set; }
+        public object Products { get; set; }
     }
 }

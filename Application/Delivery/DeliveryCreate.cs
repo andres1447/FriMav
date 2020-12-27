@@ -8,7 +8,6 @@ namespace FriMav.Application
 {
     public class DeliveryCreate
     {
-        public DateTime Date { get; set; }
         public int EmployeeId { get; set; }
         public ICollection<int> Invoices { get; set; }
     }

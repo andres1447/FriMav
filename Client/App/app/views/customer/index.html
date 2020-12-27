@@ -1,12 +1,10 @@
-<div class="row">
-    <h4>Clientes</h4>
-</div>
-<div class="row">
-    <div class="form-group">
-        <a ui-sref="CustomerCreate" class="btn btn-success">Nuevo<span class="key-shortcut">+</span></a>
-    </div>
-</div>
-<div class="row">
+<header>
+  <h3>Clientes</h3>
+  <div>
+    <a ui-sref="CustomerCreate" class="btn btn-success">Nuevo<span class="key-shortcut">+</span></a>
+  </div>
+</header>
+<div>
     <div class="form-group">
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-search"></i><span class="key-shortcut">F2</span></span>
@@ -16,26 +14,26 @@
                    typeahead-editable="false" ae-autofocus="SearchCustomer">
         </div>
     </div>
-    <table class="table table-bordered">
+    <table class="table table-bordered table-condensed">
         <thead>
             <tr>
-                <th>Codigo</th>
-                <th>Nombre</th>
-                <th>Cuit</th>
-                <th>Zona</th>
-                <th>Direccion</th>
-                <th>Balance</th>
+                <th class="col-md-1">Codigo</th>
+                <th class="col-md-2">Nombre</th>
+                <th class="col-md-2">Cuit</th>
+                <th class="col-md-1">Zona</th>
+                <th class="col-md-2">Direccion</th>
+                <th class="col-md-1">Balance</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="it in customers" ng-class="{'alert-info': $index == customerIndex}">
-                <td class="col-md-1">{{::it.code}}</td>
-                <td class="col-md-2">{{::it.name}}</td>
-                <td class="col-md-2">{{::it.cuit}}</td>
-                <td class="col-md-1">{{::it.zone.name}}</td>
-                <td class="col-md-2">{{::it.address}}</td>
-                <td class="col-md-1" ng-class="{'text-danger': it.balance > 0, 'text-success': it.balance < 0}">{{::it.balance}}</td>
+                <td>{{::it.code}}</td>
+                <td>{{::it.name}}</td>
+                <td>{{::it.cuit}}</td>
+                <td>{{::it.zone.name}}</td>
+                <td>{{::it.address}}</td>
+                <td ng-class="{'text-danger': it.balance > 0, 'text-success': it.balance < 0}">{{::it.balance}}</td>
                 <td>
                     <a ui-sref="CustomerShow({ id: it.id })" class="btn btn-info"><i class="glyphicon glyphicon-th-list"></i><span class="key-shortcut">&crarr;</span></a>
                     <a ui-sref="CustomerUpdate({ id: it.id })" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i><span class="key-shortcut">&midast;</span></a>

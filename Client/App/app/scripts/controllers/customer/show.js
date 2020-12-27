@@ -12,7 +12,7 @@ angular.module('client')
           description: 'Nuevo pago',
           persistent: false,
           callback: function (e) {
-              $state.go('PaymentCreate', { personId: customer.personId });
+            $state.go('CustomerPaymentCreate', { id: customer.id });
           }
         })
         .add({

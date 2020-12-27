@@ -3,7 +3,6 @@
 angular.module('client')
   .controller('CustomerPaymentCreateCtrl', function ($scope, $state, hotkeys, Notification, Payment, customer) {
       $scope.payment = {
-        date: new Date(),
         personId: customer.id
       };
 
@@ -28,7 +27,7 @@ angular.module('client')
       });
 
       $scope.init = function () {
-          $scope.broadcast('InitPaymentCreate');
+          $scope.broadcast('InitCustomerPaymentCreate');
       };
 
       $scope.init();

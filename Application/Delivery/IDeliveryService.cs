@@ -13,7 +13,7 @@ namespace FriMav.Application
     {
         IEnumerable<Delivery> GetAll();
 
-        Delivery Get(int id);
+        DeliveryResponse Get(int id);
 
         List<DeliveryListing> GetListing();
         IEnumerable<UndeliveredInvoice> GetUndeliveredInvoices();

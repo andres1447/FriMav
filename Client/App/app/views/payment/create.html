@@ -15,11 +15,11 @@
                typeahead-focus-on-select="false" typeahead-editable="false" ae-key-prev="[37, 38]"
                clear-on-backspace="clearPerson()" ae-tab-validator="payment.person != null" ae-autofocus="InitPaymentCreate">
       </div>
-      <div class="col-md-6" ng-show="payment.person != null">
+      <div class="col-md-6">
         <label class="control-label">Balance</label>
-        <div class="form-control-static" ng-class="{'text-danger': payment.person.balance > 0, 'text-success': payment.person.balance < 0}">${{payment.person.balance}}</div>
+        <div class="form-control-static" ng-class="{'text-danger': payment.person.balance > 0, 'text-success': payment.person.balance < 0}">${{payment.person == null ? 0 : payment.person.balance}}</div>
       </div>
     </div>
   </div>
-  <div ng-include="'views/payment/_form.html'"></div>
+  <div ng-include="'views/payment/_form.html'" onload="init()"></div>
 </form>

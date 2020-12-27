@@ -71,6 +71,7 @@
     <Compile Include="FriMavDbContext.cs" />
     <Compile Include="DatabaseInstaller.cs" />
     <Compile Include="EntityRepository.cs" />
+    <Compile Include="Mappings\CatalogMapping.cs" />
     <Compile Include="Mappings\CustomerMapping.cs" />
     <Compile Include="Mappings\CustomerPriceMapping.cs" />
     <Compile Include="Mappings\DeliveryMapping.cs" />

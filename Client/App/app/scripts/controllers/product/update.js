@@ -33,8 +33,6 @@ angular.module('client')
       $scope.update = function (product) {
           if (!$scope.sending) {
               $scope.sending = true;
-              if (hasValue(product.type))
-                product.id = product.type.id;
               Product.update(product, function (res) {
                   $scope.sending = false;
                   Notification.success('Producto editado correctamente.');

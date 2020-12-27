@@ -1,17 +1,19 @@
-<div class="row">
+<header>
+  <h3>Ticket</h3>
+  <div>
     <a class="btn btn-default" href="" ng-click="reload()"><i class="glyphicon glyphicon-refresh"></i> <span class="key-shortcut">ESC</span></a>
-</div>
-<form class="form" ng-submit="submit(ticket)">
+  </div>
+</header>
+<form class="form" name="form" ng-submit="form.$valid && submit(ticket)">
     <div class="row">
-        <h4>Compra</h4>
         <div class="form-group col-md-2">
             <label for="ticket_date" class="control-label">Fecha</label>
             <input id="ticket_date" type="date" class="form-control" ng-model="ticket.date" ng-model-options="{timezone: 'UTC'}" ng-required="true" ae-autofocus="InitTicket" ae-key-tab="[13]">
         </div>
     </div>
-    <div class="row">
+    <div>
         <h4>Detalle</h4>
-        <table class="table table-bordered">
+        <table class="table table-bordered table-condensed">
             <thead>
               <tr>
                 <th></th>

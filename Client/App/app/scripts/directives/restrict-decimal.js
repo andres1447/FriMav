@@ -11,7 +11,7 @@ angular.module('client').directive('restrictDecimal', function () {
         else if (!document.selection) {
           return 0;
         }
-        var c = "\001";
+        var c = parseInt('001', 8);
         var sel = document.selection.createRange();
         var txt = sel.text;
         var dul = sel.duplicate();

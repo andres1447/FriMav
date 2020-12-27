@@ -195,6 +195,7 @@
     <Content Include="App\app\scripts\controllers\zone\show.js" />
     <Content Include="App\app\scripts\controllers\zone\update.js" />
     <Content Include="App\app\scripts\controllers\family\show.js" />
+    <Content Include="App\app\scripts\directives\blacklist.js" />
     <Content Include="App\app\scripts\directives\clear-on-backspace.js" />
     <Content Include="App\app\scripts\directives\keyprev.js" />
     <Content Include="App\app\scripts\directives\restrict-decimal.js" />
@@ -209,10 +210,18 @@
     <Content Include="App\app\views\zone\update.html" />
     <Content Include="App\app\views\zone\_form.html" />
     <Content Include="App\app\views\family\show.html" />
-    <Content Include="App\dist\scripts\scripts.4be9b9f8.js" />
-    <Content Include="App\dist\scripts\vendor.90d71e31.js" />
-    <Content Include="App\dist\styles\main.d92349e0.css" />
-    <Content Include="App\dist\styles\vendor.16c1ee70.css" />
+    <Content Include="App\dist\scripts\scripts.1e898d2e.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App\dist\scripts\vendor.7c2b40a4.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App\dist\styles\main.4d359427.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App\dist\styles\vendor.16c1ee70.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="bin\x86\Debug\App\dist\404.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -228,10 +237,18 @@
     <Content Include="bin\x86\Debug\App\dist\robots.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="bin\x86\Debug\App\dist\scripts\scripts.4be9b9f8.js" />
-    <Content Include="bin\x86\Debug\App\dist\scripts\vendor.90d71e31.js" />
-    <Content Include="bin\x86\Debug\App\dist\styles\main.d92349e0.css" />
-    <Content Include="bin\x86\Debug\App\dist\styles\vendor.16c1ee70.css" />
+    <Content Include="bin\x86\Debug\App\dist\scripts\scripts.4be9b9f8.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\x86\Debug\App\dist\scripts\vendor.7c2b40a4.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\x86\Debug\App\dist\styles\main.4d359427.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\x86\Debug\App\dist\styles\vendor.16c1ee70.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Templates\EscpInvoice.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>

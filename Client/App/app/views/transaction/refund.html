@@ -1,14 +1,10 @@
-<div class="row">
-    <h4>Cancelacion de {{::getTransactionType(transaction)}} #{{::transaction.number}}</h4>
-</div>
-<div class="row">
+<header>
+  <h3>Cancelacion de {{::getTransactionType(transaction)}} #{{::transaction.number}}</h3>
+  <div>
     <a ui-sref="CustomerShow({ personId: transaction.personId })" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i><span class="key-shortcut">esc</span></a>
-</div>
-<form class="form-horizontal" ng-submit="refund(createRefund)">
-    <div class="form-group">
-        <label for="payment_date" class="control-label">Fecha</label>
-        <input id="payment_date" type="date" class="form-control" ng-model="createRefund.date" ae-key-tab="[13]" ae-autofocus="InitPaymentCreate" autocomplete="off" />
-    </div>
+  </div>
+</header>
+<form class="form" name="form" ng-submit="form.$valid && refund(createRefund)">
     <div class="form-group">
         <label for="payment_description" class="control-label">Descripcion</label>
         <textarea id="payment_description" type="text" class="form-control" ng-model="createRefund.description" ae-key-tab="[13]" autocomplete="off" ae-autofocus="InitRefund" ></textarea>

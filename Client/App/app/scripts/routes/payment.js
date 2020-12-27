@@ -13,16 +13,6 @@ angular
                 }
             }
         })
-        .state('CustomerPaymentCreate', {
-          url: '/customer/:id/payment',
-          templateUrl: 'views/payment/customer-payment-create.html',
-          controller: 'CustomerPaymentCreateCtrl',
-          resolve: {
-            customer: function ($stateParams, Customer) {
-              return Customer.get({ id: $stateParams.id }).$promise;
-            }
-          }
-        })
         .state('PaymentCancel', {
           url: '/payment/:id/cancel',
             templateUrl: 'views/payment/cancel.html',

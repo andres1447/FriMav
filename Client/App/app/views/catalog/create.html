@@ -1,7 +1,7 @@
 <div class="row">
     <a class="btn btn-default" href="" ng-click="reload()"><i class="glyphicon glyphicon-refresh"></i><span class="key-shortcut">F5</span></a>
 </div>
-<form class="form" ng-submit="submit(catalog)">
+<form class="form" name="form" ng-submit="form.$valid && submit(catalog)">
     <div class="row">
         <h4>Lista de precios</h4>
         <div class="form-group col-md-2">

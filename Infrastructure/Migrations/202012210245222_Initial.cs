@@ -127,6 +127,16 @@
                 .Index(t => t.ProductId);
             
             CreateTable(
+                "dbo.Catalog",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        CreationDate = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.Delivery",
                 c => new
                     {
@@ -153,6 +163,19 @@
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
+                "dbo.CatalogProduct",
+                c => new
+                    {
+                        CatalogId = c.Int(nullable: false),
+                        ProductId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.CatalogId, t.ProductId })
+                .ForeignKey("dbo.Catalog", t => t.CatalogId)
+                .ForeignKey("dbo.Product", t => t.ProductId)
+                .Index(t => t.CatalogId)
+                .Index(t => t.ProductId);
+            
+            CreateTable(
                 "dbo.DeliveryInvoice",
                 c => new
                     {
@@ -172,6 +195,8 @@
             DropForeignKey("dbo.DeliveryInvoice", "InvoiceId", "dbo.TransactionDocument");
             DropForeignKey("dbo.DeliveryInvoice", "DeliveryId", "dbo.Delivery");
             DropForeignKey("dbo.Delivery", "EmployeeId", "dbo.Person");
+            DropForeignKey("dbo.CatalogProduct", "ProductId", "dbo.Product");
+            DropForeignKey("dbo.CatalogProduct", "CatalogId", "dbo.Catalog");
             DropForeignKey("dbo.InvoiceItem", "InvoiceId", "dbo.TransactionDocument");
             DropForeignKey("dbo.InvoiceItem", "ProductId", "dbo.Product");
             DropForeignKey("dbo.TransactionDocument", "RefundDocumentId", "dbo.TransactionDocument");
@@ -182,6 +207,8 @@
             DropForeignKey("dbo.Person", "ZoneId", "dbo.Zone");
             DropIndex("dbo.DeliveryInvoice", new[] { "InvoiceId" });
             DropIndex("dbo.DeliveryInvoice", new[] { "DeliveryId" });
+            DropIndex("dbo.CatalogProduct", new[] { "ProductId" });
+            DropIndex("dbo.CatalogProduct", new[] { "CatalogId" });
             DropIndex("dbo.Delivery", new[] { "EmployeeId" });
             DropIndex("dbo.InvoiceItem", new[] { "ProductId" });
             DropIndex("dbo.InvoiceItem", new[] { "InvoiceId" });
@@ -192,8 +219,10 @@
             DropIndex("dbo.TransactionDocument", new[] { "RefundDocumentId" });
             DropIndex("dbo.TransactionDocument", new[] { "PersonId" });
             DropTable("dbo.DeliveryInvoice");
+            DropTable("dbo.CatalogProduct");
             DropTable("dbo.NumberSequence");
             DropTable("dbo.Delivery");
+            DropTable("dbo.Catalog");
             DropTable("dbo.InvoiceItem");
             DropTable("dbo.ProductType");
             DropTable("dbo.Product");

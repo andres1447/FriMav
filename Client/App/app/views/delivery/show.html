@@ -1,68 +1,72 @@
-<div class="row">
-    <h4>Envio</h4>
-</div>
-<div class="row">
+<header>
+  <h3>Envio</h3>
+  <div>
     <a ui-sref="DeliveryIndex" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i><span class="key-shortcut">esc</span></a>
     <a ng-click="print()" class="btn btn-success"><i class="glyphicon glyphicon-print"></i><span class="key-shortcut">F5</span></a>
     <a ng-click="delete()" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i><span class="key-shortcut">-</span></a>
-</div>
-<div class="row">
-    <table class="table">
+  </div>
+</header>
+<div>
+  <div class="row">
+    <div class="col-md-6">
+      <table class="table table-bordered table-condensed">
         <tr>
-            <td>Fecha</td>
-            <td>{{:: delivery.date | date:'dd/MM/yyyy' }}</td>
+          <th>Fecha</th>
+          <td>{{:: delivery.date | date:'dd/MM/yyyy' }}</td>
         </tr>
         <tr>
-            <td>Numero</td>
-            <td>{{:: delivery.number }}</td>
+          <th>Numero</th>
+          <td>{{:: delivery.number }}</td>
         </tr>
         <tr>
-            <td>Empleado</td>
-            <td>{{:: delivery.employee.name }}</td>
+          <th>Empleado</th>
+          <td>{{:: delivery.employeeCode}} - {{::delivery.employeeName }}</td>
         </tr>
-    </table>
-</div>
-<div class="row">
+      </table>
+    </div>
+  </div>
+  <div>
     <h5>Facturas</h5>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Numero</th>
-                <th>Codigo de cliente</th>
-                <th>Cliente</th>
-                <th>Monto</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="it in delivery.invoices">
-                <td class="col-md-2">{{:: it.number }}</td>
-                <td class="col-md-2">{{:: it.person.code }}</td>
-                <td class="col-md-2">{{:: it.person.name }}</td>
-                <td class="col-md-2 number">{{:: it.total | number:2 }}</td>
-            </tr>
-            <tr>
-                <td class="col-md-2"></td>
-                <td class="col-md-2"></td>
-                <td class="col-md-2 number"><strong>{{:: invoiceTotals.quantity }}</strong></td>
-                <td class="col-md-2 number"><strong>{{:: invoiceTotals.amount | number:2 }}</strong></td>
-            </tr>
-        </tbody>
+    <table class="table table-bordered table-condensed">
+      <thead>
+        <tr>
+          <th class="col-md-2">Numero</th>
+          <th class="col-md-2">Codigo de cliente</th>
+          <th class="col-md-2">Cliente</th>
+          <th class="col-md-2">Monto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="it in delivery.invoices">
+          <td>{{:: it.number }}</td>
+          <td>{{:: it.customerCode }}</td>
+          <td>{{:: it.customerName }}</td>
+          <td class="text-right">{{:: it.total | number:2 }}</td>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th class="text-right">{{:: invoiceTotals.quantity }}</th>
+          <th class="text-right">{{:: invoiceTotals.amount | number:2 }}</th>
+        </tr>
+      </tbody>
     </table>
-</div>
-<div class="row">
+  </div>
+  <div>
     <h5>Productos</h5>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Producto</th>
-                <th>Cantidad</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="it in products">
-                <td class="col-md-2">{{:: it.name }}</td>
-                <td class="col-md-2 number">{{:: it.quantity | number:2 }}</td>
-            </tr>
-        </tbody>
+    <table class="table table-bordered table-condensed">
+      <thead>
+        <tr>
+          <th class="col-md-2">Producto</th>
+          <th class="col-md-2 text-right">Cantidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="it in delivery.products">
+          <td>{{:: it.name }}</td>
+          <td class="text-right">{{:: it.quantity | number:2 }}</td>
+        </tr>
+      </tbody>
     </table>
+  </div>
 </div>

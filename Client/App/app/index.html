@@ -41,10 +41,10 @@
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
             <ul class="nav navbar-nav">
-              <li><a ui-sref="TicketCreate">Ticket</a></li>
-              <li><a ui-sref="InvoiceCreate">Factura</a></li>
-              <li><a ui-sref="PaymentCreate">Pago</a></li>
-              <li><a ui-sref="DeliveryIndex">Envio</a></li>
+              <li><a ui-sref="TicketCreate"><span class="key-shortcut">F1</span>Ticket</a></li>
+              <li><a ui-sref="InvoiceCreate"><span class="key-shortcut">F2</span>Factura</a></li>
+              <li><a ui-sref="PaymentCreate"><span class="key-shortcut">F3</span>Pago</a></li>
+              <li><a ui-sref="DeliveryIndex"><span class="key-shortcut">F4</span>Reparto</a></li>
               <li uib-dropdown>
                 <a uib-dropdown-toggle>Administración <span class="caret"></span></a>
                 <ul uib-dropdown-menu>
@@ -69,7 +69,6 @@
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/jquery-validation/dist/jquery.validate.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
@@ -80,6 +79,7 @@
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/angular-hotkeys/build/hotkeys.js"></script>
+    <script src="bower_components/jquery-validation/dist/jquery.validate.js"></script>
     <script src="bower_components/angular-ui-notification/dist/angular-ui-notification.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
@@ -111,6 +111,7 @@
     <script src="scripts/controllers/product/index.js"></script>
     <script src="scripts/controllers/product/update.js"></script>
     <script src="scripts/controllers/payment/create.js"></script>
+    <script src="scripts/controllers/payment/customer-payment-create.js"></script>
     <script src="scripts/controllers/transaction/refund.js"></script>
     <script src="scripts/controllers/settings/print.js"></script>
     <script src="scripts/controllers/zone/create.js"></script>
