@@ -3,8 +3,11 @@
 angular.module('client').directive('blacklist', function () {
   return {
     require: 'ngModel',
-    link: function (scope, elem, attr, ngModel) {
-      var blacklist = attr.blacklist;
+    scope: {
+      blacklist: '='
+    },
+    link: function (scope, elem, attrs, ngModel) {
+      var blacklist = scope.blacklist;
 
       //For DOM -> model validation
       ngModel.$parsers.unshift(function (value) {

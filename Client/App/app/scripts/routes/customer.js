@@ -20,6 +20,9 @@ angular
             resolve: {
                 zones: function (Zone) {
                     return Zone.query().$promise;
+                },
+                codes: function (Customer) {
+                  return Customer.codes().$promise;
                 }
             }
         })
@@ -29,10 +32,13 @@ angular
             controller: 'CustomerUpdateCtrl',
             resolve: {
                 customer: function ($stateParams, Customer) {
-                return Customer.get({ id: $stateParams.id }).$promise;
+                    return Customer.get({ id: $stateParams.id }).$promise;
                 },
                 zones: function (Zone) {
                     return Zone.query().$promise;
+                },
+                codes: function (Customer) {
+                    return Customer.codes().$promise;
                 }
             }
         })
@@ -42,10 +48,10 @@ angular
             controller: 'CustomerShowCtrl',
             resolve: {
                 customer: function ($stateParams, Customer) {
-                return Customer.get({ id: $stateParams.id }).$promise;
+                    return Customer.get({ id: $stateParams.id }).$promise;
                 },
                 transactions: function (customer, Transaction) {
-                  return Transaction.account({ id: customer.id }).$promise;
+                    return Transaction.account({ id: customer.id }).$promise;
                 }
             }
         })
@@ -55,7 +61,7 @@ angular
           controller: 'CustomerPaymentCreateCtrl',
           resolve: {
             customer: function ($stateParams, Customer) {
-              return Customer.get({ id: $stateParams.id }).$promise;
+                return Customer.get({ id: $stateParams.id }).$promise;
             }
           }
         })

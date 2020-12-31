@@ -14,6 +14,7 @@ namespace FriMav.Delivery
         {
             var exitCode = HostFactory.Run(x =>
             {
+                x.DependsOnMsSql();
                 x.Service<HostConfig>();
                 x.RunAsLocalSystem();
                 x.SetDisplayName("Frimav.Api");

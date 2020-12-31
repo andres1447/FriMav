@@ -12,6 +12,7 @@ namespace FriMav.Application
         IEnumerable<ProductResponse> GetAll();
         IPagedList<ProductResponse> GetPaged(string code, string name, int pageIndex, int pageSize);
         IEnumerable<PriceListItem> GetPriceList(int id);
+        List<string> UsedCodes();
 
         [Transactional]
         void Create(ProductCreate product);

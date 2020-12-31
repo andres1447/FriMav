@@ -1,0 +1,1 @@
+FriMav.Delivery.exe install --autostart

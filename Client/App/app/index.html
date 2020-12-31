@@ -62,7 +62,7 @@
           </div>
         </div>
       </div>
-      <div class="content" ui-view="">
+      <div class="content" ng-if="!hideContent" ui-view="">
       </div>
     </div>
 
@@ -119,7 +119,9 @@
     <script src="scripts/controllers/zone/show.js"></script>
     <script src="scripts/controllers/zone/update.js"></script>
     <script src="scripts/directives/autofocus.js"></script>
+    <script src="scripts/directives/blacklist.js"></script>
     <script src="scripts/directives/clear-on-backspace.js"></script>
+    <script src="scripts/directives/form-group.js"></script>
     <script src="scripts/directives/keyprev.js"></script>
     <script src="scripts/directives/keytab.js"></script>
     <script src="scripts/directives/navigate.js"></script>

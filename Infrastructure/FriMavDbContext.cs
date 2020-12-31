@@ -13,27 +13,13 @@ using System.Threading.Tasks;
 
 namespace FriMav.Infrastructure
 {
-    public interface IDbContext
-    {
-        DbSet<T> Set<T>() where T : class;
-        int SaveChanges();
-    }
-
-    public class FriMavDbContext : DbContext, IDbContext
+    public class FriMavDbContext : DbContext
     {
         public FriMavDbContext() : base("FriMavDb")
         {
+            Database.SetInitializer(new CreateDatabaseIfNotExists<FriMavDbContext>());
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<FriMavDbContext, Configuration>());
         }
-
-        public DbSet<Product> Products { get; set; }
-        public DbSet<ProductType> ProductTypes { get; set; }
-        public DbSet<Invoice> Invoices { get; set; }
-        public DbSet<InvoiceItem> Items { get; set; }
-        public DbSet<TransactionDocument> TransactionDocuments { get; set; }
-        public DbSet<Payment> Payments { get; set; }
-        public DbSet<DebitNote> DebitNotes { get; set; }
-        public DbSet<CreditNote> CreditNotes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('client')
-  .controller('EmployeeCreateCtrl', function ($scope, $state, $timeout, hotkeys, Notification, Employee) {
+  .controller('EmployeeCreateCtrl', function ($scope, $state, $timeout, hotkeys, Notification, Employee, codes) {
       hotkeys.bindTo($scope)
       .add({
           combo: 'f5',
@@ -23,6 +23,7 @@ angular.module('client')
       });
 
       $scope.employee = {};
+      $scope.codes = codes;
 
       $scope.init = function () {
             $scope.broadcast('InitForm');

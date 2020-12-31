@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FriMav.Domain;
 using FriMav.Domain.Entities;
 
@@ -19,6 +20,9 @@ namespace FriMav.Application
 
         public void Create(EmployeeCreate request)
         {
+            if (_employeeRepository.Query().Any(x => x.Code == request.Code))
+                throw new AlreadyExistsException();
+
             var employee = new Employee
             {
                 Code = request.Code,
@@ -54,6 +58,9 @@ namespace FriMav.Application
 
         public void Update(EmployeeUpdate employee)
         {
+            if (_employeeRepository.Query().Any(x => x.Id != employee.Id && x.Code == employee.Code))
+                throw new AlreadyExistsException();
+
             var saved = _employeeRepository.Get(employee.Id);
 
             saved.Code = employee.Code;
@@ -62,9 +69,9 @@ namespace FriMav.Application
             saved.Address = employee.Address;
         }
 
-        public bool Exists(string code)
+        public List<string> UsedCodes()
         {
-            return _employeeRepository.Exists(x => x.Code.EndsWith(code));
+            return _employeeRepository.Query().Select(x => x.Code).ToList();
         }
     }
 }

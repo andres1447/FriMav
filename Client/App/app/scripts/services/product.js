@@ -9,6 +9,11 @@ angular.module('client').factory('Product', function ($resource, ApiConfig) {
             url: ApiConfig.host + 'product/active',
             method: 'GET',
             isArray: true
+        },
+        codes: {
+          url: ApiConfig.host + 'product/codes',
+          method: 'GET',
+          isArray: true
         }
     });
 });

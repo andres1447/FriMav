@@ -29,11 +29,22 @@ namespace FriMav.Client.Printer.Pos
         [XmlElement("Footer")]
         public PosTemplateSection Footer { get; set; }
 
+        [XmlElement("Center", typeof(AlignCenter))]
+        [XmlElement("Left", typeof(AlignLeft))]
+        [XmlElement("Right", typeof(AlignRight))]
+        [XmlElement("Emphasis", typeof(Emphasis))]
+        [XmlElement("Feed", typeof(Feed))]
+        [XmlElement("Line", typeof(Line))]
+        [XmlElement("NewLine", typeof(NewLine))]
+        [XmlElement("Text", typeof(Text))]
+        public List<RawPrinterCommand> Commands { get; set; }
+
         public PosTemplate()
         {
             CharactersPerLine = 40;
             InlineCopies = 0;
             LinesPerPage = 0;
+            Commands = new List<RawPrinterCommand>();
             Header = new PosTemplateSection();
             Body = new PosTemplateSection();
             Footer = new PosTemplateSection();
@@ -63,7 +74,12 @@ namespace FriMav.Client.Printer.Pos
         {
             var pages = new List<string>();
             var helper = new EpsonCommander(CharactersPerLine);
-            if (FitsInOnePage())
+            foreach (var command in Commands)
+            {
+                command.Execute(helper);
+            }
+            pages.Add(helper.Build());
+            /*if (FitsInOnePage())
             {
                 helper.Init();
                 for (int x = 0; x < InlineCopies + 1; x++)
@@ -89,7 +105,7 @@ namespace FriMav.Client.Printer.Pos
                     helper.Init();
                     pages.Add(helper.Build());
                 }
-            }
+            }*/
             return pages;
         }
     }

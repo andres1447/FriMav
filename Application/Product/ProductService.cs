@@ -44,6 +44,9 @@ namespace FriMav.Application
 
         public void Create(ProductCreate request)
         {
+            if (_productRepository.Query().Any(x => x.Code == request.Code))
+                throw new AlreadyExistsException();
+
             var type = request.ProductTypeId.HasValue ? _productTypeRepository.Get(request.ProductTypeId.Value) : null;
             var product = new Product
             {
@@ -58,6 +61,9 @@ namespace FriMav.Application
 
         public void Update(ProductUpdate product)
         {
+            if (_productRepository.Query().Any(x => x.Id != product.Id && x.Code == product.Code))
+                throw new AlreadyExistsException();
+
             var saved = GetById(product.Id);
             saved.Name = product.Name;
             saved.ProductTypeId = product.ProductTypeId;
@@ -84,7 +90,9 @@ namespace FriMav.Application
 
         public IEnumerable<ProductResponse> GetAllActive()
         {
-            return _productRepository.Query().Where(x => !x.DeleteDate.HasValue).Select(ProductResponse.Expression).ToList();
+            return _productRepository.Query()
+                .Where(x => !x.DeleteDate.HasValue)
+                .Select(ProductResponse.Expression).ToList();
         }
 
         public IEnumerable<ProductResponse> GetAllActiveInFamily(int typeId)
@@ -106,6 +114,11 @@ namespace FriMav.Application
                     Code = x.Code,
                     Price = y.Select(c => c.Price).DefaultIfEmpty(x.Price).FirstOrDefault()
                 }).ToList();
+        }
+
+        public List<string> UsedCodes()
+        {
+            return _productRepository.Query().Select(x => x.Code).ToList();
         }
     }
 }

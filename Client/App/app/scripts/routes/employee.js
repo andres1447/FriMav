@@ -16,7 +16,12 @@ angular
         .state('EmployeeCreate', {
             url: '/employee/create',
             templateUrl: 'views/employee/create.html',
-            controller: 'EmployeeCreateCtrl'
+            controller: 'EmployeeCreateCtrl',
+            resolve: {
+              codes: function (Employee) {
+                return Employee.codes().$promise;
+              }
+          }
         })
         .state('EmployeeUpdate', {
           url: '/employee/:id/update',
@@ -24,7 +29,10 @@ angular
             controller: 'EmployeeUpdateCtrl',
             resolve: {
                 employee: function ($stateParams, Employee) {
-                return Employee.get({ id: $stateParams.id }).$promise;
+                  return Employee.get({ id: $stateParams.id }).$promise;
+                },
+                codes: function (Employee) {
+                  return Employee.codes().$promise;
                 }
             }
         })
@@ -34,10 +42,10 @@ angular
             controller: 'EmployeeShowCtrl',
             resolve: {
                 employee: function ($stateParams, Employee) {
-                return Employee.get({ id: $stateParams.id }).$promise;
+                  return Employee.get({ id: $stateParams.id }).$promise;
                 },
-                accountEntries: function (customer, AccountEntry) {
-                  return AccountEntry.query({ id: customer.id }).$promise;
+                accountEntries: function (/*AccountEntry*/) {
+                  return [];//AccountEntry.query({ id: customer.id }).$promise;
                 }
             }
         })

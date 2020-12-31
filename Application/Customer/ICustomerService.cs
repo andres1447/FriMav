@@ -12,7 +12,7 @@ namespace FriMav.Application
 
         Customer Get(int id);
 
-        bool Exists(string code);
+        List<string> UsedCodes();
 
         [Transactional]
         void Create(CustomerCreate request);

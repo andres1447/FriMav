@@ -32,7 +32,7 @@ namespace FriMav.Application
 
         public InvoiceResult Create(InvoiceCreate request)
         {
-            var customer = GetRequestCustomerOrDefault(request);
+            var customer = GetRequestCustomer(request);
 
             var invoice = MapInvoice(request, customer);
 
@@ -49,7 +49,7 @@ namespace FriMav.Application
                 _paymentRepository.Add(payment);
             }
 
-            UpdateCustomer(customer, invoice);
+            UpdateCustomerPrices(customer, invoice);
 
             return new InvoiceResult(invoice.Number, invoice.Total, invoice.Balance);
         }
@@ -95,10 +95,9 @@ namespace FriMav.Application
             return _productRepository.Query().Where(x => productIds.Contains(x.Id)).ToList();
         }
 
-        private Customer GetRequestCustomerOrDefault(InvoiceCreate request)
+        private Customer GetRequestCustomer(InvoiceCreate request)
         {
-            var customerId = request.CustomerId ?? Customer.DefaultCustomerId;
-            var customer = _customerRepository.Get(customerId, x => x.CustomerPrices);
+            var customer = _customerRepository.Get(request.PersonId, x => x.CustomerPrices);
             if (customer == null)
                 throw new NotFoundException();
             return customer;
@@ -117,12 +116,6 @@ namespace FriMav.Application
         public Invoice GetDisplay(int id)
         {
             return _invoiceRepository.Get(id, x => x.Person, x => x.Items);
-        }
-
-        private void UpdateCustomer(Customer customer, Invoice invoice)
-        {
-            customer.Shipping = invoice.Shipping;
-            UpdateCustomerPrices(customer, invoice);
         }
 
         private void UpdateCustomerPrices(Customer customer, Invoice invoice)

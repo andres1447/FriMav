@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FriMav.Domain;
 using FriMav.Domain.Entities;
 
@@ -20,6 +21,9 @@ namespace FriMav.Application
 
         public void Create(CustomerCreate request)
         {
+            if (_customerRepository.Query().Any(x => x.Code == request.Code))
+                throw new AlreadyExistsException();
+
             var customer = new Customer
             {
                 Code = request.Code,
@@ -42,9 +46,9 @@ namespace FriMav.Application
             customer.Delete();
         }
 
-        public bool Exists(string code)
+        public List<string> UsedCodes()
         {
-            throw new NotImplementedException();
+            return _customerRepository.Query().Select(x => x.Code).ToList();
         }
 
         public Customer Get(int personId)
@@ -64,6 +68,9 @@ namespace FriMav.Application
 
         public void Update(CustomerUpdate customer)
         {
+            if (_customerRepository.Query().Any(x => x.Id != customer.Id && x.Code == customer.Code))
+                throw new AlreadyExistsException();
+
             var saved = _customerRepository.Get(customer.Id, x => x.Zone);
             var zone = customer.ZoneId.HasValue ? _zoneRepository.Get(customer.ZoneId.Value) : null;
             saved.Code = customer.Code;

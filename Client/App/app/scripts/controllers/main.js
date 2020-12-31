@@ -75,8 +75,17 @@ angular.module('client').controller('MainCtrl', function ($rootScope, $scope, $s
       }
     });
 
+    $scope.hideContent = false;
+
     $scope.reload = function () {
-        $state.reload();
+      return $state.transitionTo($state.current, $stateParams, {
+        reload: true
+      }).then(function () {
+        $scope.hideContent = true;
+        return $timeout(function () {
+          return $scope.hideContent = false;
+        }, 1);
+      });
     };
 
     $scope.broadcast = function (ev) {

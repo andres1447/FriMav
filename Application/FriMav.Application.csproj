@@ -49,6 +49,7 @@
     <Compile Include="Catalog\CatalogCreateValidator.cs" />
     <Compile Include="Catalog\ICatalogService.cs" />
     <Compile Include="Catalog\CatalogService.cs" />
+    <Compile Include="AlreadyExistsException.cs" />
     <Compile Include="Customer\CustomerCreate.cs" />
     <Compile Include="Customer\CustomerCreateValidator.cs" />
     <Compile Include="Customer\CustomerUpdate.cs" />

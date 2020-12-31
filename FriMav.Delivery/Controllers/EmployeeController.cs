@@ -14,10 +14,18 @@ namespace FriMav.Api.Controllers
             _employeeService = employeeService;
         }
 
+        [HttpGet]
         [Route("")]
         public IHttpActionResult GetAll()
         {
             return Ok(_employeeService.GetAll());
+        }
+
+        [HttpGet]
+        [Route("codes")]
+        public IHttpActionResult UsedCodes()
+        {
+            return Ok(_employeeService.UsedCodes());
         }
 
         [HttpGet]

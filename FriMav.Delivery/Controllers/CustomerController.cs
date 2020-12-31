@@ -17,10 +17,18 @@ namespace FriMav.Api.Controllers
             _productService = productService;
         }
 
+        [HttpGet]
         [Route("")]
         public IHttpActionResult GetAll()
         {
             return Ok(_customerService.GetAll());
+        }
+
+        [HttpGet]
+        [Route("codes")]
+        public IHttpActionResult UsedCodes()
+        {
+            return Ok(_customerService.UsedCodes());
         }
 
         [HttpGet]

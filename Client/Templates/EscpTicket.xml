@@ -1,40 +1,49 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <EscCommandTemplate>
-  <Line>40</Line>
+  <Line>48</Line>
   <NewLine/>
   <NewLine>
     <Right>
-      <Text>@Model.Date.ToString("dd/MM/yyyy")</Text>
+      <Text>@Model.Date.ToString("dd/MM/yyyy HH:mm")</Text>
     </Right>
   </NewLine>
   <NewLine>
     <Center>
-      <Emphasis>
-        <Text>Granja Malvinas</Text>
-      </Emphasis>
+	<Text>Malvinas</Text>
     </Center>
   </NewLine>
-  <Line>40</Line>
   <NewLine/>
-  @foreach (var item in Model.Items)
-  {
   <NewLine>
-    <Text>@item.Product</Text>
+    <Left>
+	<Text>Consumidor final</Text>
+    </Left>
   </NewLine>
-  <NewLine>
-    <Text>@item.Quantity.ToString("N2") x $@item.Price.ToString("N2")</Text>
-    <Right>
-      <Text>$@item.Amount().ToString("N2")</Text>
-    </Right>
-  </NewLine>
+  <NewLine/>
+  <Line>48</Line>
+  <NewLine/>
+@foreach (var item in Model.Items)
+{
+	<NewLine>
+		<Text Width="48" Align="L">@item.Product</Text>
+	</NewLine>
+    <NewLine>
+        <Text Width="30" Align="L">@item.Quantity.ToString("N2") x $@item.Price.ToString("N2")</Text>
+	    <Text Width="18" Align="R">$@item.Amount().ToString("N2")</Text>
+    </NewLine>
   }
-  <Line>40</Line>
+  <Line>48</Line>
   <NewLine/>
   <NewLine>
     <Right>
       <Text>Total: $@Model.Total().ToString("N2")</Text>
     </Right>
   </NewLine>
-  <Line>40</Line>
+  <NewLine/>
+  <NewLine>
+    <Center>
+      <Text>¡Muchas gracias!</Text>
+    </Center>
+  </NewLine>
+  <Line>48</Line>
   <Feed>9</Feed>
 </EscCommandTemplate>

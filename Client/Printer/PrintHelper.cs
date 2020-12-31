@@ -5,6 +5,7 @@ using System.IO;
 using System.Xml.Serialization;
 using FriMav.Client.Models;
 using System;
+using System.Windows.Forms;
 
 namespace FriMav.Client.Printer
 {

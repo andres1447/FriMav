@@ -29,6 +29,13 @@ function newDateUTC() {
     return new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
 }
 
+if (!Date.prototype.toLocal) {
+  Date.prototype.toLocal = function () {
+    return new Date(this.getTime() - this.getTimezoneOffset() * 60 * 1000);
+  }
+}
+
+
 if (!String.prototype.format) {
     String.prototype.format = function () {
         var args = arguments;
@@ -39,6 +46,16 @@ if (!String.prototype.format) {
             ;
         });
     };
+}
+
+if (!Array.prototype.remove) {
+  Array.prototype.remove = function (item) {
+    var index = this.indexOf(item);
+    if (index > -1) {
+      this.splice(index, 1);
+    }
+    return this;
+  }
 }
 
 if (!PrintHelper) {

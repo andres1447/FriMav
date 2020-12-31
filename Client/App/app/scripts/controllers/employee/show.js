@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('client')
-  .controller('EmployeeShowCtrl', function ($scope, $state, hotkeys, Notification, customer, accountEntries) {
+  .controller('EmployeeShowCtrl', function ($scope, $state, hotkeys, Notification, employee, accountEntries) {
       $scope.entryIndex = 0;
       $scope.accountEntries = accountEntries;
-      $scope.customer = customer;
+      $scope.employee = employee;
 
       hotkeys.bindTo($scope)
         .add({

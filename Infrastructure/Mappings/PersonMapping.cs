@@ -19,6 +19,8 @@ namespace FriMav.Infrastructure.Mappings
             Property(x => x.Code).IsRequired().HasMaxLength(10);
             Property(x => x.Name).IsRequired();
             HasOptional(x => x.Zone).WithMany().HasForeignKey(x => x.ZoneId);
+
+            HasIndex(x => x.Code).IsUnique(false);
         }
     }
 }

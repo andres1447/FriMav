@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('client')
-  .controller('ProductCreateCtrl', function ($scope, $state, $timeout, hotkeys, Notification, Product, productTypes) {
+  .controller('ProductCreateCtrl', function ($scope, $state, $timeout, hotkeys, Notification, Product, productTypes, codes) {
       $scope.productTypes = productTypes;
+      $scope.codes = codes;
 
       hotkeys.bindTo($scope).add({
           combo: 'f5',

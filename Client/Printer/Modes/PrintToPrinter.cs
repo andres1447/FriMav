@@ -18,7 +18,7 @@ namespace FriMav.Client.Printer
 
         public override void PrintTemplate(string dest, string template)
         {
-            Image image = HtmlRender.RenderToImage(template);
+            var image = HtmlRender.RenderToImage(template);
             PrintDocument document = new PrintDocument();
             document.PrinterSettings.PrinterName = dest;
             document.PrintPage += (ev, args) =>
@@ -27,10 +27,6 @@ namespace FriMav.Client.Printer
                 args.Graphics.DrawImage(image, point);
             };
             document.Print();
-
-            /*WebBrowser webBrowser = new WebBrowser();
-            webBrowser.DocumentCompleted += webBrowser_DocumentCompleted;
-            webBrowser.DocumentText = template;*/
         }
 
         void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)

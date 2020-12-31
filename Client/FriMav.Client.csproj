@@ -199,6 +199,7 @@
     <Content Include="App\app\scripts\directives\clear-on-backspace.js" />
     <Content Include="App\app\scripts\directives\keyprev.js" />
     <Content Include="App\app\scripts\directives\restrict-decimal.js" />
+    <Content Include="App\app\scripts\directives\form-group.js" />
     <Content Include="App\app\scripts\routes\zone.js" />
     <Content Include="App\app\scripts\services\zone.js" />
     <Content Include="App\app\scripts\services\healthcheck.js" />
@@ -210,7 +211,7 @@
     <Content Include="App\app\views\zone\update.html" />
     <Content Include="App\app\views\zone\_form.html" />
     <Content Include="App\app\views\family\show.html" />
-    <Content Include="App\dist\scripts\scripts.1e898d2e.js">
+    <Content Include="App\dist\scripts\scripts.e09fc2ce.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App\dist\scripts\vendor.7c2b40a4.js">

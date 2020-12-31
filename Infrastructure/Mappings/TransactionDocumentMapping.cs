@@ -21,6 +21,9 @@ namespace FriMav.Infrastructure.Mappings
 
             HasRequired(x => x.Person).WithMany().HasForeignKey(x => x.PersonId);
             HasOptional(x => x.RefundDocument).WithMany().HasForeignKey(x => x.RefundDocumentId);
+
+            HasIndex(x => x.Date).IsUnique(false);
+            HasIndex(x => x.Number).IsUnique(false);
         }
     }
 }

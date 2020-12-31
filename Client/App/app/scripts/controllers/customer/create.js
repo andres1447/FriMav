@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('client')
-  .controller('CustomerCreateCtrl', function ($scope, $state, $timeout, hotkeys, Notification, Customer, zones) {
+  .controller('CustomerCreateCtrl', function ($scope, $state, $timeout, hotkeys, Notification, Customer, zones, codes) {
       $scope.customer = { shipping: 2, paymentMethod: 2 };
       $scope.zones = zones;
+      $scope.codes = codes;
 
       hotkeys.bindTo($scope)
       .add({

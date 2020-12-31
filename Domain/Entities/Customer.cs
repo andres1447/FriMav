@@ -8,7 +8,8 @@ namespace FriMav.Domain.Entities
 {
     public class Customer : Person
     {
-        public const int DefaultCustomerId = 1;
+        public const int TicketCustomerId = 1;
+        public const int DefaultCustomerId = 2;
 
         public ICollection<CustomerPrice> CustomerPrices { get; set; } = new List<CustomerPrice>();
     }

@@ -1,21 +1,21 @@
-<div class="form-group">
-  <label for="product_code" class="control-label">Codigo</label>
-  <input id="product_code" type="text" class="form-control" ng-model="product.code" ae-key-tab="[13, 9, 40]" ae-key-prev="[37, 38]" ae-autofocus="InitProductCreate" autocomplete="off" required />
-</div>
-<div class="form-group">
-  <label for="product_name" class="control-label">Nombre</label>
-  <input id="product_name" type="text" class="form-control" ng-model="product.name" ae-key-tab="[13, 9, 40]" ae-key-prev="[37, 38]" autocomplete="off" required />
-</div>
-<div class="form-group">
-  <label for="product_price" class="control-label">Precio</label>
-  <input id="product_price" type="text" class="form-control" ng-model="product.price" ae-key-tab="[13, 9, 40]" ae-key-prev="[37, 38]" autocomplete="off" restrict-decimal required />
-</div>
+<form-group input="form.code" label="Código">
+  <input id="product_code" name="code" type="text" class="form-control" ng-model="product.code" ae-key-tab="[13, 9, 40]"
+         ae-key-prev="[37, 38]" ae-autofocus="InitProductCreate" autocomplete="off" required blacklist="codes" />
+</form-group>
+<form-group input="form.name" label="Nombre">
+  <input id="product_name" name="=name" type="text" class="form-control" ng-model="product.name" ae-key-tab="[13, 9, 40]"
+         ae-key-prev="[37, 38]" autocomplete="off" required />
+</form-group>
+<form-group input="form.price" label="Precio">
+  <input id="product_price" name="price" type="text" class="form-control" ng-model="product.price" ae-key-tab="[13, 9, 40]"
+         ae-key-prev="[37, 38]" autocomplete="off" restrict-decimal required />
+</form-group>
 <div class="form-group">
   <label for="product_type" class="control-label">Categoría</label>
   <input id="product_type" type="text" class="form-control" ng-model="product.type" ae-key-tab="[13, 9, 40]" ae-key-prev="[37, 38]"
-         autocomplete="off" uib-typeahead="type as type.name for type in productTypes | filter:$viewValue | limitTo:8"
-         class="form-control" typeahead-on-select="setProductTypeId(product)" typeahead-focus-on-select="false"
-         typeahead-editable="false" clear-on-backspace on-clear="clearProductType()" />
+          autocomplete="off" uib-typeahead="type as type.name for type in productTypes | filter:$viewValue | limitTo:8"
+          typeahead-on-select="setProductTypeId(product)" typeahead-focus-on-select="false"
+          typeahead-editable="false" clear-on-backspace on-clear="clearProductType()" />
 </div>
 <div class="form-group" ng-if="product.id > 0">
   <div class="checkbox">

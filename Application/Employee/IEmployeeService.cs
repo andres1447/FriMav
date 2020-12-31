@@ -18,6 +18,6 @@ namespace FriMav.Application
 
         List<Employee> GetAll();
         Person Get(int personId);
-        bool Exists(string code);
+        List<string> UsedCodes();
     }
 }

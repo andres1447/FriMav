@@ -26,8 +26,7 @@ namespace FriMav.Delivery.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\FriMav.mdf;In" +
-            "tegrated Security=True;Connect Timeout=30")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-G183075;Initial Catalog=FriMav;Integrated Security=True")]
         public string FriMavConnectionString {
             get {
                 return ((string)(this["FriMavConnectionString"]));

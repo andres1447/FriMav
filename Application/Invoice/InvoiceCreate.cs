@@ -8,7 +8,7 @@ namespace FriMav.Application
 {
     public class InvoiceCreate
     {
-        public int? CustomerId { get; set; }
+        public int PersonId { get; set; }
         public string CustomerName { get; set; }
         public Shipping? Shipping { get; set; }
         public PaymentMethod? PaymentMethod { get; set; }

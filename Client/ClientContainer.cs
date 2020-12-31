@@ -35,6 +35,7 @@ namespace FriMav.Client
 
             browser = new ChromiumWebBrowser(start);
             helper = new CefHelper(browser);
+
             browser.RegisterJsObject("CefHelper", helper);
             browser.RegisterJsObject("PrintHelper", new PrintHelper(Application.StartupPath + "\\PrintConfig.xml"));
             browser.RegisterJsObject("ClientConfig", new ClientConfig
@@ -44,7 +45,7 @@ namespace FriMav.Client
             this.Controls.Add(browser);
 
             browser.Dock = DockStyle.Fill;
-            browser.LoadingStateChanged += loaded;
+            //browser.LoadingStateChanged += loaded;
             // Allow the use of local resources in the browser
             BrowserSettings browserSettings = new BrowserSettings();
             browserSettings.FileAccessFromFileUrls = CefState.Enabled;

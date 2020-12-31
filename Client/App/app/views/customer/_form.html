@@ -1,11 +1,11 @@
-<div class="form-group">
-  <label for="customer_code" class="control-label">Codigo</label>
-  <input id="customer_code" type="text" class="form-control" ng-model="customer.code" ae-key-tab="[13]" ae-key-prev="[37, 38]" ae-autofocus="InitCustomerCreate" autocomplete="off" />
-</div>
-<div class="form-group">
-  <label for="customer_name" class="control-label">Nombre</label>
-  <input id="customer_name" type="text" class="form-control" ng-model="customer.name" ae-key-tab="[13]" ae-key-prev="[37, 38]" autocomplete="off" />
-</div>
+<form-group input="form.code" label="Código">
+  <input id="customer_code" name="code" blacklist="codes" type="text" class="form-control" ng-model="customer.code"
+         ae-key-tab="[13]" ae-key-prev="[37, 38]" ae-autofocus="InitCustomerCreate" autocomplete="off" required />
+</form-group>
+<form-group input="form.name" label="Nombre">
+  <input id="customer_name" name="name" type="text" class="form-control" ng-model="customer.name"
+         ae-key-tab="[13]" ae-key-prev="[37, 38]" autocomplete="off" required />
+</form-group>
 <div class="form-group">
   <label for="customer_cuit" class="control-label">Cuit</label>
   <input id="customer_cuit" type="text" class="form-control" ng-model="customer.cuit" ae-key-tab="[13, 40]" ae-key-prev="[37, 38]" autocomplete="off" maxlength="11" />

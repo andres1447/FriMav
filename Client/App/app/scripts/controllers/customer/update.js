@@ -1,8 +1,10 @@
 'use strict';
 
 angular.module('client')
-  .controller('CustomerUpdateCtrl', function ($scope, $state, $timeout, hotkeys, Notification, Customer, customer, zones) {
+  .controller('CustomerUpdateCtrl', function ($scope, $state, $timeout, hotkeys, Notification, Customer, customer, zones, codes) {
       $scope.zones = zones;
+      $scope.codes = codes.remove(customer.code);
+      $scope.customer = customer;
 
       hotkeys.bindTo($scope)
       .add({
@@ -23,8 +25,6 @@ angular.module('client')
               e.preventDefault();
           }
       });
-
-      $scope.customer = customer;
 
       $scope.init = function () {
           $timeout(function () {

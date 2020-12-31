@@ -22,6 +22,13 @@ namespace FriMav.Api.Controllers
         }
 
         [HttpGet]
+        [Route("codes")]
+        public IHttpActionResult UsedCodes()
+        {
+            return Ok(_productService.UsedCodes());
+        }
+
+        [HttpGet]
         [Route("active")]
         public IHttpActionResult GetActive()
         {

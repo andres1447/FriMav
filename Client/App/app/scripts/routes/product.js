@@ -20,6 +20,9 @@ angular
             resolve: {
                 productTypes: function (ProductFamily) {
                     return ProductFamily.query().$promise;
+                },
+                codes: function (Product) {
+                  return Product.codes().$promise;
                 }
             }
         })
@@ -33,6 +36,9 @@ angular
                 },
                 product: function ($stateParams, Product) {
                   return Product.get({ id: $stateParams.id }).$promise;
+                },
+                codes: function (Product) {
+                  return Product.codes().$promise;
                 }
             }
         });

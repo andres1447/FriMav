@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('client')
-  .controller('ProductUpdateCtrl', function ($scope, $state, $timeout, hotkeys, Notification, Product, productTypes, product) {
+  .controller('ProductUpdateCtrl', function ($scope, $state, $timeout, hotkeys, Notification, Product, productTypes, product, codes) {
       $scope.productTypes = productTypes;
       $scope.product = product;
+      $scope.codes = codes.remove(product.code);
 
       hotkeys.bindTo($scope).add({
           combo: 'f5',
