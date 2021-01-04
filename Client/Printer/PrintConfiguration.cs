@@ -1,16 +1,8 @@
-﻿using FriMav.Client.Models;
-using FriMav.Client.Printer.Modes;
-using FriMav.Client.Utils;
-using FriMav.Domain;
-using System;
+﻿using FriMav.Client.Utils;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Serialization;
 
 namespace FriMav.Client.Printer
 {
