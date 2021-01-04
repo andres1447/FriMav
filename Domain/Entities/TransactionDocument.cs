@@ -36,5 +36,7 @@ namespace FriMav.Domain.Entities
 
             return document;
         }
+
+        public bool IsReferencingDocument => RefundedDocumentId.HasValue;
     }
 }

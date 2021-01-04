@@ -2,12 +2,14 @@
 using FriMav.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace FriMav.Application
 {
     public class InvoiceCreate
     {
+        [Required]
         public int PersonId { get; set; }
         public string CustomerName { get; set; }
         public Shipping? Shipping { get; set; }

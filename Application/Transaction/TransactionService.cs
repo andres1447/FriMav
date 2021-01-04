@@ -100,7 +100,7 @@ namespace FriMav.Application
         {
             var document = GetById(request.Id);
 
-            if (IsLastTransaction(document))
+            if (IsLastTransaction(document) && !document.IsReferencingDocument)
                 DeleteDocument(document);
             else
                 CancelDocument(document, request);

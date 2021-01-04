@@ -35,6 +35,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
@@ -46,14 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Catalog\CatalogCreate.cs" />
-    <Compile Include="Catalog\CatalogCreateValidator.cs" />
     <Compile Include="Catalog\ICatalogService.cs" />
     <Compile Include="Catalog\CatalogService.cs" />
     <Compile Include="AlreadyExistsException.cs" />
     <Compile Include="Customer\CustomerCreate.cs" />
-    <Compile Include="Customer\CustomerCreateValidator.cs" />
     <Compile Include="Customer\CustomerUpdate.cs" />
-    <Compile Include="Customer\CustomerUpdateValidator.cs" />
     <Compile Include="Customer\IZoneService.cs" />
     <Compile Include="Customer\ZoneService.cs" />
     <Compile Include="Delivery\DeliveryCreate.cs" />
@@ -63,20 +61,16 @@
     <Compile Include="Delivery\DeliveryService.cs" />
     <Compile Include="Delivery\IDeliveryService.cs" />
     <Compile Include="Employee\EmployeeCreate.cs" />
-    <Compile Include="Employee\EmployeeCreateValidator.cs" />
     <Compile Include="Employee\EmployeeService.cs" />
     <Compile Include="Employee\EmployeeUpdate.cs" />
-    <Compile Include="Employee\EmployeeUpdateValidator.cs" />
     <Compile Include="Employee\IEmployeeService.cs" />
     <Compile Include="HealthCheck\HealthCheckService.cs" />
     <Compile Include="HealthCheck\IHealthCheckService.cs" />
-    <Compile Include="IContainerContext.cs" />
     <Compile Include="Invoice\InvoiceCreate.cs" />
     <Compile Include="Invoice\InvoiceResult.cs" />
     <Compile Include="NotFoundException.cs" />
     <Compile Include="Product\PriceListItem.cs" />
     <Compile Include="Product\ProductCreate.cs" />
-    <Compile Include="Product\ProductCreateValidator.cs" />
     <Compile Include="Product\ProductResponse.cs" />
     <Compile Include="Product\ProductTypeService.cs" />
     <Compile Include="Product\IProductTypeService.cs" />
@@ -87,10 +81,8 @@
     <Compile Include="Product\IProductService.cs" />
     <Compile Include="Product\ProductService.cs" />
     <Compile Include="Product\ProductUpdate.cs" />
-    <Compile Include="Product\ProductUpdateValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transaction\CancelTransaction.cs" />
-    <Compile Include="Transaction\CancelTransactionValidator.cs" />
     <Compile Include="Transaction\CreatePayment.cs" />
     <Compile Include="Transaction\ITransactionService.cs" />
     <Compile Include="Transaction\PersonTransactionsResponse.cs" />
