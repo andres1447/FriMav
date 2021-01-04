@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('client')
-  .controller('CustomerIndexCtrl', function ($scope, $state, ModalService, hotkeys, Customer, Notification, customers) {
+  .controller('CustomerIndexCtrl', function ($scope, $state, ModalService, hotkeys, Customer, Notification, customers, $filter) {
       $scope.customerIndex = 0;
-      $scope.customers = customers;
+      $scope.customers = orderByCode($filter, customers);
 
       hotkeys.bindTo($scope).add({
           combo: 'f2',

@@ -35,9 +35,14 @@ namespace FriMav.Domain.Entities
             ZoneId = null;
         }
 
+        public void Cancel(TransactionDocument document)
+        {
+            Balance -= document.Total;
+            document.DeleteDate = DateTime.UtcNow;
+        }
+
         public void Accept(TransactionDocument document)
         {
-            document.PreviousBalance = Balance;
             Balance += document.Total;
             document.Balance = Balance;
         }

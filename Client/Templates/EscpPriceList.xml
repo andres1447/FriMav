@@ -5,7 +5,7 @@
   <NewLine>
     <Center>
       <Emphasis>
-        <Text>Granja Malvinas</Text>
+        <Text>Malvinas</Text>
       </Emphasis>
     </Center>
   </NewLine>
@@ -34,4 +34,5 @@
   </NewLine>
   <Line>40</Line>
   <Feed>9</Feed>
+  <CutPartial></CutPartial>
 </EscCommandTemplate>

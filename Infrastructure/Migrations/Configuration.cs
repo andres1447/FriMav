@@ -10,7 +10,6 @@
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(FriMavDbContext context)

@@ -1,9 +1,15 @@
 'use strict';
 
 angular.module('client')
-  .controller('CustomerShowCtrl', function ($scope, $state, hotkeys, Notification, customer, transactions) {
+  .controller('CustomerShowCtrl', function ($scope, $state, hotkeys, customer, Transaction) {
       $scope.transactionIndex = 0;
-      $scope.transactions = transactions;
+
+      $scope.transactions = [];
+      $scope.pageNumber = 0
+      $scope.itemsPerPage = 20;
+      $scope.totalCount = 0;
+      $scope.totalPages = 0;
+
       $scope.customer = customer;
 
       hotkeys.bindTo($scope)
@@ -66,7 +72,49 @@ angular.module('client')
               $state.go('CustomerIndex');
               e.preventDefault();
           }
+      })
+      .add({
+        combo: 'pageup',
+        description: 'Cargar transacciones anteriores',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        persistent: false,
+        callback: function (e) {
+          e.preventDefault();
+          if ($scope.pageNumber >= $scope.totalPages - 1)
+            return;
+
+          $scope.pageNumber++;
+          $scope.loadTransactions();
+        }
+      })
+      .add({
+        combo: 'pagedown',
+        description: 'Cargar transacciones mas recientes',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        persistent: false,
+        callback: function (e) {
+          e.preventDefault();
+          if ($scope.pageNumber <= 0)
+            return;
+
+          $scope.pageNumber--;
+          $scope.loadTransactions();
+        }
       });
+
+      $scope.loadTransactions = function () {
+        Transaction.account({ id: customer.id, offset: $scope.pageNumber, count: $scope.itemsPerPage }).$promise.then(function (response) {
+          $scope.transactions = response.items;
+          $scope.totalCount = response.totalCount;
+          $scope.totalPages = Math.ceil($scope.totalCount / $scope.itemsPerPage);
+        });
+      }
+
+      $scope.isLastTransaction = function (index) {
+        return index == $scope.transactions.length - 1 && $scope.pageNumber == 0;
+      }
+
+      $scope.loadTransactions();
 
       function transactionTypeDescription(type) {
           switch (type) {
@@ -79,12 +127,34 @@ angular.module('client')
 
       $scope.description = function (transaction) {
           switch (transaction.transactionType) {
-              case 1: return 'Factura #' + transaction.number;
-              case 2: return 'Pago #' + transaction.number;
-              case 3: return 'N/C #{0} - Reembolso de {1} #{2}'.format(transaction.number, transactionTypeDescription(transaction.reference.transactionType), transaction.reference.number);
-              case 4: return 'N/D #{0} - Anulacion de {1} #{2}'.format(transaction.number, transactionTypeDescription(transaction.reference.transactionType), transaction.reference.number);
+            case 1: return invoiceDescription(transaction);
+            case 2: return paymentDescription(transaction);
+            case 3: return creditNoteDescription(transaction);
+            case 4: return debitNoteDescription(transaction);
           }
       };
+
+      function invoiceDescription(transaction) {
+          return 'Factura #' + transaction.number + (transaction.isRefunded ? ' (Cancelada)' : '');
+      }
+
+      function paymentDescription(transaction) {
+          return 'Pago #' + transaction.number + (transaction.isRefunded ? ' (Anulado)' : '');
+      }
+
+      function creditNoteDescription(transaction) {
+        return 'Nota de crédito #{0}'.format(transaction.number) +
+          (transaction.refundedDocument ? ' - Cancelación de {0} #{1}'.format(
+          transactionTypeDescription(transaction.refundedDocument.transactionType),
+          transaction.refundedDocument.number) : '')
+      }
+
+      function debitNoteDescription(transaction) {
+        return 'Nota de débito #{0}'.format(transaction.number) +
+          (transaction.refundedDocument ? ' - Anulación de {0} #{1}'.format(
+            transactionTypeDescription(transaction.refundedDocument.transactionType),
+            transaction.refundedDocument.number) : '')
+      }
 
       $scope.showEntry = function (transaction) {
           if (transaction.transactionType == 1) {
@@ -93,6 +163,7 @@ angular.module('client')
       };
 
       $scope.refund = function (transaction) {
-          $state.go('TransactionRefund', { id: transaction.id });
+        if (!transaction.isRefunded)
+            $state.go('TransactionRefund', { id: transaction.id });
       };
   });

@@ -49,9 +49,6 @@ angular
             resolve: {
                 customer: function ($stateParams, Customer) {
                     return Customer.get({ id: $stateParams.id }).$promise;
-                },
-                transactions: function (customer, Transaction) {
-                    return Transaction.account({ id: customer.id }).$promise;
                 }
             }
         })

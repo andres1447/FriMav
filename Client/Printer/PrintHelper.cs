@@ -16,7 +16,7 @@ namespace FriMav.Client.Printer
         private PrintConfiguration Configuration { get; set; }
         private IDictionary<string, Type> _models;
 
-        public PrintHelper(string configPath)
+        public PrintHelper(string configPath, IEnumerable<IPrintMode> printModes)
         {
             _models = new Dictionary<string, Type>();
             _models.Add("Ticket", typeof(TicketModel));
@@ -30,6 +30,7 @@ namespace FriMav.Client.Printer
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             };
             Configuration = (!File.Exists(_configPath)) ? InitPrintConfiguration() : LoadPrintConfiguration();
+            Configuration.SetPrintModes(printModes);
         }
 
         public string GetPrinters()

@@ -20,6 +20,16 @@ namespace FriMav.Infrastructure
             _db = db;
         }
 
+        public int NextForCreditNote()
+        {
+            return NextOrInit(CreditNote);
+        }
+
+        public int NextForDebitNote()
+        {
+            return NextOrInit(DebitNote);
+        }
+
         public int NextForDelivery()
         {
             return NextOrInit(Delivery);

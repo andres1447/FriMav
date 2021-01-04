@@ -67,42 +67,54 @@ if (!PrintHelper) {
     };
 }
 
+if (!CefHelper) {
+  var CefHelper = {
+    showDevTools: function () { }
+  }
+}
+
+if (!String.prototype.padStart) {
+  String.prototype.padStart = function (count, char) {
+    return (Array(count).join(char) + this).slice(-10);
+  }
+}
+
+if (!String.prototype.padEnd) {
+  String.prototype.padEnd = function (count, char) {
+    return (Array(count).join(char) + this).slice(10);
+  }
+}
+
+function orderByCode($filter, collection) {
+  return $filter('orderBy')(collection, function (it) { return it.code.padStart(10, '0'); })
+}
+
 angular.module('client', [
-    'ngAnimate',
-    'ngCookies',
-    'ngResource',
-    'ngRoute',
-    'ngSanitize',
-    'ngTouch',
-    'ui.router',
-    'ui.bootstrap',
-    'cfp.hotkeys',
-    'ui-notification'
-    ])
-    .config(function ($stateProvider, $urlRouterProvider, hotkeysProvider, $provide) {
-        hotkeysProvider.cheatSheetHotkey = '?';
+  'ngAnimate',
+  'ngCookies',
+  'ngResource',
+  'ngRoute',
+  'ngSanitize',
+  'ngTouch',
+  'ui.router',
+  'ui.bootstrap',
+  'cfp.hotkeys',
+  'ui-notification'
+])
+  .config(function ($stateProvider, $urlRouterProvider, hotkeysProvider, $provide) {
+    hotkeysProvider.cheatSheetHotkey = '?';
 
-        $stateProvider
-        .state('Main', {
-            url: '/',
-            templateUrl: 'views/main.html',
-            controller: 'MainCtrl'
-        });
+    $stateProvider
+      .state('Main', {
+        url: '/',
+        templateUrl: 'views/main.html',
+        controller: 'MainCtrl'
+      });
 
 
-        if (typeof(ClientConfig) !== 'undefined') {
-            $provide.constant('ApiConfig', ClientConfig);
-        }
+    if (typeof (ClientConfig) !== 'undefined') {
+      $provide.constant('ApiConfig', ClientConfig);
+    }
 
-        $urlRouterProvider.otherwise('/invoice');
-    })
-    .run(function (hotkeys) {
-        hotkeys.add({
-            combo: 'ctrl+i',
-            description: 'DevTools',
-            allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-            callback: function () {
-                CefHelper.showDevTools();
-            }
-        });
-    });
+    $urlRouterProvider.otherwise('/invoice');
+  });

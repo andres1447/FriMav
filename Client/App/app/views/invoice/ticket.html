@@ -8,7 +8,7 @@
     <div class="row">
         <div class="form-group col-md-2">
             <label for="ticket_date" class="control-label">Fecha</label>
-            <input id="ticket_date" type="date" class="form-control" ng-model="ticket.date" ng-required="true" ae-autofocus="InitTicket" ae-key-tab="[13]">
+            <input id="ticket_date" type="date" class="form-control" ng-model="ticket.date" readonly>
         </div>
     </div>
     <div>
@@ -23,7 +23,7 @@
                 <th>Importe</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody ae-autofocus="InitTicket">
               <tr ng-repeat="it in ticket.items" ae-navigate>
                 <td class="col-md-1">
                   <button ng-if="$index < ticket.items.length - 1" type="button" class="btn btn-danger" ng-click="deleteItem($index)">

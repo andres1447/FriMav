@@ -28,5 +28,10 @@ namespace FriMav.Domain.Entities
             Total = -Total,
             Balance = Balance - Total
         };
+
+        public override TransactionDocument CreateVoidDocument(IDocumentNumberGenerator numberGenerator)
+        {
+            return new CreditNote { Number = numberGenerator.NextForCreditNote() };
+        }
     }
 }

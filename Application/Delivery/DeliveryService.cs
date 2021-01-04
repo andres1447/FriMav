@@ -62,7 +62,6 @@ namespace FriMav.Application
                         Date = invoice.Date,
                         Number = invoice.Number,
                         Total = invoice.Total,
-                        PreviousBalance = invoice.PreviousBalance,
                         Balance = invoice.Balance,
                         CustomerCode = invoice.Person.Code,
                         CustomerName = invoice.CustomerName,
@@ -117,7 +116,7 @@ namespace FriMav.Application
             var deliveries = _deliveryRepository.Query();
 
             return _invoiceRepository.Query()
-                .Where(x => x.Shipping == Shipping.Delivery && !deliveries.Any(d => !d.DeleteDate.HasValue && d.Invoices.Contains(x)))
+                .Where(x => x.Shipping == Shipping.Delivery && !x.DeleteDate.HasValue && !x.IsRefunded && !deliveries.Any(d => !d.DeleteDate.HasValue && d.Invoices.Contains(x)))
             .Select(x => new UndeliveredInvoice
             {
                 Id = x.Id,

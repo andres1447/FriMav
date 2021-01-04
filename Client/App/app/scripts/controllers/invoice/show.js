@@ -46,7 +46,7 @@ angular.module('client')
 
       $scope.print = function () {
           Notification.success('Imprimiendo factura...');
-          PrintHelper.print('Factura', JSON.stringify($scope.getPrintModel($scope.invoice)));
+          PrintHelper.print('Invoice', JSON.stringify($scope.getPrintModel($scope.invoice)));
       };
 
       $scope.getPrintModel = function (invoice) {
@@ -54,13 +54,13 @@ angular.module('client')
               date: invoice.date,
               deliveryAddress: invoice.deliveryAddress,
               customerCode: invoice.person.code,
-              customerName: invoice.person.name,
+              customerName: invoice.customerName,
               number: invoice.number,
               balance: 0,
               items: []
           };
           angular.forEach(invoice.items, function (item) {
-              model.items.push({ product: item.product.name, quantity: item.quantity, price: item.price });
+              model.items.push({ product: item.productName, quantity: item.quantity, price: item.price });
           });
           return model;
       };

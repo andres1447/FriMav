@@ -24,20 +24,17 @@ namespace FriMav.Client.Printer
         public PrintConfiguration()
         {
             PrintEntries = new List<PrintEntry>();
-            _printModes = new List<IPrintMode>()
-            {
-                new PrintToPrinter(),
-                new PrintToImage(),
-                new PrintToPDF(),
-                new PrintEpsonCommandsToPort(),
-                new PrintEpsonCommandsToPrinter()
-            };
             _types = new List<SelectItem>()
             {
                 new SelectItem("Ticket", "Ticket"),
                 new SelectItem("Factura", "Invoice"),
                 new SelectItem("Lista de precios", "PriceList")
             };
+        }
+
+        public void SetPrintModes(IEnumerable<IPrintMode> printModes)
+        {
+            _printModes = printModes;
         }
 
         public IEnumerable<SelectItem> GetPrintModes()

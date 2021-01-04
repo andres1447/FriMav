@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('client')
-  .controller('EmployeeIndexCtrl', function ($scope, $state, ModalService, hotkeys, Employee, Notification, employees) {
+  .controller('EmployeeIndexCtrl', function ($scope, $state, ModalService, hotkeys, Employee, Notification, employees, $filter) {
       $scope.index = 0;
-      $scope.employees = employees;
+      $scope.employees = orderByCode($filter, employees);
 
       hotkeys.bindTo($scope).add({
           combo: '+',

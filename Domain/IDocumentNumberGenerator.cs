@@ -11,5 +11,7 @@ namespace FriMav.Domain
         int NextForDelivery();
         int NextForInvoice();
         int NextForPayment();
+        int NextForDebitNote();
+        int NextForCreditNote();
     }
 }

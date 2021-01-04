@@ -12,7 +12,6 @@ namespace FriMav.Application
         public string DeliveryAddress { get; set; }
         public string DeliveryZone { get; set; }
         public decimal Total { get; internal set; }
-        public decimal PreviousBalance { get; internal set; }
         public decimal Balance { get; internal set; }
     }
 }

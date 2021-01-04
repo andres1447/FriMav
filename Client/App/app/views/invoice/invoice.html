@@ -8,7 +8,7 @@
   <div class="row">
     <div class="form-group col-md-4">
       <label class="control-label" for="invoice_customer">Cliente</label>
-      <input id="invoice_customer" type="text" ng-model="invoice.customer" class="form-control" ae-key-tab="[13, 9]" autocomplete="off"
+      <input id="invoice_customer" name="customer" type="text" ng-model="invoice.customer" class="form-control" ae-key-tab="[13, 9]" ae-tab-validator="invoice.customer != null" autocomplete="off"
              uib-typeahead="customer as (customer.code + ' - ' + customer.name) for customer in getMatchingCustomer($viewValue) | limitTo:8"
              typeahead-select-on-blur="true" typeahead-on-select="setCustomer(invoice)" ae-select-on-click=""
              typeahead-focus-on-select="false" typeahead-editable="false" ae-key-prev="[37, 38]"

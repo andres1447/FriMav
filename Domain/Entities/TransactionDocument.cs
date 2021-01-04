@@ -16,9 +16,25 @@ namespace FriMav.Domain.Entities
         public string Description { get; set; }
         public int PersonId { get; set; }
         public string CustomerName { get; set; }
-        public TransactionDocument RefundDocument { get; set; }
-        public int? RefundDocumentId { get; set; }
+        public TransactionDocument RefundedDocument { get; set; }
+        public int? RefundedDocumentId { get; set; }
         public Person Person { get; set; }
-        public decimal PreviousBalance { get; internal set; }
+        public DateTime? DeleteDate { get; set; }
+
+        public abstract TransactionDocument CreateVoidDocument(IDocumentNumberGenerator numberGenerator);
+
+        public TransactionDocument Void(IDocumentNumberGenerator numberGenerator)
+        {
+            var document = CreateVoidDocument(numberGenerator);
+            document.Total = -Total;
+            document.Person = Person;
+            document.PersonId = PersonId;
+            document.CustomerName = CustomerName;
+            document.RefundedDocument = this;
+
+            IsRefunded = true;
+
+            return document;
+        }
     }
 }

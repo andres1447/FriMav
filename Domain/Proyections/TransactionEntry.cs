@@ -19,7 +19,7 @@ namespace FriMav.Domain.Proyections
         public int PersonId { get; set; }
         public bool IsRefunded { get; set; }
 
-        public TransactionEntryReference RefundDocument { get; set; }
+        public TransactionEntryReference RefundedDocument { get; set; }
     }
 
     public class TransactionEntryReference

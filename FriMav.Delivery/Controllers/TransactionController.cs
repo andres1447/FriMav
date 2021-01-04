@@ -23,9 +23,17 @@ namespace FriMav.Api.Controllers
 
         [HttpGet]
         [Route("person/{personId}")]
-        public IHttpActionResult GetAllByPersonId(int personId)
+        public IHttpActionResult GetAllByPersonId(int personId, [FromUri]int offset = 0, [FromUri]int count = 20)
         {
-            return Ok(_transactionService.GetAllByPersonId(personId));
+            return Ok(_transactionService.GetAllByPersonId(personId, offset, count));
+        }
+
+        [HttpPost]
+        [Route("cancel")]
+        public IHttpActionResult Cancel([FromBody] CancelTransaction request)
+        {
+            _transactionService.Cancel(request);
+            return Ok();
         }
     }
 }

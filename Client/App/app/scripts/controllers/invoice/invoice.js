@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('client')
-  .controller('InvoiceCtrl', function ($scope, $state, $filter, $timeout, hotkeys, Notification, Customer, Invoice, products, customers) {
-      $scope.products = products;
+  .controller('InvoiceCtrl', function ($scope, $state, $filter, hotkeys, Notification, Customer, Invoice, products, customers) {
+      $scope.products = orderByCode($filter, products);
       $scope.baseProducts = products;
-      $scope.customers = customers;
+      $scope.customers = orderByCode($filter, customers);
 
       hotkeys.bindTo($scope).add({
           combo: 'f5',
@@ -48,10 +48,10 @@ angular.module('client')
 
       $scope.init = function () {
           $scope.invoice = {
-              date: new Date(),
+              date: newDateUTC(),
               shipping: 1,
               paymentMethod: 1,
-              items: [{quantity: 0, price: 0}]
+              items: [{quantity: 1, price: 0}]
           };
           $scope.totals = {};
 
@@ -63,7 +63,7 @@ angular.module('client')
       $scope.addItem = function () {
           var items = $scope.invoice.items;
           if (items.length === 0 || hasValue(items[items.length - 1].quantity)) {
-              $scope.invoice.items.push({ quantity: 0, price: 0 });
+              $scope.invoice.items.push({ quantity: 1, price: 0 });
               return true;
           }
       };
@@ -148,10 +148,11 @@ angular.module('client')
         }
       };
 
-      $scope.getMatchingProduct = function ($viewValue) {
-          return $.grep($scope.products, function (it) {
-              return it.name.toLowerCase().indexOf($viewValue) != -1 || it.code.toLowerCase().indexOf($viewValue) == 0;
-          });
+    $scope.getMatchingProduct = function ($viewValue) {
+        var term = $viewValue.toLowerCase();
+        return $.grep($scope.products, function (it) {
+          return it.name.toLowerCase().indexOf(term) != -1 || it.code.toLowerCase().indexOf(term) == 0;
+        });
       };
 
       $scope.hasQuantity = function (item) {

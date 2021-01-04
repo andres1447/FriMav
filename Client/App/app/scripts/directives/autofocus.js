@@ -5,7 +5,13 @@ angular.module('client')
       return function (scope, elem, attr) {
         scope.$on(attr.aeAutofocus, function (e) {
           $timeout(function () {
-            elem[0].focus();
+            var $elem = $(elem);
+            if (!$elem.is('input[type=text],textarea,select')) {
+              var first = $elem.find('input[type=text],textarea,select').first();
+              first.focus();
+            }
+            else
+              $elem.focus();
           });
         });
       };

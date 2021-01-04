@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('client')
-  .controller('TicketCtrl', function ($scope, $state, $filter, $timeout, hotkeys, Notification, products) {
-      $scope.products = products;
+  .controller('TicketCtrl', function ($scope, $state, $filter, hotkeys, Notification, products) {
+      $scope.products = orderByCode($filter, products);
 
       hotkeys.bindTo($scope).add({
           combo: 'f5',
@@ -46,8 +46,8 @@ angular.module('client')
 
       $scope.init = function () {
           $scope.ticket = {
-              date: new Date(),
-              items: [{quantity: 0, price: 0}]
+              date: newDateUTC(),
+              items: [{quantity: 1, price: 0}]
           };
           $scope.totals = {};
 
@@ -59,7 +59,7 @@ angular.module('client')
       $scope.addItem = function () {
           var items = $scope.ticket.items;
           if (items.length === 0 || hasValue(items[items.length - 1].quantity)) {
-              $scope.ticket.items.push({ quantity: 0, price: 0 });
+              $scope.ticket.items.push({ quantity: 1, price: 0 });
               return true;
           }
       };
@@ -121,9 +121,10 @@ angular.module('client')
       };
 
       $scope.getMatchingProduct = function ($viewValue) {
-          return $.grep($scope.products, function (it) {
-              return it.name.toLowerCase().indexOf($viewValue) != -1 || it.code.toLowerCase().indexOf($viewValue) == 0;
-          });
+        var term = $viewValue.toLowerCase();
+        return $.grep($scope.products, function (it) {
+            return it.name.toLowerCase().indexOf(term) != -1 || it.code.toLowerCase().indexOf(term) == 0;
+        });
       }
 
       $scope.$watch(function () { return $scope.ticket; }, function (newVal) {

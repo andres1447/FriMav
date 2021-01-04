@@ -87,6 +87,10 @@
     <Compile Include="Migrations\202012210245222_Initial.designer.cs">
       <DependentUpon>202012210245222_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012312112460_CancelTransactions.cs" />
+    <Compile Include="Migrations\202012312112460_CancelTransactions.designer.cs">
+      <DependentUpon>202012312112460_CancelTransactions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MissingDllHack.cs" />
     <Compile Include="DocumentNumberGenerator.cs" />
@@ -110,6 +114,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202012210245222_Initial.resx">
       <DependentUpon>202012210245222_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012312112460_CancelTransactions.resx">
+      <DependentUpon>202012312112460_CancelTransactions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

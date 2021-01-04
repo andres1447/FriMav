@@ -42,11 +42,7 @@ namespace FriMav.Application
 
             if (request.PaymentMethod == PaymentMethod.Cash)
             {
-                Payment payment = CreateCancellingPayment(invoice);
-
-                customer.Accept(payment);
-
-                _paymentRepository.Add(payment);
+                CreateCancellingPayment(invoice, customer);
             }
 
             UpdateCustomerPrices(customer, invoice);
@@ -54,10 +50,14 @@ namespace FriMav.Application
             return new InvoiceResult(invoice.Number, invoice.Total, invoice.Balance);
         }
 
-        private Payment CreateCancellingPayment(Invoice invoice)
+        private void CreateCancellingPayment(Invoice invoice, Customer customer)
         {
             var number = _documentNumberGenerator.NextForPayment();
-            return invoice.CreateCancellingPayment(number);
+            var payment = invoice.CreateCancellingPayment(number);
+
+            customer.Accept(payment);
+
+            _paymentRepository.Add(payment);
         }
 
         private Invoice MapInvoice(InvoiceCreate request, Customer customer)
@@ -110,7 +110,7 @@ namespace FriMav.Application
 
         public Invoice Get(int id)
         {
-            return _invoiceRepository.Get(id, x => x.Person, x => x.Items);
+            return _invoiceRepository.Get(id, x => x.Person, x => x.Items.Select(i => i.Product));
         }
 
         public Invoice GetDisplay(int id)

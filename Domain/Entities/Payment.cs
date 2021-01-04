@@ -8,5 +8,9 @@ namespace FriMav.Domain.Entities
 {
     public class Payment : TransactionDocument
     {
+        public override TransactionDocument CreateVoidDocument(IDocumentNumberGenerator numberGenerator)
+        {
+            return new DebitNote { Number = numberGenerator.NextForDebitNote() };
+        }
     }
 }

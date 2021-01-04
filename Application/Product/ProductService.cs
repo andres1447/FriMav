@@ -104,7 +104,7 @@ namespace FriMav.Application
 
         public IEnumerable<PriceListItem> GetPriceList(int id)
         {
-            return _productRepository.Query()
+            return _productRepository.Query().Where(x => !x.DeleteDate.HasValue)
                 .GroupJoin(_customerPriceRepository.Query().Where(x => x.CustomerId == id),
                 x => x.Id, x => x.ProductId,
                 (x, y) => new PriceListItem

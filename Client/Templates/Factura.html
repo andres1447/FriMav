@@ -4,34 +4,31 @@
         html, body {
             font-family: Consolas;
             text-transform: uppercase;
-            font-size: 11px;
+            font-size: 12px;
+            height: 100%;
+            min-height: 100%;
+            width: 100%;
+        }
+        .wrapper {
+            height: 100%;
+            min-height: 100%;
+        }
+        .invoice-item-list table {
+            font-family: Consolas;
+            text-transform: uppercase;
+            font-size: 12px;
+            width: 100%;
+        }
+        .invoice-item-list table tr {
+            border-bottom: 1px solid #ccc
         }
         .invoice-item-list {
             padding-top: 3mm;
-        }
-        .invoice-item {
-            margin-top: 1mm;
-        }
-        .item-quantity-price, .total-label {
-            display: inline-block;
-            width: 40mm;
-        }
-        .item-total, .total-number {
-            display: inline-block;
-            width: 18mm;
-            text-align: right;
-        }
-        .total-label {
-            text-align: right;
         }
         .header {
             padding-top: 1mm;
             padding-bottom: 1mm;
             border-bottom: 1px solid;
-            border-top: 1px solid;
-        }
-        .date {
-            text-align: right;
         }
         .title {
             margin-top: 1mm;
@@ -41,59 +38,166 @@
             border-top: 1px solid;
             margin-top: 3mm;
             padding-top: 2mm;
+            text-align: right;
+        }
+        .invoice-total table {
+            font-family: Consolas;
+            text-transform: uppercase;
+            font-size: 12px;
+            text-align: right;
+            width: 40%;
         }
         h1 {
             text-transform: uppercase;
             font-size: 16px;
         }
-        .copy {
+        .separator {
             margin-top: 20px;
             border-top: 1px dashed black;
             margin-bottom: 20px;
         }
+        .content {
+            padding: 20px;
+        }
+        .document {
+            height: 48%;
+            min-height: 48%;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .text-left {
+            text-align: left;
+        }
+        @("@")page {
+            size: legal;
+        }
+        .dont-split {
+            page-break-inside: avoid;
+            break-inside: avoid;
+            display: inline;
+            width: 100%;
+        }
+        table tr td, table tr th {
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
     </style>
 </head>
 <body>
-    <div>
-        <div class="header">
-            <div class="date">@Model.Date.ToString("dd/MM/yyyy HH:mm")</div>
-            <div class="title">Frigorífico Malvinas</div>
-            <div>@Model.CustomerCode - @Model.CustomerName</div>
-        </div>
-        <div class="invoice-item-list">
-            @foreach (var item in Model.Items)
-            {
-            <div class="invoice-item">
-                <div class="product-name">@item.Product</div>
-                <span class="item-quantity-price">@item.Quantity.ToString("N2") x $@item.Price.ToString("N2")</span>
-                <span class="item-total">$@item.Amount().ToString("N2")</span>
+    <div class="content wrapper">
+        <div class="document dont-split">
+            <div class="header dont-split">
+                <div class="text-right">@DateTime.Now.ToString("dd/MM/yyyy HH:mm")</div>
+                <h3 class="title">Malvinas</h3>
+                <h4>Factura #@Model.Number</h4>
+                <div>Cliente: @Model.CustomerCode - @Model.CustomerName</div>
+                <div>Dirección: @Model.DeliveryAddress</div>
             </div>
-            }
-        </div>
-        <div class="invoice-total">
-            <span class="total-label">Total</span><span class="total-number">$@Model.Total().ToString("N2")</span>
-            <span class="total-label">Balance</span><span class="total-number">$@Model.Balance.ToString("N2")</span>
-        </div>
-    </div>
-    <div class="copy">
-        <div class="header">
-            <div class="date">@Model.Date.ToString("dd/MM/yyyy HH:mm")</div>
-            <div class="title">Frigorífico Malvinas</div>
-            <div>@Model.CustomerCode - @Model.CustomerName</div>
-        </div>
-        <div class="invoice-item-list">
-            @foreach (var item in Model.Items)
-            {
-            <div class="invoice-item">
-                <div class="product-name">@item.Product</div>
-                <span class="item-quantity-price">@item.Quantity.ToString("N2") x $@item.Price.ToString("N2")</span>
-                <span class="item-total">$@item.Amount().ToString("N2")</span>
+            <div class="invoice-item-list dont-split">
+                <table class="dont-split">
+                    <thead>
+                        <tr>
+                            <th width="40%" class="text-left">Producto</th>
+                            <th width="20%" class="text-right">Cantidad</th>
+                            <th width="20%" class="text-right">Precio</th>
+                            <th width="20%" class="text-right">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                        <tr>
+                            <td class="text-left">@item.Product</td>
+                            <td class="text-right">@item.Quantity.ToString("N2")</td>
+                            <td class="text-right">$@item.Price.ToString("N2")</td>
+                            <td class="text-right">$@item.Amount().ToString("N2")</td>
+                        </tr>
+                        }
+                        <tr>
+                            <td></td>
+                            <td class="text-right"></td>
+                            <td class="text-right"></td>
+                            <td class="text-right"><strong>$@Model.Total().ToString("N2")</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            }
+            <div class="invoice-total dont-split">
+                <table class="dont-split">
+                    <tbody>
+                        <tr>
+                            <th>Saldo anterior</th>
+                            <td>$@Model.PreviousBalance().ToString("N2")</td>
+                        </tr>
+                        <tr>
+                            <th>Total</th>
+                            <td>$@Model.Total().ToString("N2")</td>
+                        </tr>
+                        <tr>
+                            <th>Cuenta</th>
+                            <td>$@Model.Balance.ToString("N2")</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="invoice-total">
-            <span class="total-label">Total</span><span class="total-number">$@Model.Total().ToString("N2")</span>
-            <span class="total-label">Balance</span><span class="total-number">$@Model.Balance.ToString("N2")</span>
+        <div class="separator"></div>
+        <div class="document dont-split">
+            <div class="header dont-split">
+                <div class="text-right">@DateTime.Now.ToString("dd/MM/yyyy HH:mm")</div>
+                <h3 class="title">Malvinas</h3>
+                <h4>Factura #@Model.Number</h4>
+                <div>Cliente: @Model.CustomerCode - @Model.CustomerName</div>
+                <div>Dirección: @Model.DeliveryAddress</div>
+            </div>
+            <div class="invoice-item-list dont-split">
+                <table class="dont-split">
+                    <thead>
+                        <tr>
+                            <th width="40%" class="text-left">Producto</th>
+                            <th width="20%" class="text-right">Cantidad</th>
+                            <th width="20%" class="text-right">Precio</th>
+                            <th width="20%" class="text-right">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                        <tr>
+                            <td class="text-left">@item.Product</td>
+                            <td class="text-right">@item.Quantity.ToString("N2")</td>
+                            <td class="text-right">$@item.Price.ToString("N2")</td>
+                            <td class="text-right">$@item.Amount().ToString("N2")</td>
+                        </tr>
+                        }
+                        <tr>
+                            <td></td>
+                            <td class="text-right"></td>
+                            <td class="text-right"></td>
+                            <td class="text-right"><strong>$@Model.Total().ToString("N2")</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="invoice-total dont-split">
+                <table class="dont-split">
+                    <tbody>
+                        <tr>
+                            <th>Saldo anterior</th>
+                            <td>$@Model.PreviousBalance().ToString("N2")</td>
+                        </tr>
+                        <tr>
+                            <th>Total</th>
+                            <td>$@Model.Total().ToString("N2")</td>
+                        </tr>
+                        <tr>
+                            <th>Cuenta</th>
+                            <td>$@Model.Balance.ToString("N2")</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </body>

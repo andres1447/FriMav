@@ -18,6 +18,11 @@ namespace FriMav.Client.Models
         {
             return Items.Sum(x => x.Amount());
         }
+
+        public decimal PreviousBalance()
+        {
+            return Balance - Total();
+        }
     }
 
     public class InvoiceItemModel

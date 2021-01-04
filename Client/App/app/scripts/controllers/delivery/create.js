@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('client')
-  .controller('DeliveryCreateCtrl', function ($scope, $state, $filter, $timeout, hotkeys, Notification, Delivery, employees, invoices) {
+  .controller('DeliveryCreateCtrl', function ($scope, $state, $filter, hotkeys, Notification, Delivery, employees, invoices) {
 
       hotkeys.bindTo($scope).add({
           combo: 'f5',
@@ -48,14 +48,28 @@ angular.module('client')
         description: 'Seleccionar',
         persistent: false,
         callback: function (e) {
-          if (invoices.length > 0) {
-            $scope.invoices[$scope.invoiceIndex].selected = !$scope.invoices[$scope.invoiceIndex].selected;
-          }
+          $scope.selectCurrentInvoice();
+        }
+      })
+      .add({
+        combo: 'enter',
+        description: 'Seleccionar',
+        persistent: false,
+        callback: function (e) {
+          $scope.selectCurrentInvoice();
+        }
+      })
+      .add({
+        combo: '*',
+        description: 'Seleccionar Todo',
+        persistent: false,
+        callback: function (e) {
+          $scope.selectAllInvoices();
         }
       });
 
       $scope.invoices = invoices;
-      $scope.employees = employees;
+      $scope.employees = orderByCode($filter, employees);
       $scope.invoiceIndex = -1;
 
       $scope.init = function () {
@@ -73,6 +87,18 @@ angular.module('client')
         $scope.invoiceIndex = 0;
       };
 
+      $scope.selectCurrentInvoice = function () {
+        if (invoices.length > 0 && invoiceIndex >= 0) {
+          $scope.invoices[$scope.invoiceIndex].selected = !$scope.invoices[$scope.invoiceIndex].selected;
+        }
+      }
+
+      $scope.selectAllInvoices = function () {
+        if (invoices.length > 0) {
+          $.each($scope.invoices, function (idx, it) { it.selected = !it.selected });
+        }
+      }
+
       $scope.create = function (delivery) {
           if (!$scope.sending) {
               $scope.sending = true;
@@ -89,10 +115,11 @@ angular.module('client')
         return $.map($.grep($scope.invoices, function (it) { return it.selected; }), function (it) { return it.id; });
       }
 
-      $scope.getMatchingEmployees = function ($viewValue) {
-          return $.grep($scope.employees, function (it) {
-              return it.code.toLowerCase().indexOf($viewValue) == 0;
-          });
+    $scope.getMatchingEmployees = function ($viewValue) {
+        var term = $viewValue.toLowerCase();
+        return $.grep($scope.employees, function (it) {
+          return it.code.toLowerCase().indexOf(term) != -1 || it.name.toLowerCase().indexOf(term) != -1;
+        });
       };
 
     $scope.$watch(function () { return $scope.invoices }, function (newVal) {

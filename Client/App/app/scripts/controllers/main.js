@@ -35,7 +35,7 @@ angular.module('client').controller('MainCtrl', function ($rootScope, $scope, $s
     };
     
     hotkeys.bindTo($scope).add({
-        combo: 'ctrl+i',
+        combo: 'f12',
         description: 'DevTools',
         allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
         callback: function () {
@@ -78,14 +78,7 @@ angular.module('client').controller('MainCtrl', function ($rootScope, $scope, $s
     $scope.hideContent = false;
 
     $scope.reload = function () {
-      return $state.transitionTo($state.current, $stateParams, {
-        reload: true
-      }).then(function () {
-        $scope.hideContent = true;
-        return $timeout(function () {
-          return $scope.hideContent = false;
-        }, 1);
-      });
+      $state.reload();
     };
 
     $scope.broadcast = function (ev) {

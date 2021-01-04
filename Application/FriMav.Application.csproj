@@ -93,6 +93,7 @@
     <Compile Include="Transaction\CancelTransactionValidator.cs" />
     <Compile Include="Transaction\CreatePayment.cs" />
     <Compile Include="Transaction\ITransactionService.cs" />
+    <Compile Include="Transaction\PersonTransactionsResponse.cs" />
     <Compile Include="Transaction\TransactionService.cs" />
   </ItemGroup>
   <ItemGroup>

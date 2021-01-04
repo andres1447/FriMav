@@ -13,10 +13,10 @@ namespace FriMav.Client.Printer.Pos
         Right = 2
     }
 
-    public enum Cut
+    public enum CutMode
     {
-        Full = 65,
-        Partial = 66
+        Full = 0,
+        Partial = 1
     }
 
     public class EpsonCommander
@@ -73,9 +73,11 @@ namespace FriMav.Client.Printer.Pos
             return this;
         }
 
-        public EpsonCommander Cut(Cut mode, int lines)
+        public EpsonCommander Cut(CutMode mode)
         {
-            _buffer.Append(GS + "V" + ((char)(int)mode) + (char)lines);
+            _buffer.Append(CR + LF);
+            _buffer.Append(GS + "V" + ((char)(int)mode));
+            _buffer.Append(LF);
             return this;
         }
 

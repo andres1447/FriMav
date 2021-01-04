@@ -11,9 +11,12 @@ namespace FriMav.Application
 
         TransactionDocument Get(int transactionId);
 
-        IEnumerable<TransactionEntry> GetAllByPersonId(int personId, int offset = 0, int count = 20);
+        PersonTransactionsResponse GetAllByPersonId(int personId, int offset = 0, int count = 20);
 
         [Transactional]
         void Create(CreatePayment payment);
+
+        [Transactional]
+        void Cancel(CancelTransaction request);
     }
 }

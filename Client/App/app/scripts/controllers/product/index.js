@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('client')
-  .controller('ProductIndexCtrl', function ($scope, $state, ModalService, hotkeys, Product, Notification, products) {
+  .controller('ProductIndexCtrl', function ($scope, $state, ModalService, hotkeys, Product, Notification, products, $filter) {
       $scope.productIndex = 0;
-      $scope.products = products;
+      $scope.products = orderByCode($filter, products)
 
       hotkeys.bindTo($scope).add({
           combo: 'f2',
@@ -77,8 +77,9 @@ angular.module('client')
       $scope.init();
 
       $scope.getMatchingProducts = function ($viewValue) {
+          var term = $viewValue.toLowerCase();
           return $.grep($scope.products, function (it) {
-              return it.name.toLowerCase().indexOf($viewValue) != -1 || it.code.toLowerCase().indexOf($viewValue) == 0;
+              return it.name.toLowerCase().indexOf(term) != -1 || it.code.toLowerCase().indexOf(term) == 0;
           });
       };
 

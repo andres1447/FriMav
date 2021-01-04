@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('client')
-  .controller('CatalogCreateCtrl', function ($scope, $state, $filter, $timeout, hotkeys, Notification, Catalog, products) {
-      $scope.products = products;
+  .controller('CatalogCreateCtrl', function ($scope, $state, $filter, hotkeys, Notification, Catalog, products) {
+      $scope.products = orderByCode($filter, products);
 
       hotkeys.bindTo($scope).add({
           combo: 'f5',
