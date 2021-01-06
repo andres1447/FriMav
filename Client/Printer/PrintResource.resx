@@ -130,6 +130,6 @@
     <value>PDF</value>
   </data>
   <data name="Mode_PrintToPrinter" xml:space="preserve">
-    <value>Imagen a impresora</value>
+    <value>Enviar a impresora</value>
   </data>
 </root>

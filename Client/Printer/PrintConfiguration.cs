@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace FriMav.Client.Printer
 {
@@ -41,7 +42,7 @@ namespace FriMav.Client.Printer
 
         public IEnumerable<string> GetTemplates()
         {
-            return Directory.GetFiles(ConfigurationManager.AppSettings["TemplatesPath"]);
+            return Directory.GetFiles(Path.Combine(Application.StartupPath, ConfigurationManager.AppSettings["TemplatesPath"]));
         }
 
         public void Print(string type, dynamic model)

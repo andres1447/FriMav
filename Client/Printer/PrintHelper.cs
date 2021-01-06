@@ -2,10 +2,8 @@
 using Newtonsoft.Json.Serialization;
 using System.Collections.Generic;
 using System.IO;
-using System.Xml.Serialization;
 using FriMav.Client.Models;
 using System;
-using System.Windows.Forms;
 
 namespace FriMav.Client.Printer
 {
@@ -29,45 +27,50 @@ namespace FriMav.Client.Printer
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             };
-            Configuration = (!File.Exists(_configPath)) ? InitPrintConfiguration() : LoadPrintConfiguration();
+            Configuration = LoadPrintConfiguration();
             Configuration.SetPrintModes(printModes);
         }
 
         public string GetPrinters()
         {
-            var printers = new List<string>();
-            foreach (var printer in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
-            {
-                printers.Add(printer.ToString());
-            }
-            return JsonConvert.SerializeObject(printers);
+            return CefFxResponse.WrapResult(() => {
+                var printers = new List<string>();
+                foreach (var printer in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
+                {
+                    printers.Add(printer.ToString());
+                }
+                return printers;
+            });
         }
 
         public string GetPrintModes()
         {
-            return JsonConvert.SerializeObject(Configuration.GetPrintModes());
+            return CefFxResponse.WrapResult(() => Configuration.GetPrintModes());
         }
 
         public string GetPrintEntries()
         {
-            return JsonConvert.SerializeObject(Configuration.PrintEntries);
+            return CefFxResponse.WrapResult(() => Configuration.PrintEntries);
         }
 
         public string GetTemplates()
         {
-            return JsonConvert.SerializeObject(Configuration.GetTemplates());
+            return CefFxResponse.WrapResult(() => Configuration.GetTemplates());
         }
 
         public string GetTypes()
         {
-            return JsonConvert.SerializeObject(Configuration.GetTypes());
+            return CefFxResponse.WrapResult(() => Configuration.GetTypes());
         }
 
-        public void UpdatePrintEntries(string jsonPrintDocument)
+        public string UpdatePrintEntries(string jsonPrintDocument)
         {
-            Configuration.PrintEntries =
-                JsonConvert.DeserializeObject<List<PrintEntry>>(jsonPrintDocument, _jsonSerializerSettings);
-            SavePrintConfiguration();
+            return CefFxResponse.WrapResult(() =>
+            {
+                Configuration.PrintEntries =
+                    JsonConvert.DeserializeObject<List<PrintEntry>>(jsonPrintDocument, _jsonSerializerSettings);
+                SavePrintConfiguration();
+            });
         }
 
         public void Print(string modelType, string jsonModel)
@@ -78,8 +81,6 @@ namespace FriMav.Client.Printer
                 Configuration.Print(modelType, model);
             }
         }
-
-        #region Private
 
         private PrintConfiguration InitPrintConfiguration()
         {
@@ -93,22 +94,15 @@ namespace FriMav.Client.Printer
 
         private void SavePrintConfiguration()
         {
-            using (var fs = new FileStream(_configPath, FileMode.Create))
-            {
-                XmlSerializer serializer = new XmlSerializer(typeof(PrintConfiguration));
-                serializer.Serialize(fs, Configuration);
-            }
+            File.WriteAllText(_configPath, JsonConvert.SerializeObject(Configuration));
         }
 
         private PrintConfiguration LoadPrintConfiguration()
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(PrintConfiguration));
-            using (var fs = new FileStream(_configPath, FileMode.Open))
-            {
-                return (PrintConfiguration)serializer.Deserialize(fs);
-            }
-        }
+            if (!File.Exists(_configPath)) return InitPrintConfiguration();
 
-        #endregion
+            var content = File.ReadAllText(_configPath);
+            return JsonConvert.DeserializeObject<PrintConfiguration>(content);
+        }
     }
 }

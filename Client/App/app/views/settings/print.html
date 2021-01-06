@@ -15,22 +15,22 @@
             <tbody>
                 <tr ng-repeat="it in printEntries">
                     <td class="col-md-3">
-                        <select class="form-control" ng-model="it.Type">
-                            <option ng-repeat="opt in types" value="{{::opt.Value}}">{{::opt.Text}}</option>
+                        <select class="form-control" ng-model="it.type">
+                            <option ng-repeat="opt in types" value="{{::opt.value}}">{{::opt.text}}</option>
                         </select>
                     </td>
                     <td class="col-md-3">
-                        <select class="form-control" ng-model="it.Mode">
-                            <option ng-repeat="opt in printModes" value="{{::opt.Value}}">{{::opt.Text}}</option>
+                        <select class="form-control" ng-model="it.mode">
+                            <option ng-repeat="opt in printModes" value="{{::opt.value}}">{{::opt.text}}</option>
                         </select>
                     </td>
                     <td class="col-md-3">
-                        <select class="form-control" ng-model="it.Template">
+                        <select class="form-control" ng-model="it.template">
                             <option ng-repeat="opt in templates" value="{{::opt}}">{{::opt}}</option>
                         </select>
                     </td>
                     <td class="col-md-3">
-                        <input type="text" ng-model="it.Destination" uib-typeahead="printer for printer in printers" class="form-control" typeahead-focus-on-select="false">
+                        <input type="text" ng-model="it.destination" uib-typeahead="printer for printer in printers" class="form-control" typeahead-focus-on-select="false">
                     </td>
                 </tr>
             </tbody>

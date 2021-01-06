@@ -39,7 +39,7 @@ namespace FriMav.Client
             helper = new CefHelper(browser);
 
             browser.RegisterJsObject("CefHelper", helper);
-            browser.RegisterJsObject("PrintHelper", new PrintHelper(Application.StartupPath + "\\PrintConfig.xml", CreatePrintModes()));
+            browser.RegisterJsObject("PrintHelper", new PrintHelper(Application.StartupPath + "\\PrintConfig.json", CreatePrintModes()));
             browser.RegisterJsObject("ClientConfig", new ClientConfig
             {
                 Host = ConfigurationManager.AppSettings["ApiHost"]
