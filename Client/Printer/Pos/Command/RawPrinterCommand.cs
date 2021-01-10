@@ -17,6 +17,8 @@ namespace FriMav.Client.Printer.Pos.Command
         [XmlElement("Line", typeof(Line))]
         [XmlElement("NewLine", typeof(NewLine))]
         [XmlElement("Text", typeof(Text))]
+        [XmlElement("CutPartial", typeof(CutPartial))]
+        [XmlElement("CutFull", typeof(CutFull))]
         public List<RawPrinterCommand> Children { get; set; }
 
         public abstract void Apply(EpsonCommander commander);

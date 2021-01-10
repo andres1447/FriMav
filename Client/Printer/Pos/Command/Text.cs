@@ -15,11 +15,18 @@ namespace FriMav.Client.Printer.Pos.Command
         [XmlAttribute]
         public string Width { get; set; }
 
+        [XmlAttribute]
+        public string Size { get; set; }
+
         [XmlText]
         public string Value { get; set; }
 
         public override void Apply(EpsonCommander commander)
         {
+            if (Size != null)
+            {
+                commander.CharacterSize(Size).CarriageReturn();
+            }
             if (Value == null)
             {
                 Value = "";
@@ -63,6 +70,10 @@ namespace FriMav.Client.Printer.Pos.Command
 
         public override void Revert(EpsonCommander commander)
         {
+            if (Size != null)
+            {
+                commander.CharacterSize("1").CarriageReturn();
+            }
         }
     }
 }

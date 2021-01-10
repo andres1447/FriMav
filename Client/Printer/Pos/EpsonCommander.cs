@@ -15,8 +15,8 @@ namespace FriMav.Client.Printer.Pos
 
     public enum CutMode
     {
-        Full = 0,
-        Partial = 1
+        Full = 48,
+        Partial = 49
     }
 
     public class EpsonCommander
@@ -121,6 +121,12 @@ namespace FriMav.Client.Printer.Pos
         public EpsonCommander Double(bool on)
         {
             _buffer.Append(ESC + "G" + (on ? (char)1 : (char)0));
+            return this;
+        }
+
+        public EpsonCommander CharacterSize(string size)
+        {
+            _buffer.Append(ESC + "X" + size);
             return this;
         }
 

@@ -7,9 +7,10 @@
       <Text>@DateTime.Now.ToString("dd/MM/yyyy HH:mm")</Text>
     </Right>
   </NewLine>
+  <NewLine/>
   <NewLine>
     <Center>
-	<Text>Malvinas</Text>
+	<Text Size="2">Malvinas</Text>
     </Center>
   </NewLine>
   <NewLine/>
@@ -46,5 +47,5 @@
   </NewLine>
   <Line>48</Line>
   <Feed>9</Feed>
-  <CutPartial></CutPartial>
+  <CutFull></CutFull>
 </EscCommandTemplate>

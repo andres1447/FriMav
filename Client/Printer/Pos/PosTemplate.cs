@@ -37,6 +37,8 @@ namespace FriMav.Client.Printer.Pos
         [XmlElement("Line", typeof(Line))]
         [XmlElement("NewLine", typeof(NewLine))]
         [XmlElement("Text", typeof(Text))]
+        [XmlElement("CutPartial", typeof(CutPartial))]
+        [XmlElement("CutFull", typeof(CutFull))]
         public List<RawPrinterCommand> Commands { get; set; }
 
         public PosTemplate()
@@ -123,6 +125,8 @@ namespace FriMav.Client.Printer.Pos
         [XmlElement("Line", typeof(Line))]
         [XmlElement("NewLine", typeof(NewLine))]
         [XmlElement("Text", typeof(Text))]
+        [XmlElement("CutPartial", typeof(CutPartial))]
+        [XmlElement("CutFull", typeof(CutFull))]
         public List<RawPrinterCommand> Commands { get; set; }
 
         public PosTemplateSection()
