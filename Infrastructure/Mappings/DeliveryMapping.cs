@@ -19,6 +19,11 @@ namespace FriMav.Infrastructure.Mappings
                 m.MapLeftKey("DeliveryId");
                 m.MapRightKey("InvoiceId");
             });
+            HasMany(x => x.Payments).WithMany().Map(m =>
+            {
+                m.MapLeftKey("DeliveryId");
+                m.MapRightKey("PaymentId");
+            });
         }
     }
 }

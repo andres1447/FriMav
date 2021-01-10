@@ -17,12 +17,14 @@ namespace FriMav.Api.Controllers
             _deliveryService = deliveryService;
         }
 
+        [HttpGet]
         [Route("")]
         public IHttpActionResult GetAll()
         {
             return Ok(_invoiceService.GetAll());
         }
 
+        [HttpGet]
         [Route("undelivered")]
         public IHttpActionResult GetUndelivered()
         {
@@ -43,6 +45,14 @@ namespace FriMav.Api.Controllers
         {
             var invoice = _invoiceService.Create(request);
             return Ok(invoice);
+        }
+
+        [HttpPost]
+        [Route("{id}/dontDeliver")]
+        public IHttpActionResult DontSend([FromUri]int id)
+        {
+            _invoiceService.DontDeliver(id);
+            return Ok();
         }
     }
 }

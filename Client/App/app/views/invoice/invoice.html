@@ -16,7 +16,7 @@
     </div>
     <div class="form-group col-md-4">
       <label class="control-label" for="invoice_customer_name">Nombre</label>
-      <input id="invoice_customer_name" type="text" class="form-control" ae-key-tab="[13, 9]" ng-model="invoice.customerName" ae-key-prev="[37, 38]" required />
+      <input id="invoice_customer_name" type="text" class="form-control" ae-key-tab="[13, 9]" ng-model="invoice.customerName" ae-key-prev="[37, 38]" required autocomplete="off" />
     </div>
     <div class="form-group col-md-4">
       <label class="control-label">Saldo anterior</label>
@@ -27,7 +27,7 @@
   <div class="row">
     <div class="form-group col-md-4">
       <label class="control-label" for="invoice_address">Direccion</label>
-      <input id="invoice_address" type="text" class="form-control" ae-key-tab="[13, 9]" ng-model="invoice.deliveryAddress" ae-key-prev="[37, 38]" />
+      <input id="invoice_address" type="text" class="form-control" ae-key-tab="[13, 9]" ng-model="invoice.deliveryAddress" ae-key-prev="[37, 38]" autocomplete="off" />
     </div>
     <div class="form-group col-md-2">
       <label class="control-label" for="invoice_shipping">Forma de envio</label>
@@ -55,7 +55,7 @@
           <th class="col-md-3">Producto</th>
           <th class="col-md-2">Cantidad</th>
           <th class="col-md-2">Precio</th>
-          <th class="col-md-2">Dif. precio</th>
+          <th class="col-md-2">Precio Lista</th>
           <th class="col-md-2">Importe</th>
         </tr>
       </thead>

@@ -16,8 +16,8 @@ namespace FriMav.Domain.Entities
         public string Description { get; set; }
         public int PersonId { get; set; }
         public string CustomerName { get; set; }
-        public TransactionDocument RefundedDocument { get; set; }
-        public int? RefundedDocumentId { get; set; }
+        public TransactionDocument ReferencedDocument { get; set; }
+        public int? ReferencedDocumentId { get; set; }
         public Person Person { get; set; }
         public DateTime? DeleteDate { get; set; }
 
@@ -30,13 +30,13 @@ namespace FriMav.Domain.Entities
             document.Person = Person;
             document.PersonId = PersonId;
             document.CustomerName = CustomerName;
-            document.RefundedDocument = this;
+            document.ReferencedDocument = this;
 
             IsRefunded = true;
 
             return document;
         }
 
-        public bool IsReferencingDocument => RefundedDocumentId.HasValue;
+        public bool IsReferencingDocument => ReferencedDocumentId.HasValue;
     }
 }

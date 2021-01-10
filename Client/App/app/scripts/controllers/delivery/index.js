@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('client')
-  .controller('DeliveryIndexCtrl', function ($scope, $state, hotkeys, Delivery, Notification, ModalService, deliveries) {
+  .controller('DeliveryIndexCtrl', function ($scope, $state, hotkeys, Delivery, Notification, ModalService, deliveries, PendingDeliveryCheck) {
       $scope.deliveryIndex = 0;
       $scope.deliveries = deliveries;
 
@@ -36,12 +36,14 @@ angular.module('client')
           }
       })
       .add({
-          combo: '*',
-          description: 'Editar envio',
-          persistent: false,
-          callback: function (e) {
-            $state.go('DeliveryUpdate', { id: $scope.deliveries[$scope.deliveryIndex].id });
-              e.preventDefault();
+        combo: '*',
+        description: 'Cerrar envio',
+        persistent: false,
+        callback: function (e) {
+            if ($scope.deliveryIndex < $scope.deliveries.length) {
+              $scope.close($scope.deliveryIndex);
+            }
+            e.preventDefault();
           }
       })
       .add({
@@ -68,13 +70,25 @@ angular.module('client')
       });
       
       $scope.delete = function (index) {
-          ModalService.show({ title: 'Lista de precios', message: 'Desea borrar el envio?' }).then(function (res) {
-            Delivery.delete({ id: $scope.deliveries[index].id }, function (res) {
-                  Notification.success('Envio borrado correctamente.');
-                  $state.reload();
-              }, function (err) {
-                  Notification.error(err.data);
-              });
-          });
-      };
+        ModalService.show({ title: 'Envío', message: 'Desea borrar el envio?' }).then(function (res) {
+          Delivery.delete({ id: $scope.deliveries[index].id }, function (res) {
+                Notification.success('Envio borrado correctamente.');
+                $state.reload();
+            }, function (err) {
+                Notification.error(err.data);
+            });
+        }, function () { });
+    };
+
+    $scope.close = function (index) {
+      ModalService.show({ title: 'Envío', message: 'Desea cerrar el envio?' }).then(function (res) {
+        Delivery.close({ id: $scope.deliveries[index].id }, { id: $scope.deliveries[index].id, payments: [] }, function (res) {
+          Notification.success('Envio cerrado correctamente.');
+          PendingDeliveryCheck.schedule();
+          $state.reload();
+        }, function (err) {
+          Notification.error(err.data);
+        });
+      }, function () { });
+    };
   });

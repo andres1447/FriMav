@@ -57,7 +57,7 @@ angular.module('client')
           description: 'Mover abajo',
           persistent: false,
           callback: function (e) {
-              if ($scope.transactionIndex < transactions.length - 1) {
+              if ($scope.transactionIndex < $scope.transactions.length - 1) {
                   $scope.transactionIndex++;
                   e.preventDefault();
               }
@@ -107,6 +107,8 @@ angular.module('client')
           $scope.transactions = response.items;
           $scope.totalCount = response.totalCount;
           $scope.totalPages = Math.ceil($scope.totalCount / $scope.itemsPerPage);
+          if ($scope.transactionIndex >= $scope.transactions.length)
+            $scope.transactionIndex = 0;
         });
       }
 

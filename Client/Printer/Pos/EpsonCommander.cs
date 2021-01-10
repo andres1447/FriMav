@@ -75,9 +75,7 @@ namespace FriMav.Client.Printer.Pos
 
         public EpsonCommander Cut(CutMode mode)
         {
-            _buffer.Append(CR + LF);
             _buffer.Append(GS + "V" + ((char)(int)mode));
-            _buffer.Append(LF);
             return this;
         }
 

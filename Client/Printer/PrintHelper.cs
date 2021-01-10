@@ -94,7 +94,7 @@ namespace FriMav.Client.Printer
 
         private void SavePrintConfiguration()
         {
-            File.WriteAllText(_configPath, JsonConvert.SerializeObject(Configuration));
+            File.WriteAllText(_configPath, JsonConvert.SerializeObject(Configuration, Formatting.Indented));
         }
 
         private PrintConfiguration LoadPrintConfiguration()
@@ -102,7 +102,9 @@ namespace FriMav.Client.Printer
             if (!File.Exists(_configPath)) return InitPrintConfiguration();
 
             var content = File.ReadAllText(_configPath);
-            return JsonConvert.DeserializeObject<PrintConfiguration>(content);
+            var printConfig = JsonConvert.DeserializeObject<PrintConfiguration>(content);
+            printConfig.Sync();
+            return printConfig;
         }
     }
 }

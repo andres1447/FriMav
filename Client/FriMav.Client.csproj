@@ -206,6 +206,7 @@
     <Content Include="App\app\scripts\directives\restrict-decimal.js" />
     <Content Include="App\app\scripts\directives\form-group.js" />
     <Content Include="App\app\scripts\routes\zone.js" />
+    <Content Include="App\app\scripts\services\pending-delivery-check.js" />
     <Content Include="App\app\scripts\services\zone.js" />
     <Content Include="App\app\scripts\services\healthcheck.js" />
     <Content Include="App\app\views\delivery\show.html" />
@@ -216,13 +217,13 @@
     <Content Include="App\app\views\zone\update.html" />
     <Content Include="App\app\views\zone\_form.html" />
     <Content Include="App\app\views\family\show.html" />
-    <Content Include="App\dist\scripts\scripts.a8ae08d0.js">
+    <Content Include="App\dist\scripts\scripts.c0c9372e.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App\dist\scripts\vendor.7c2b40a4.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App\dist\styles\main.4d359427.css">
+    <Content Include="App\dist\styles\main.6e2d3fbe.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App\dist\styles\vendor.16c1ee70.css">
@@ -231,6 +232,10 @@
     <Content Include="Templates\EscpInvoice.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Templates\EscpDelivery.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\Factura.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

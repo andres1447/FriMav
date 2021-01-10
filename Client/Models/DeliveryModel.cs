@@ -8,23 +8,26 @@ namespace FriMav.Client.Models
 {
     public class DeliveryModel
     {
+        public int Id { get; set; }
         public DateTime Date { get; set; }
-        public DeliveryEmployeeModel Employee { get; set; }
-        public DeliveryInvoiceModel Invoices { get; set; }
-        public DeliveryProductModel Products { get; set; }
-    }
-
-    public class DeliveryEmployeeModel
-    {
-        public string Code { get; set; }
-        public string Name { get; set; }
+        public int Number { get; set; }
+        public string EmployeeCode { get; set; }
+        public string EmployeeName { get; set; }
+        public List<DeliveryInvoiceModel> Invoices { get; set; }
+        public List<DeliveryProductModel> Products { get; set; }
     }
 
     public class DeliveryInvoiceModel
     {
+        public int Id { get; set; }
+        public DateTime Date { get; set; }
         public int Number { get; set; }
-        public DeliveryCustomerModel Customer { get; set; }
+        public string CustomerCode { get; set; }
+        public string CustomerName { get; set; }
+        public string DeliveryAddress { get; set; }
+        public string DeliveryZone { get; set; }
         public decimal Total { get; set; }
+        public decimal Balance { get; set; }
     }
 
     public class DeliveryCustomerModel
@@ -37,5 +40,6 @@ namespace FriMav.Client.Models
     {
         public string Name { get; set; }
         public decimal Quantity { get; set; }
+        public int ProductId { get; set; }
     }
 }

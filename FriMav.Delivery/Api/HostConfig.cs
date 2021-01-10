@@ -16,7 +16,7 @@ namespace FriMav.Delivery.Api
         public bool Start(HostControl hostControl)
         {
             Trace.WriteLine("Starting the service");
-            _webApplication = WebApp.Start<OwinConfig>("http://localhost:8080");
+            _webApplication = WebApp.Start<OwinConfig>("http://*:8080");
             return true;
         }
 

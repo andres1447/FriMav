@@ -112,7 +112,8 @@ namespace FriMav.Application
                     Id = x.Id,
                     Name = x.Name,
                     Code = x.Code,
-                    Price = y.Select(c => c.Price).DefaultIfEmpty(x.Price).FirstOrDefault()
+                    Price = y.Select(c => c.Price).DefaultIfEmpty(x.Price).FirstOrDefault(),
+                    BasePrice = x.Price,
                 }).ToList();
         }
 

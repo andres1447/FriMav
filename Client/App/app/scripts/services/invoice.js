@@ -9,6 +9,10 @@ angular.module('client').factory('Invoice', function ($resource, ApiConfig) {
             method: 'GET',
             url: ApiConfig.host + 'invoice/undelivered',
             isArray: true
+        },
+        dontDeliver: {
+          url: ApiConfig.host + 'invoice/:id/dontDeliver',
+          method: 'POST'
         }
     });
 });

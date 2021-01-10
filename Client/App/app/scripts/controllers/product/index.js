@@ -49,22 +49,24 @@ angular.module('client')
           combo: 'up',
           description: 'Mover arriba',
           persistent: false,
+          allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
           callback: function (e) {
-              if ($scope.productIndex > 0) {
-                  $scope.productIndex--;
-                  e.preventDefault();
-              }
+            if ($scope.productIndex > 0 && !$scope.typeaheadOpen) {
+                $scope.productIndex--;
+                e.preventDefault();
+            }
           }
       })
       .add({
           combo: 'down',
           description: 'Mover abajo',
           persistent: false,
+          allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
           callback: function (e) {
-              if ($scope.productIndex < products.length - 1) {
-                  $scope.productIndex++;
-                  e.preventDefault();
-              }
+            if ($scope.productIndex < products.length - 1 && !$scope.typeaheadOpen) {
+                $scope.productIndex++;
+                e.preventDefault();
+            }
           }
       });
 
@@ -95,6 +97,6 @@ angular.module('client')
               }, function (err) {
                   Notification.error(err.data);
               });
-          });
+          }, function () { });
       };
   });

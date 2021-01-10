@@ -1,8 +1,9 @@
 'use strict';
 
-angular.module('client').controller('MainCtrl', function ($rootScope, $scope, $state, hotkeys, $timeout, HealthCheck) {
+angular.module('client').controller('MainCtrl', function ($scope, $state, hotkeys, $timeout, HealthCheck, PendingDeliveryCheck) {
     $scope.$state = $state;
     $scope.backendAlive = false;
+    $scope.deliveries = PendingDeliveryCheck
 
     $scope.shippingOptions = [
         { name: 'Retiro', id: 1 },
@@ -71,11 +72,9 @@ angular.module('client').controller('MainCtrl', function ($rootScope, $scope, $s
       description: 'Reparto',
       allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
       callback: function () {
-        $state.go("DeliveryCreate");
+        $state.go("DeliveryIndex");
       }
     });
-
-    $scope.hideContent = false;
 
     $scope.reload = function () {
       $state.reload();
@@ -87,25 +86,20 @@ angular.module('client').controller('MainCtrl', function ($rootScope, $scope, $s
         }, 100);
     };
 
-    function checkBackendAlive() {
+    function RecursiveCheckBackendAlive() {
         $scope.backendAlive = false;
         HealthCheck.query().$promise.then(function (res) {
-            $scope.backendAlive = true;
+          $scope.backendAlive = true;
+          $timeout(RecursiveCheckBackendAlive, 300000);
+        }, function () {
+          $timeout(RecursiveCheckBackendAlive, 5000);
         });
     }
 
-    function RecursiveCheckBackendAlive() {
-        checkBackendAlive();
-        $timeout(RecursiveCheckBackendAlive, 300000);
-    }
-
     $scope.init = function () {
-        RecursiveCheckBackendAlive();
+      RecursiveCheckBackendAlive();
+      PendingDeliveryCheck.schedule();
     };
 
     $scope.init();
-    
-    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
-        checkBackendAlive();
-    });
 });

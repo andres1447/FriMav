@@ -9,9 +9,31 @@
             min-height: 100%;
             width: 100%;
         }
-        .wrapper {
+        .content {
+            padding: 30px;
             height: 100%;
             min-height: 100%;
+            width: 100%;
+        }
+        .document {
+            height: 48%;
+            min-height: 48%;
+            width: 100%;
+        }
+        .top {
+            min-height: 78%;
+            width: 100%;
+        }
+        .header {
+            padding-top: 1mm;
+            padding-bottom: 1mm;
+            border-bottom: 1px solid;
+            font-size: 15px;
+            width: 100%;
+        }
+        .title {
+            margin-top: 1mm;
+            text-align: center;
         }
         .invoice-item-list table {
             font-family: Consolas;
@@ -25,27 +47,21 @@
         .invoice-item-list {
             padding-top: 3mm;
         }
-        .header {
-            padding-top: 1mm;
-            padding-bottom: 1mm;
-            border-bottom: 1px solid;
-        }
-        .title {
-            margin-top: 1mm;
-            text-align: center;
-        }
         .invoice-total {
             border-top: 1px solid;
-            margin-top: 3mm;
             padding-top: 2mm;
-            text-align: right;
         }
         .invoice-total table {
             font-family: Consolas;
             text-transform: uppercase;
             font-size: 12px;
-            text-align: right;
             width: 40%;
+        }
+        .invoice-total th {
+            text-align: left;
+        }
+        .invoice-total td {
+            text-align: right;
         }
         h1 {
             text-transform: uppercase;
@@ -56,18 +72,14 @@
             border-top: 1px dashed black;
             margin-bottom: 20px;
         }
-        .content {
-            padding: 20px;
-        }
-        .document {
-            height: 48%;
-            min-height: 48%;
-        }
         .text-right {
             text-align: right;
         }
         .text-left {
             text-align: left;
+        }
+        .top {
+
         }
         @("@")page {
             size: legal;
@@ -85,43 +97,45 @@
     </style>
 </head>
 <body>
-    <div class="content wrapper">
+    <div class="content">
         <div class="document dont-split">
-            <div class="header dont-split">
-                <div class="text-right">@DateTime.Now.ToString("dd/MM/yyyy HH:mm")</div>
-                <h3 class="title">Malvinas</h3>
-                <h4>Factura #@Model.Number</h4>
-                <div>Cliente: @Model.CustomerCode - @Model.CustomerName</div>
-                <div>Dirección: @Model.DeliveryAddress</div>
-            </div>
-            <div class="invoice-item-list dont-split">
-                <table class="dont-split">
-                    <thead>
-                        <tr>
-                            <th width="40%" class="text-left">Producto</th>
-                            <th width="20%" class="text-right">Cantidad</th>
-                            <th width="20%" class="text-right">Precio</th>
-                            <th width="20%" class="text-right">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Items)
-                        {
-                        <tr>
-                            <td class="text-left">@item.Product</td>
-                            <td class="text-right">@item.Quantity.ToString("N2")</td>
-                            <td class="text-right">$@item.Price.ToString("N2")</td>
-                            <td class="text-right">$@item.Amount().ToString("N2")</td>
-                        </tr>
-                        }
-                        <tr>
-                            <td></td>
-                            <td class="text-right"></td>
-                            <td class="text-right"></td>
-                            <td class="text-right"><strong>$@Model.Total().ToString("N2")</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="top dont-split">
+                <div class="header dont-split">
+                    <div class="text-right">@DateTime.Now.ToString("dd/MM/yyyy HH:mm")</div>
+                    <h3 class="title">Malvinas</h3>
+                    <h4>Factura #@Model.Number</h4>
+                    <div><strong>Cliente: @Model.CustomerCode - @Model.CustomerName</strong></div>
+                    <div><strong>Dirección: @Model.DeliveryAddress</strong></div>
+                </div>
+                <div class="invoice-item-list dont-split">
+                    <table class="dont-split">
+                        <thead>
+                            <tr>
+                                <th width="40%" class="text-left">Producto</th>
+                                <th width="20%" class="text-right">Cantidad</th>
+                                <th width="20%" class="text-right">Precio</th>
+                                <th width="20%" class="text-right">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                            <tr>
+                                <td class="text-left">@item.Product</td>
+                                <td class="text-right">@item.Quantity.ToString("N2")</td>
+                                <td class="text-right">$@item.Price.ToString("N2")</td>
+                                <td class="text-right">$@item.Amount().ToString("N2")</td>
+                            </tr>
+                            }
+                            <tr>
+                                <td></td>
+                                <td class="text-right"></td>
+                                <td class="text-right"></td>
+                                <td class="text-right"><strong>$@Model.Total().ToString("N2")</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="invoice-total dont-split">
                 <table class="dont-split">
@@ -148,8 +162,8 @@
                 <div class="text-right">@DateTime.Now.ToString("dd/MM/yyyy HH:mm")</div>
                 <h3 class="title">Malvinas</h3>
                 <h4>Factura #@Model.Number</h4>
-                <div>Cliente: @Model.CustomerCode - @Model.CustomerName</div>
-                <div>Dirección: @Model.DeliveryAddress</div>
+                <div><strong>Cliente: @Model.CustomerCode - @Model.CustomerName</strong></div>
+                <div><strong>Dirección: @Model.DeliveryAddress</strong></div>
             </div>
             <div class="invoice-item-list dont-split">
                 <table class="dont-split">

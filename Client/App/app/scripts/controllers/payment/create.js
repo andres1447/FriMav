@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('client')
-  .controller('PaymentCreateCtrl', function ($scope, $state, hotkeys, Notification, Payment, customers) {
-      $scope.customers = customers;
+  .controller('PaymentCreateCtrl', function ($scope, $state, hotkeys, Notification, Payment, customers, $filter) {
+      $scope.customers = orderByCode($filter, customers);
 
       $scope.payment = {
         date: new Date()
@@ -38,19 +38,20 @@ angular.module('client')
           if (!$scope.sending) {
               $scope.sending = true;
               Payment.save(payment, function (res) {
-                  $scope.sending = false;
-                  Notification.success('Pago creado correctamente.');
-                $state.go('CustomerShow', { id: payment.personId });
+                $scope.sending = false;
+                Notification.success('Pago creado correctamente.');
+                $state.reload();
               }, function (err) {
-                  $scope.sending = false;
-                  Notification.error(err.data);
+                $scope.sending = false;
+                Notification.error(err.data);
               });
           }
     };
 
     $scope.getMatchingCustomer = function ($viewValue) {
+      var term = $viewValue.toLowerCase();
       return $.grep($scope.customers, function (it) {
-        return it.name.toLowerCase().indexOf($viewValue) != -1 || it.code.toLowerCase().indexOf($viewValue) == 0;
+        return it.name.toLowerCase().indexOf(term) != -1 || it.code.toLowerCase().indexOf(term) == 0;
       });
     };
 

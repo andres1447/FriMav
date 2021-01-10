@@ -1,6 +1,5 @@
 ﻿using FriMav.Domain;
 using FriMav.Domain.Entities;
-using FriMav.Domain.Proyections;
 using System.Collections.Generic;
 
 namespace FriMav.Application
@@ -13,5 +12,8 @@ namespace FriMav.Application
 
         [Transactional]
         InvoiceResult Create(InvoiceCreate request);
+
+        [Transactional]
+        void DontDeliver(int id);
     }
 }

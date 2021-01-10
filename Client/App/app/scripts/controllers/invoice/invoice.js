@@ -61,17 +61,18 @@ angular.module('client')
       $scope.init();
 
       $scope.addItem = function () {
-          var items = $scope.invoice.items;
-          if (items.length === 0 || hasValue(items[items.length - 1].quantity)) {
-              $scope.invoice.items.push({ quantity: 1, price: 0 });
-              return true;
-          }
+        var items = $scope.invoice.items;
+        if (items.length === 0 || $scope.hasProduct(items[items.length - 1])) {
+          $scope.invoice.items.push({ quantity: 1, price: 0 });
+          return true;
+        }
       };
 
-      $scope.getMatchingCustomer = function ($viewValue) {
-          return $.grep($scope.customers, function (it) {
-              return it.name.toLowerCase().indexOf($viewValue) != -1 || it.code.toLowerCase().indexOf($viewValue) == 0;
-          });
+    $scope.getMatchingCustomer = function ($viewValue) {
+        var term = $viewValue.toLowerCase();
+        return $.grep($scope.customers, function (it) {
+          return it.name.toLowerCase().indexOf(term) != -1 || it.code.toLowerCase().indexOf(term) == 0;
+        });
       };
 
       $scope.setCustomer = function (invoice) {

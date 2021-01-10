@@ -54,12 +54,15 @@
     <Compile Include="Customer\CustomerUpdate.cs" />
     <Compile Include="Customer\IZoneService.cs" />
     <Compile Include="Customer\ZoneService.cs" />
+    <Compile Include="Delivery\DeliveryClose.cs" />
+    <Compile Include="Delivery\DeliveryCloseResponse.cs" />
     <Compile Include="Delivery\DeliveryCreate.cs" />
     <Compile Include="Delivery\DeliveryInvoice.cs" />
     <Compile Include="Delivery\DeliveryProduct.cs" />
     <Compile Include="Delivery\DeliveryResponse.cs" />
     <Compile Include="Delivery\DeliveryService.cs" />
     <Compile Include="Delivery\IDeliveryService.cs" />
+    <Compile Include="Delivery\PendingDeliveriesResponse.cs" />
     <Compile Include="Employee\EmployeeCreate.cs" />
     <Compile Include="Employee\EmployeeService.cs" />
     <Compile Include="Employee\EmployeeUpdate.cs" />

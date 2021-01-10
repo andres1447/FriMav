@@ -78,13 +78,13 @@ namespace FriMav.Application
                     Number = x.Number,
                     Description = x.Description,
                     IsRefunded = x.IsRefunded,
-                    RefundedDocument = x.RefundedDocumentId.HasValue ? new TransactionEntryReference
+                    RefundedDocument = x.ReferencedDocumentId.HasValue ? new TransactionEntryReference
                     {
-                        Number = x.RefundedDocument.Number,
-                        Id = x.RefundedDocument.Id,
-                        TransactionType = x.RefundedDocument is Invoice ? TransactionDocumentType.Invoice :
-                                          x.RefundedDocument is Payment ? TransactionDocumentType.Payment :
-                                          x.RefundedDocument is CreditNote ? TransactionDocumentType.CreditNote :
+                        Number = x.ReferencedDocument.Number,
+                        Id = x.ReferencedDocument.Id,
+                        TransactionType = x.ReferencedDocument is Invoice ? TransactionDocumentType.Invoice :
+                                          x.ReferencedDocument is Payment ? TransactionDocumentType.Payment :
+                                          x.ReferencedDocument is CreditNote ? TransactionDocumentType.CreditNote :
                                           TransactionDocumentType.DebitNote
                     } : null,
                     Total = x.Total,

@@ -21,8 +21,18 @@ namespace FriMav.Client.Printer
             {
                 new SelectItem("Ticket", "Ticket"),
                 new SelectItem("Factura", "Invoice"),
+                new SelectItem("Reparto", "Delivery"),
                 new SelectItem("Lista de precios", "PriceList")
             };
+        }
+
+        public void Sync()
+        {
+            var abscentTypes = _types.Where(t => !PrintEntries.Any(pe => pe.Type == t.Value)).ToList();
+            foreach (var type in abscentTypes)
+            {
+                PrintEntries.Add(new PrintEntry(type.Value));
+            }
         }
 
         public void SetPrintModes(IEnumerable<IPrintMode> printModes)
@@ -40,9 +50,10 @@ namespace FriMav.Client.Printer
             return _types;
         }
 
-        public IEnumerable<string> GetTemplates()
+        public IEnumerable<SelectItem> GetTemplates()
         {
-            return Directory.GetFiles(Path.Combine(Application.StartupPath, ConfigurationManager.AppSettings["TemplatesPath"]));
+            var path = Path.Combine(Application.StartupPath, ConfigurationManager.AppSettings["TemplatesPath"]);
+            return Directory.GetFiles(path).Select(x => new SelectItem(Path.GetFileName(x), x));
         }
 
         public void Print(string type, dynamic model)
@@ -64,8 +75,8 @@ namespace FriMav.Client.Printer
         public string Mode { get; set; }
 
         public PrintEntry() : this("", "", "", "") { }
-
-        public PrintEntry(string type, string destination) : this(destination, "", "") { }
+        public PrintEntry(string type) : this(type, "", "", "") { }
+        public PrintEntry(string type, string destination) : this(type, destination, "") { }
 
         public PrintEntry(string type, string destination, string template) : this(type, destination, template, "") { }
 

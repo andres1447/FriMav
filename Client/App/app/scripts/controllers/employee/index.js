@@ -81,6 +81,6 @@ angular.module('client')
               }, function (err) {
                   Notification.error(err.data);
               });
-          });
+          }, function () { });
       };
   });

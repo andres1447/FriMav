@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<EscCommandTemplate>
+	<Line>48</Line>
+	<NewLine/>
+	<NewLine>
+	<Right>
+		<Text>@DateTime.Now.ToString("dd/MM/yyyy HH:mm")</Text>
+	</Right>
+	</NewLine>
+	<NewLine>
+	<Center>
+		<Text>Reparto</Text>
+	</Center>
+	</NewLine>
+	<NewLine/>
+	<NewLine>
+	<Left>
+		<Text>Repartidor: @Model.EmployeeCode - @Model.EmployeeName</Text>
+	</Left>
+	</NewLine>
+	<NewLine/>
+	<Line>48</Line>
+	<NewLine>
+		<Center>
+			<Text>Facturas (@Model.Invoices.Count)</Text>
+		</Center>
+	</NewLine>
+	<Line>48</Line>
+	<NewLine/>
+	@foreach (var invoice in Model.Invoices)
+	{
+		<NewLine>
+			<Text Width="30" Align="L">@invoice.CustomerCode - @invoice.CustomerName</Text>
+			<Text Width="18" Align="R">#@invoice.Number</Text>
+		</NewLine>
+		<NewLine>
+			<Text>@invoice.DeliveryAddress</Text>
+		</NewLine>
+		<NewLine/>
+	}
+	  <Line>48</Line>
+	  <NewLine>
+		<Center>
+		  <Text>Productos</Text>
+		</Center>
+	  </NewLine>
+	  <Line>48</Line>
+	  <NewLine/>
+	@foreach (var product in Model.Products)
+	{
+		<NewLine>
+			<Text Width="30" Align="L">@product.Name</Text>
+			<Text Width="18" Align="R">#@product.Quantity.ToString("N2")</Text>
+		</NewLine>
+	}
+	<NewLine/>
+	<Feed>9</Feed>
+	<CutPartial></CutPartial>
+</EscCommandTemplate>

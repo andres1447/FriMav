@@ -53,6 +53,7 @@ namespace FriMav.Client
             browserSettings.FileAccessFromFileUrls = CefState.Enabled;
             browserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
             browser.BrowserSettings = browserSettings;
+            browser.Focus();
         }
 
         private IEnumerable<IPrintMode> CreatePrintModes()

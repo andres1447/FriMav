@@ -58,7 +58,7 @@ angular.module('client')
 
       $scope.addItem = function () {
           var items = $scope.ticket.items;
-          if (items.length === 0 || hasValue(items[items.length - 1].quantity)) {
+          if (items.length === 0 || $scope.hasProduct(items[items.length - 1])) {
               $scope.ticket.items.push({ quantity: 1, price: 0 });
               return true;
           }

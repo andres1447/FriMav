@@ -89,6 +89,13 @@ function orderByCode($filter, collection) {
   return $filter('orderBy')(collection, function (it) { return it.code.padStart(10, '0'); })
 }
 
+function filterByCodeOrName(collection, value) {
+  var term = value.toLowerCase();
+  return $.grep(collection, function (it) {
+    return it.code.toLowerCase().indexOf(term) == 0 || it.name.toLowerCase().indexOf(term) != -1;
+  });
+}
+
 angular.module('client', [
   'ngAnimate',
   'ngCookies',
@@ -108,7 +115,6 @@ angular.module('client', [
       .state('Main', {
         url: '/',
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
       });
 
 

@@ -20,7 +20,7 @@ namespace FriMav.Infrastructure.Mappings
             Map<DebitNote>(m => m.Requires("Type").HasValue((int)TransactionDocumentType.DebitNote));
 
             HasRequired(x => x.Person).WithMany().HasForeignKey(x => x.PersonId);
-            HasOptional(x => x.RefundedDocument).WithMany().HasForeignKey(x => x.RefundedDocumentId);
+            HasOptional(x => x.ReferencedDocument).WithMany().HasForeignKey(x => x.ReferencedDocumentId);
 
             HasIndex(x => x.Date).IsUnique(false);
             HasIndex(x => x.Number).IsUnique(false);

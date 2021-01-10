@@ -82,10 +82,11 @@ angular.module('client')
 
       $scope.init();
 
-      $scope.getMatchingCustomer = function ($viewValue) {
-          return $.grep($scope.customers, function (it) {
-              return it.name.toLowerCase().indexOf($viewValue) != -1 || it.code.toLowerCase().indexOf($viewValue) == 0;
-          });
+    $scope.getMatchingCustomer = function ($viewValue) {
+        var term = $viewValue.toLowerCase();
+        return $.grep($scope.customers, function (it) {
+          return it.name.toLowerCase().indexOf(term) != -1 || it.code.toLowerCase().indexOf(term) == 0;
+        });
       };
 
       $scope.goToCustomer = function (customer) {
@@ -100,6 +101,6 @@ angular.module('client')
               }, function (err) {
                   Notification.error(err.data);
               });
-          });
+          }, function () { });
       };
   });

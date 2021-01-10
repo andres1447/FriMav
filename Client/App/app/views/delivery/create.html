@@ -18,18 +18,26 @@
     <div class="row">
       <div name="invoices" class="col-md-6">
         <div ng-repeat="it in invoices">
-          <div name="invoice_{{::$index}}" tabindex="{{::$index + 1}}" class="selectrow" ng-class="{'alert-info': $index == invoiceIndex}" ae-key-tab="[13, 9]">
+          <div id="invoice_{{::it.id}}" name="invoice_{{::$index}}" class="selectrow" ng-class="{'alert-info': $index == invoiceIndex}" ae-key-tab="[13, 9]">
             <label>
               <input type="checkbox" ng-model="it.selected">
+              <span class="key-shortcut">&crarr;</span>
               <span class="description">
                 <h4>#{{::it.number}}</h4>
               </span>
-              <span class="description">
-                <span class="title">{{::it.customerCode}} - {{::it.customerName}}</span>
+              <span class="description flex-column">
+                <span class="title"><strong>{{::it.customerCode}} - {{::it.customerName}}</strong></span>
                 <span class="subtitle">{{::it.deliveryAddress}}</span>
               </span>
-              <span>
+              <span class="description text-right">
                 <span>${{::it.total | number:2}}</span>
+              </span>
+              <span>
+                <a class="btn btn-default btn-sm" href="">
+                  <i class="glyphicon glyphicon-trash"></i>
+                  <span>Sin Envio</span>
+                  <span class="key-shortcut">-</span>
+                </a>
               </span>
             </label>
           </div>

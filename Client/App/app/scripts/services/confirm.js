@@ -6,7 +6,7 @@ angular.module('client').service('ModalService', function ($uibModal) {
         backdrop: true,
         keyboard: true,
         modalFade: true,
-        template: '<div class="modal-header"><h4>{{ modalOptions.title }}</h4></div><div class="modal-body"><p>{{ modalOptions.message }}</p></div><div class="modal-footer"><button class="btn btn-success" data-ng-click="modalOptions.ok();"><i class="glyphicon glyphicon-ok"></i><span class="key-shortcut">&crarr;</span></button><button type="button" class="btn btn-danger" data-ng-click="modalOptions.close()"><i class="glyphicon glyphicon-remove"></i><span class="key-shortcut">&minus;</span></button></div>'
+        template: '<div class="modal-header"><h4>{{ modalOptions.title }}</h4></div><div class="modal-body"><p>{{ modalOptions.message }}</p></div><div class="modal-footer"><button class="btn btn-success" data-ng-click="modalOptions.ok();"><i class="glyphicon glyphicon-ok"></i> Si<span class="key-shortcut">&crarr;</span></button><button type="button" class="btn btn-danger" data-ng-click="modalOptions.close()"><i class="glyphicon glyphicon-remove"></i> No<span class="key-shortcut">&minus;</span></button></div>'
     };
 
     var modalOptions = {
@@ -32,7 +32,7 @@ angular.module('client').service('ModalService', function ($uibModal) {
         angular.extend(tempModalOptions, modalOptions, customModalOptions ? customModalOptions : {});
 
         if (!tempModalDefaults.controller) {
-            tempModalDefaults.controller = function ($scope, $uibModalInstance, hotkeys) {
+          tempModalDefaults.controller = ['$scope', '$uibModalInstance', 'hotkeys', function ($scope, $uibModalInstance, hotkeys) {
                 $scope.modalOptions = tempModalOptions;
                 $scope.previousHotkeys = angular.copy(hotkeys.get());
 
@@ -69,7 +69,7 @@ angular.module('client').service('ModalService', function ($uibModal) {
                     recoverHotkeys();
                     $uibModalInstance.dismiss('cancel');
                 };
-            };
+            }];
         }
         return $uibModal.open(tempModalDefaults).result;
     };

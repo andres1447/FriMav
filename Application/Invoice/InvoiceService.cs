@@ -118,6 +118,14 @@ namespace FriMav.Application
             return _invoiceRepository.Get(id, x => x.Person, x => x.Items);
         }
 
+        public void DontDeliver(int id)
+        {
+            var invoice = _invoiceRepository.Get(id);
+            if (invoice == null) throw new NotFoundException();
+
+            invoice.Shipping = Shipping.Self;
+        }
+
         private void UpdateCustomerPrices(Customer customer, Invoice invoice)
         {
             foreach (var item in invoice.Items)

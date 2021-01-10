@@ -35,7 +35,9 @@
               <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="#/"><i class="glyphicon glyphicon-flash" ng-class="{ 'text-success': backendAlive, 'text-danger': !backendAlive }"></i></a>
+            <div class="navbar-brand">
+              <a class="notification-icon" href="#/"><i class="glyphicon glyphicon-flash" ng-class="{ 'text-success': backendAlive, 'text-danger': !backendAlive }"></i></a>
+            </div>
           </div>
 
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
@@ -44,11 +46,18 @@
               <li><a ui-sref="TicketCreate"><span class="key-shortcut">F1</span>Ticket</a></li>
               <li><a ui-sref="InvoiceCreate"><span class="key-shortcut">F2</span>Factura</a></li>
               <li><a ui-sref="PaymentCreate"><span class="key-shortcut">F3</span>Pago</a></li>
-              <li><a ui-sref="DeliveryIndex"><span class="key-shortcut">F4</span>Reparto</a></li>
+              <li>
+                <a ui-sref="DeliveryIndex">
+                  <span class="key-shortcut">F4</span>Reparto
+                  <span class="notification-icon danger" ng-if="deliveries.hasPending">
+                    <i class="glyphicon glyphicon-alert"></i>
+                  </span>
+                </a>
+              </li>
+              <li><a ui-sref="ProductIndex">Productos</a></li>
               <li uib-dropdown>
                 <a uib-dropdown-toggle>Administración <span class="caret"></span></a>
                 <ul uib-dropdown-menu>
-                  <li><a ui-sref="ProductIndex">Productos</a></li>
                   <li><a ui-sref="FamilyIndex">Categorías</a></li>
                   <li><a ui-sref="CatalogIndex">Listas de precio</a></li>
                   <li class="divider"></li>
@@ -143,6 +152,7 @@
     <script src="scripts/services/customer.js"></script>
     <script src="scripts/services/employee.js"></script>
     <script src="scripts/services/family.js"></script>
+    <script src="scripts/services/pending-delivery-check.js"></script>
     <script src="scripts/services/healthcheck.js"></script>
     <script src="scripts/services/invoice.js"></script>
     <script src="scripts/services/product.js"></script>

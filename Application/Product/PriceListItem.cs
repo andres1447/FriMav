@@ -12,5 +12,6 @@ namespace FriMav.Application
         public string Code { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
+        public decimal BasePrice { get; internal set; }
     }
 }
