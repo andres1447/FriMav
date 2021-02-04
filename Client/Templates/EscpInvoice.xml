@@ -8,7 +8,7 @@
     </NewLine>
     <NewLine>
       <Text Align="R" Width="50">Fecha:</Text>
-      <Text Align="R" Width="10">@DateTime.Now.ToString("dd/MM/yyyy")</Text>
+      <Text Align="R" Width="10">@Model.Date.ToString("dd/MM/yyyy")</Text>
     </NewLine>
     <Emphasis>
       <Center>

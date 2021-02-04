@@ -4,7 +4,7 @@
   <NewLine/>
   <NewLine>
     <Right>
-      <Text>@DateTime.Now.ToString("dd/MM/yyyy HH:mm")</Text>
+      <Text>@Model.Date.ToString("dd/MM/yyyy HH:mm")</Text>
     </Right>
   </NewLine>
   <NewLine/>
@@ -16,7 +16,7 @@
   <NewLine/>
   <NewLine>
     <Left>
-	<Text>Consumidor final</Text>
+	<Text>Presupuesto X</Text>
     </Left>
   </NewLine>
   <NewLine/>

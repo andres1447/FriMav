@@ -1,9 +1,11 @@
-<div class="row">
-    <a class="btn btn-default" href="" ng-click="reload()"><i class="glyphicon glyphicon-refresh"></i><span class="key-shortcut">F5</span></a>
-</div>
+<header>
+  <h3>Listas de precios</h3>
+  <div>
+    <a class="btn btn-default" href="" ng-click="reload()"><i class="glyphicon glyphicon-refresh"></i><span class="key-shortcut">esc</span></a>
+  </div>
+</header>
 <form class="form" name="form" ng-submit="form.$valid && submit(catalog)">
     <div class="row">
-        <h4>Lista de precios</h4>
         <div class="form-group col-md-2">
             <label for="catalog_name" class="control-label">Nombre</label>
             <input id="catalog_name" type="text" class="form-control" ng-model="catalog.name" ng-required="true" ae-autofocus="InitForm" ae-key-tab="[13]">
@@ -11,7 +13,7 @@
     </div>
     <div class="row">
         <h4>Productos</h4>
-        <table class="table table-bordered">
+        <table class="table table-bordered table-condensed">
             <thead>
                 <tr>
                     <th>Producto</th>

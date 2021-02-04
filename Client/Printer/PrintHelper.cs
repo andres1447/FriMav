@@ -10,23 +10,31 @@ namespace FriMav.Client.Printer
     public class PrintHelper
     {
         private string _configPath;
-        private JsonSerializerSettings _jsonSerializerSettings;
+
+        private static readonly JsonSerializerSettings SerializerSettings = new JsonSerializerSettings()
+        {
+            DateTimeZoneHandling = DateTimeZoneHandling.Local,
+            ContractResolver = new CamelCasePropertyNamesContractResolver()
+        };
+
+        private static readonly Dictionary<string, Type> Models = new Dictionary<string, Type>
+        {
+            { "Ticket", typeof(TicketModel) },
+            { "Invoice", typeof(InvoiceModel) },
+            { "PriceList", typeof(CatalogModel) },
+            { "Delivery", typeof(DeliveryModel) },
+            { "EmployeeTicket", typeof(EmployeeTicketModel) },
+            { "Absency", typeof(EmployeeAbsencyModel) },
+            { "Advance", typeof(EmployeeAdvanceModel) },
+            { "Loan", typeof(EmployeeLoanModel) },
+            { "Payroll", typeof(PayrollModel) }
+        };
+
         private PrintConfiguration Configuration { get; set; }
-        private IDictionary<string, Type> _models;
 
         public PrintHelper(string configPath, IEnumerable<IPrintMode> printModes)
         {
-            _models = new Dictionary<string, Type>();
-            _models.Add("Ticket", typeof(TicketModel));
-            _models.Add("Invoice", typeof(InvoiceModel));
-            _models.Add("PriceList", typeof(CatalogModel));
-            _models.Add("Delivery", typeof(DeliveryModel));
-
             _configPath = configPath;
-            _jsonSerializerSettings = new JsonSerializerSettings()
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
             Configuration = LoadPrintConfiguration();
             Configuration.SetPrintModes(printModes);
         }
@@ -68,18 +76,17 @@ namespace FriMav.Client.Printer
             return CefFxResponse.WrapResult(() =>
             {
                 Configuration.PrintEntries =
-                    JsonConvert.DeserializeObject<List<PrintEntry>>(jsonPrintDocument, _jsonSerializerSettings);
+                    JsonConvert.DeserializeObject<List<PrintEntry>>(jsonPrintDocument, SerializerSettings);
                 SavePrintConfiguration();
             });
         }
 
         public void Print(string modelType, string jsonModel)
         {
-            if (_models.ContainsKey(modelType))
-            {
-                var model = JsonConvert.DeserializeObject(jsonModel, _models[modelType], _jsonSerializerSettings);
-                Configuration.Print(modelType, model);
-            }
+            if (!Models.ContainsKey(modelType)) return;
+
+            var model = JsonConvert.DeserializeObject(jsonModel, Models[modelType], SerializerSettings);
+            Configuration.Print(modelType, model);
         }
 
         private PrintConfiguration InitPrintConfiguration()

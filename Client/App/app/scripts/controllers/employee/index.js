@@ -16,6 +16,56 @@ angular.module('client')
           }
       })
       .add({
+        combo: 'f5',
+        description: 'Falta',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        persistent: false,
+        callback: function (e) {
+          $state.go('AbsencyCreate');
+          e.preventDefault();
+        }
+      })
+      .add({
+        combo: 'f6',
+        description: 'Adelanto',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        persistent: false,
+        callback: function (e) {
+          $state.go('AdvanceCreate');
+          e.preventDefault();
+        }
+      })
+      .add({
+        combo: 'f7',
+        description: 'Mercadería',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        persistent: false,
+        callback: function (e) {
+          $state.go('GoodsSoldCreate');
+          e.preventDefault();
+        }
+      })
+      .add({
+        combo: 'f8',
+        description: 'Préstamo',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        persistent: false,
+        callback: function (e) {
+          $state.go('LoanCreate');
+          e.preventDefault();
+        }
+      })
+      .add({
+        combo: 'f9',
+        description: 'Liquidar sueldos',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        persistent: false,
+        callback: function (e) {
+          $state.go('Payroll');
+          e.preventDefault();
+        }
+      })
+      .add({
           combo: '-',
           description: 'Borrar empleado',
           persistent: false,

@@ -79,7 +79,25 @@ namespace FriMav.Client.Printer {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Imagen.
+        ///   Busca una cadena traducida similar a No imprimir.
+        /// </summary>
+        internal static string Mode_PrintOff {
+            get {
+                return ResourceManager.GetString("Mode_PrintOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Guardar en archivo.
+        /// </summary>
+        internal static string Mode_PrintToFile {
+            get {
+                return ResourceManager.GetString("Mode_PrintToFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Guardar imagen.
         /// </summary>
         internal static string Mode_PrintToImage {
             get {
@@ -88,7 +106,7 @@ namespace FriMav.Client.Printer {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a PDF.
+        ///   Busca una cadena traducida similar a Guardar PDF.
         /// </summary>
         internal static string Mode_PrintToPDF {
             get {
@@ -97,7 +115,7 @@ namespace FriMav.Client.Printer {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Enviar a impresora.
+        ///   Busca una cadena traducida similar a Imprimir.
         /// </summary>
         internal static string Mode_PrintToPrinter {
             get {

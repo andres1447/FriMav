@@ -7,6 +7,7 @@ angular
             url: '/ticket',
             templateUrl: 'views/invoice/ticket.html',
             controller: 'TicketCtrl',
+            params: { previousTicket: null },
             resolve: {
                 products: function (Product) {
                     return Product.active().$promise;

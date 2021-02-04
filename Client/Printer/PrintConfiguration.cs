@@ -22,7 +22,12 @@ namespace FriMav.Client.Printer
                 new SelectItem("Ticket", "Ticket"),
                 new SelectItem("Factura", "Invoice"),
                 new SelectItem("Reparto", "Delivery"),
-                new SelectItem("Lista de precios", "PriceList")
+                new SelectItem("Lista de precios", "PriceList"),
+                new SelectItem("Falta", "Absency"),
+                new SelectItem("Adelanto", "Advance"),
+                new SelectItem("Mercadería empleados", "EmployeeTicket"),
+                new SelectItem("Préstamo", "Loan"),
+                new SelectItem("Liquidación sueldo", "Payroll")
             };
         }
 
@@ -58,11 +63,15 @@ namespace FriMav.Client.Printer
 
         public void Print(string type, dynamic model)
         {
-            var document = PrintEntries.FirstOrDefault(x => x.Type == type);
+            var document = PrintEntries.FirstOrDefault(x => x.Type == type && !string.IsNullOrEmpty(x.Mode));
+            if (document == null) return;
+
+            var printMode = _printModes.FirstOrDefault(x => x.Applies(document.Mode));
+            if (printMode == null) return;
+
             using (var stream = new StreamReader(document.Template))
             {
-                _printModes.FirstOrDefault(x => x.Applies(document.Mode))
-                            .Print(document.Destination, model, stream.ReadToEnd());
+                printMode.Print(document.Destination, model, stream.ReadToEnd());
             }
         }
     }

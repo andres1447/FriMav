@@ -1,7 +1,7 @@
 <header>
   <h4>Factura #{{:: invoice.number }}</h4>
   <div>
-    <a ui-sref="CustomerShow({ personId: invoice.personId })" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i><span class="key-shortcut">esc</span></a>
+    <a ui-sref="CustomerShow({ id: invoice.personId })" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i><span class="key-shortcut">esc</span></a>
     <a ng-click="print()" class="btn btn-success"><i class="glyphicon glyphicon-print"></i><span class="key-shortcut">F5</span></a>
     <a ui-sref="TransactionRefund({ transactionId: transaction.transactionId })" class="btn btn-danger">Reembolzar<span class="key-shortcut">-</span></a>
   </div>

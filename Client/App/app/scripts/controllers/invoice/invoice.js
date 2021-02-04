@@ -5,6 +5,7 @@ angular.module('client')
       $scope.products = orderByCode($filter, products);
       $scope.baseProducts = products;
       $scope.customers = orderByCode($filter, customers);
+      $scope.dontPrint = false;
 
       hotkeys.bindTo($scope).add({
           combo: 'f5',
@@ -13,6 +14,15 @@ angular.module('client')
           callback: function () {
               $scope.submit($scope.invoice);
           }
+      })
+      .add({
+        combo: 'f8',
+        description: 'Guardar sin imprimir',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        callback: function () {
+          $scope.dontPrint = true;
+          $scope.submit($scope.invoice);
+        }
       })
       .add({
           combo: 'esc',
@@ -48,12 +58,13 @@ angular.module('client')
 
       $scope.init = function () {
           $scope.invoice = {
-              date: newDateUTC(),
+              date: new Date(),
               shipping: 1,
               paymentMethod: 1,
               items: [{quantity: 1, price: 0}]
           };
           $scope.totals = {};
+          $scope.dontPrint = false;
 
           $scope.broadcast('InitInvoice');
       };
@@ -138,18 +149,25 @@ angular.module('client')
           });
           Invoice.save(invoice, function (result) {
             $scope.sending = false;
-            Notification.success('Imprimiendo factura...');
-            var model = $scope.getPrintModel(invoice);
-            model.number = result.number;
-            model.total = result.total;
-            model.balance = result.balance;
-            PrintHelper.print('Invoice', JSON.stringify(model));
+            if ($scope.dontPrint)
+              Notification.success('Factura guardada correctamente.');
+            else
+              print(invoice, result)
             $state.reload();
           });
         }
       };
 
-    $scope.getMatchingProduct = function ($viewValue) {
+      function print(invoice, result) {
+        Notification.success('Imprimiendo factura...');
+        var model = $scope.getPrintModel(invoice);
+        model.number = result.number;
+        model.total = result.total;
+        model.balance = result.balance;
+        PrintHelper.print('Invoice', JSON.stringify(model));
+      }
+
+      $scope.getMatchingProduct = function ($viewValue) {
         var term = $viewValue.toLowerCase();
         return $.grep($scope.products, function (it) {
           return it.name.toLowerCase().indexOf(term) != -1 || it.code.toLowerCase().indexOf(term) == 0;

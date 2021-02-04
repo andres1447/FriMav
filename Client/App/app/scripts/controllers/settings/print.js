@@ -5,7 +5,6 @@ angular.module('client')
       $scope.printModes = [];
       $scope.printers = [];
       $scope.templates = [];
-      $scope.types = [];
       $scope.printEntries = [];
 
       hotkeys.bindTo($scope).add({
@@ -21,8 +20,24 @@ angular.module('client')
         load('printModes', PrintHelper.getPrintModes);
         load('printers', PrintHelper.getPrinters);
         load('templates', PrintHelper.getTemplates);
-        load('types', PrintHelper.getTypes);
         load('printEntries', PrintHelper.getPrintEntries);
+        $.each($scope.printEntries, function (idx, it) {
+          it.name = getDescription(it.type)
+        })
+      }
+
+      function getDescription(type) {
+        switch (type) {
+          case "Ticket": return "Ticket";
+          case "Invoice": return "Factura";
+          case "Delivery": return "Reparto";
+          case "PriceList": return "Lista de precios";
+          case "Absency": return "Falta";
+          case "Advance": return "Adelanto";
+          case "EmployeeTicket": return "Mercadería empleados";
+          case "Loan": return "Préstamo";
+          case "Payroll": return "Liquidación sueldo";
+        }
       }
 
       $scope.init();

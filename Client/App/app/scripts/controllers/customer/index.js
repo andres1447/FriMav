@@ -27,6 +27,7 @@ angular.module('client')
       .add({
           combo: '-',
           description: 'Borrar cliente',
+          allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
           persistent: false,
           callback: function (e) {
                 $scope.delete($scope.customerIndex);
@@ -36,6 +37,7 @@ angular.module('client')
       .add({
           combo: 'enter',
           description: 'Detalles',
+          allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
           persistent: false,
           callback: function (e) {
             $state.go('CustomerShow', { id: $scope.customers[$scope.customerIndex].id });
@@ -45,6 +47,7 @@ angular.module('client')
       .add({
           combo: '*',
           description: 'Editar cliente',
+          allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
           persistent: false,
           callback: function (e) {
             $state.go('CustomerUpdate', { id: $scope.customers[$scope.customerIndex].id });
@@ -54,6 +57,7 @@ angular.module('client')
       .add({
           combo: 'up',
           description: 'Mover arriba',
+          allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
           persistent: false,
           callback: function (e) {
               if ($scope.customerIndex > 0) {
@@ -65,6 +69,7 @@ angular.module('client')
       .add({
           combo: 'down',
           description: 'Mover abajo',
+          allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
           persistent: false,
           callback: function (e) {
               if ($scope.customerIndex < customers.length - 1) {

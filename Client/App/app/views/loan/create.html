@@ -1,0 +1,9 @@
+<header>
+  <h3>Nuevo préstamo</h3>
+  <div>
+    <a ui-sref="EmployeeIndex" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i><span class="key-shortcut">esc</span></a>
+  </div>
+</header>
+<form class="form" name="form" ng-submit="form.$valid && create(loan)" ng-disabled="sending">
+    <div ng-include="'views/loan/_form.html'" onload="init()"></div>
+</form>

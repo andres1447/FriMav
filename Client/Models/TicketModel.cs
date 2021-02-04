@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace FriMav.Client.Models
 {
+
     public class TicketModel
     {
         public DateTime Date { get; set; }

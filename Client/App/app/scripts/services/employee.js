@@ -9,6 +9,19 @@ angular.module('client').factory('Employee', function ($resource, ApiConfig) {
           url: ApiConfig.host + 'employee/codes',
           method: 'GET',
           isArray: true
+        },
+        unliquidated: {
+          url: ApiConfig.host + 'employee/:id/unliquidated',
+          method: 'GET',
+          isArray: true
+        },
+        closePayroll: {
+          method: 'POST',
+          url: ApiConfig.host + '/employee/:id/payroll'
+        },
+        closePayrolls: {
+          method: 'POST',
+          url: ApiConfig.host + '/employee/payroll'
         }
     });
 });

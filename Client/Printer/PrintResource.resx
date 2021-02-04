@@ -123,13 +123,19 @@
   <data name="Mode_PrintEpsonCommandsToPrinter" xml:space="preserve">
     <value>ESC/P a impresora</value>
   </data>
+  <data name="Mode_PrintOff" xml:space="preserve">
+    <value>No imprimir</value>
+  </data>
+  <data name="Mode_PrintToFile" xml:space="preserve">
+    <value>Guardar en archivo</value>
+  </data>
   <data name="Mode_PrintToImage" xml:space="preserve">
-    <value>Imagen</value>
+    <value>Guardar imagen</value>
   </data>
   <data name="Mode_PrintToPDF" xml:space="preserve">
-    <value>PDF</value>
+    <value>Guardar PDF</value>
   </data>
   <data name="Mode_PrintToPrinter" xml:space="preserve">
-    <value>Enviar a impresora</value>
+    <value>Imprimir</value>
   </data>
 </root>

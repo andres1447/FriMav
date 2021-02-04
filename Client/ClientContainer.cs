@@ -63,9 +63,11 @@ namespace FriMav.Client
             browser.Visible = false;
             return new List<IPrintMode>()
             {
+                new PrintOff(),
                 new PrintToPrinter(browser),
                 new PrintToImage(),
                 new PrintToPDF(),
+                new PrintToFile(),
                 new PrintEpsonCommandsToPort(),
                 new PrintEpsonCommandsToPrinter()
             };

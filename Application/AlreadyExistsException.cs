@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace FriMav.Application
 {
     [Serializable]
-    internal class AlreadyExistsException : Exception
+    public class AlreadyExistsException : Exception
     {
         public AlreadyExistsException()
         {

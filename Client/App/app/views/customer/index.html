@@ -11,7 +11,7 @@
             <input id="invoice_customer" type="text" ng-model="customerSearch" class="form-control" autocomplete="off" ae-select-on-click=""
                    uib-typeahead="customer as (customer.code + ' - ' + customer.name) for customer in getMatchingCustomer($viewValue) | limitTo:8"
                    typeahead-on-select="goToCustomer(customerSearch)" typeahead-is-open="typeaheadOpen"
-                   typeahead-editable="false" ae-autofocus="SearchCustomer">
+                   typeahead-editable="false" ae-autofocus="InitCustomer">
         </div>
     </div>
     <table class="table table-bordered table-condensed">

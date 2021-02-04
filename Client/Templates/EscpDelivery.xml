@@ -4,12 +4,12 @@
 	<NewLine/>
 	<NewLine>
 	<Right>
-		<Text>@DateTime.Now.ToString("dd/MM/yyyy HH:mm")</Text>
+		<Text>@Model.Date.ToString("dd/MM/yyyy HH:mm")</Text>
 	</Right>
 	</NewLine>
 	<NewLine>
 	<Center>
-		<Text>Reparto</Text>
+		<Text Size="2">Reparto</Text>
 	</Center>
 	</NewLine>
 	<NewLine/>
@@ -34,7 +34,7 @@
 			<Text Width="18" Align="R">#@invoice.Number</Text>
 		</NewLine>
 		<NewLine>
-			<Text>@invoice.DeliveryAddress</Text>
+			<Text>Total: $@invoice.Total.ToString("N2")</Text>
 		</NewLine>
 		<NewLine/>
 	}
@@ -50,7 +50,7 @@
 	{
 		<NewLine>
 			<Text Width="30" Align="L">@product.Name</Text>
-			<Text Width="18" Align="R">#@product.Quantity.ToString("N2")</Text>
+			<Text Width="18" Align="R">@product.Quantity.ToString("N2")</Text>
 		</NewLine>
 	}
 	<NewLine/>

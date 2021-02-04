@@ -44,8 +44,8 @@ angular
                 employee: function ($stateParams, Employee) {
                   return Employee.get({ id: $stateParams.id }).$promise;
                 },
-                accountEntries: function (/*AccountEntry*/) {
-                  return [];//AccountEntry.query({ id: customer.id }).$promise;
+                unliquidatedDocuments: function ($stateParams, Employee) {
+                  return Employee.unliquidated({ id: $stateParams.id }).$promise;
                 }
             }
         })

@@ -17,15 +17,16 @@ angular.module('client')
           allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
           persistent: false,
           callback: function (e) {
-              $state.go('CustomerIndex');
+              $state.go('EmployeeIndex');
               e.preventDefault();
           }
       });
 
-      $scope.employee = employee;
       $scope.codes = codes.remove(employee.code);
 
       $scope.init = function () {
+          employee.joinDate = new Date(employee.joinDate);
+          $scope.employee = employee;
           $scope.broadcast('InitForm');
       };
 

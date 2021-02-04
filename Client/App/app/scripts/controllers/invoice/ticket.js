@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('client')
-  .controller('TicketCtrl', function ($scope, $state, $filter, hotkeys, Notification, products) {
+  .controller('TicketCtrl', function ($scope, $state, $filter, hotkeys, Notification, products, $stateParams) {
       $scope.products = orderByCode($filter, products);
+      $scope.previousTicket = $stateParams.previousTicket;
 
       hotkeys.bindTo($scope).add({
           combo: 'f5',
@@ -46,7 +47,7 @@ angular.module('client')
 
       $scope.init = function () {
           $scope.ticket = {
-              date: newDateUTC(),
+              date: new Date(),
               items: [{quantity: 1, price: 0}]
           };
           $scope.totals = {};
@@ -89,18 +90,27 @@ angular.module('client')
           ticket.items = $.grep(ticket.items, function (it) {
               return hasValue(it.product) && hasValue(it.quantity) && hasValue(it.price);
           });
-          PrintHelper.print('Ticket', JSON.stringify($scope.getPrintModel(ticket)));
           Notification.success('Imprimiendo ticket...');
-          $state.reload();
+          var model = $scope.getPrintModel(ticket);
+          $scope.sendToPrinter(model);
+          $state.go($state.current, { previousTicket: model }, {
+            reload: true, inherit: false, notify: true
+          });
       };
+
+      $scope.sendToPrinter = function (model) {
+        PrintHelper.print('Ticket', JSON.stringify(model));
+      }
 
       $scope.getPrintModel = function (ticket) {
           var printModel = {
               date: ticket.date,
+              total: 0,
               items: []
           };
           angular.forEach(ticket.items, function (item) {
-              printModel.items.push({ product: item.product.name, quantity: item.quantity, price: item.price });
+            printModel.items.push({ product: item.product.name, quantity: item.quantity, price: item.price });
+            printModel.total += item.quantity * item.price;
           });
           return printModel;
       };

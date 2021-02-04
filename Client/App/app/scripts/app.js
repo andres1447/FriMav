@@ -48,6 +48,19 @@ if (!String.prototype.format) {
     };
 }
 
+if (!Date.prototype.addDays) {
+  Date.prototype.addDays = function (days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+  }
+}
+if (!Date.prototype.toIsoString) {
+  Date.prototype.toIsoString = function () {
+    return new Date(this.getTime() - (this.getTimezoneOffset() * 60000)).toISOString()
+  }
+}
+
 if (!Array.prototype.remove) {
   Array.prototype.remove = function (item) {
     var index = this.indexOf(item);

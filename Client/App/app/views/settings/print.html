@@ -15,9 +15,7 @@
             <tbody>
                 <tr ng-repeat="it in printEntries">
                     <td class="col-md-3">
-                        <select class="form-control" ng-model="it.type">
-                            <option ng-repeat="opt in types" value="{{::opt.value}}">{{::opt.text}}</option>
-                        </select>
+                      {{::it.name}}
                     </td>
                     <td class="col-md-3">
                         <select class="form-control" ng-model="it.mode">

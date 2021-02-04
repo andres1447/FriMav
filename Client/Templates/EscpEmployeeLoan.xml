@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<EscCommandTemplate>
+	<Line>48</Line>
+	<NewLine/>
+	<NewLine>
+		<Center>
+			<Text Size="2">@Model.EmployeeCode - @Model.EmployeeName</Text>
+		</Center>
+	</NewLine>
+	<NewLine/>
+	<NewLine>
+		<Center>
+			<Text Size="2">Préstamo</Text>
+		</Center>
+	</NewLine>
+	<NewLine/>
+	<Line>48</Line>
+	<NewLine/>
+	<NewLine>
+		<Text Width="24" Align="L">Fecha</Text>
+		<Text Width="24" Align="R">Monto</Text>
+	</NewLine>
+	@foreach (var item in Model.Fees)
+	{
+	<NewLine>
+		<Text Width="24" Align="L">@item.Date.ToString("dd/MM/yyyy")</Text>
+		<Text Width="24" Align="R">$@item.Amount.ToString("N2")</Text>
+	</NewLine>
+	}
+	<Line>48</Line>
+	<NewLine/>
+	<NewLine>
+		<Right>
+			<Text>Total: $@Model.Total().ToString("N2")</Text>
+		</Right>
+	</NewLine>
+	<Feed>14</Feed>
+	<CutPartial></CutPartial>
+	<Line>48</Line>
+	<NewLine/>
+	<NewLine>
+		<Center>
+			<Text Size="2">@Model.EmployeeCode - @Model.EmployeeName</Text>
+		</Center>
+	</NewLine>
+	<NewLine/>
+	<NewLine>
+		<Center>
+			<Text Size="2">Préstamo</Text>
+		</Center>
+	</NewLine>
+	<NewLine/>
+	<Line>48</Line>
+	<NewLine/>
+	<NewLine>
+		<Text Width="24" Align="L">Fecha</Text>
+		<Text Width="24" Align="R">Monto</Text>
+	</NewLine>
+	@foreach (var item in Model.Fees)
+	{
+	<NewLine>
+		<Text Width="24" Align="L">@item.Date.ToString("dd/MM/yyyy")</Text>
+		<Text Width="24" Align="R">$@item.Amount.ToString("N2")</Text>
+	</NewLine>
+	}
+	<Line>48</Line>
+	<NewLine/>
+	<NewLine>
+		<Right>
+			<Text>Total: $@Model.Total().ToString("N2")</Text>
+		</Right>
+	</NewLine>
+	<Feed>14</Feed>
+	<CutFull></CutFull>
+</EscCommandTemplate>

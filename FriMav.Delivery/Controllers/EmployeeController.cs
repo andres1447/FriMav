@@ -1,5 +1,5 @@
 ﻿using FriMav.Application;
-using FriMav.Domain;
+using FriMav.Application.Employees;
 using System.Web.Http;
 
 namespace FriMav.Api.Controllers
@@ -7,11 +7,24 @@ namespace FriMav.Api.Controllers
     [RoutePrefix("api/employee")]
     public class EmployeeController : ApiController
     {
-        private IEmployeeService _employeeService;
+        private readonly IEmployeeService _employeeService;
+        private readonly IAbsencyService _absencyService;
+        private readonly IAdvanceService _advanceService;
+        private readonly ILoanService _loanService;
+        private readonly IGoodsSoldService _goodSoldService;
 
-        public EmployeeController(IEmployeeService employeeService)
+        public EmployeeController(
+            IEmployeeService employeeService,
+            IAbsencyService absencyService,
+            IAdvanceService advanceService,
+            ILoanService loanService,
+            IGoodsSoldService goodSoldService)
         {
             _employeeService = employeeService;
+            _absencyService = absencyService;
+            _advanceService = advanceService;
+            _loanService = loanService;
+            _goodSoldService = goodSoldService;
         }
 
         [HttpGet]
@@ -28,12 +41,90 @@ namespace FriMav.Api.Controllers
             return Ok(_employeeService.UsedCodes());
         }
 
+        [HttpPost]
+        [Route("absency")]
+        public IHttpActionResult Absency(AbsencyCreate request)
+        {
+            _absencyService.Create(request);
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("absency/{id:int}")]
+        public IHttpActionResult DeleteAbsency(int id)
+        {
+            _absencyService.Delete(id);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("advance")]
+        public IHttpActionResult Advance(AdvanceCreate request)
+        {
+            _advanceService.Create(request);
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("advance/{id:int}")]
+        public IHttpActionResult DelteAdvance(int id)
+        {
+            _advanceService.Delete(id);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("loan")]
+        public IHttpActionResult Loan(LoanCreate request)
+        {
+            _loanService.Create(request);
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("loan/{id:int}")]
+        public IHttpActionResult DelteLoan(int id)
+        {
+            _loanService.Delete(id);
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("loan/{id:int}")]
+        public IHttpActionResult GetLoan(int id)
+        {
+            return Ok(_loanService.Get(id));
+        }
+
+        [HttpPost]
+        [Route("goods")]
+        public IHttpActionResult Goods(GoodsSoldCreate request)
+        {
+            _goodSoldService.Create(request);
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("goods/{id:int}")]
+        public IHttpActionResult DelteGoods(int id)
+        {
+            _goodSoldService.Delete(id);
+            return Ok();
+        }
+
         [HttpGet]
         [Route("{id}")]
         public IHttpActionResult Get(int id)
         {
             var employee = _employeeService.Get(id);
             return Ok(employee);
+        }
+
+        [HttpGet]
+        [Route("{id:int}/unliquidated")]
+        public IHttpActionResult UnliquidatedDocuments(int id)
+        {
+            return Ok(_employeeService.GetUnliquidatedDocuments(id));
         }
 
         [HttpPost]
@@ -45,7 +136,7 @@ namespace FriMav.Api.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public IHttpActionResult Update(int id, EmployeeUpdate employee)
         {
             employee.Id = id;
@@ -54,10 +145,33 @@ namespace FriMav.Api.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public IHttpActionResult Delete(int id)
         {
             _employeeService.Delete(id);
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("payroll")]
+        public IHttpActionResult GetPayrolls()
+        {
+            return Ok(_employeeService.GetPayrolls());
+        }
+
+        [HttpPost]
+        [Route("{id:int}/payroll")]
+        public IHttpActionResult ClosePayroll(int id)
+        {
+            _employeeService.ClosePayroll(id);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("payroll")]
+        public IHttpActionResult CloseAllPayrolls()
+        {
+            _employeeService.ClosePayroll();
             return Ok();
         }
     }

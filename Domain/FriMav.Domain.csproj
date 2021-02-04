@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Payrolls\Absency.cs" />
     <Compile Include="Entities\Catalog.cs" />
     <Compile Include="Entities\CreditNote.cs" />
     <Compile Include="Entities\Customer.cs" />
@@ -65,13 +66,21 @@
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Invoice.cs" />
     <Compile Include="Entities\InvoiceItem.cs" />
+    <Compile Include="Entities\Payrolls\Advance.cs" />
+    <Compile Include="Entities\Payrolls\GoodsSold.cs" />
+    <Compile Include="Entities\Payrolls\LiquidationDocument.cs" />
+    <Compile Include="Entities\Payrolls\LiquidationDocumentType.cs" />
+    <Compile Include="Entities\Payrolls\Loan.cs" />
+    <Compile Include="Entities\Payrolls\LoanFee.cs" />
     <Compile Include="Entities\NumberSequence.cs" />
     <Compile Include="Entities\Payment.cs" />
     <Compile Include="Entities\PaymentMethod.cs" />
+    <Compile Include="Entities\Payrolls\Payroll.cs" />
     <Compile Include="Entities\Person.cs" />
     <Compile Include="Entities\PersonType.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ProductType.cs" />
+    <Compile Include="Entities\Payrolls\Salary.cs" />
     <Compile Include="Entities\Shipping.cs" />
     <Compile Include="Entities\TransactionDocument.cs" />
     <Compile Include="Entities\TransactionDocumentType.cs" />

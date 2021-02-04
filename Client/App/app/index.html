@@ -54,15 +54,24 @@
                   </span>
                 </a>
               </li>
+              <li><a ui-sref="CustomerIndex">Clientes</a></li>
               <li><a ui-sref="ProductIndex">Productos</a></li>
+              <li><a ui-sref="CatalogIndex">Listas de precios</a></li>
+              <li uib-dropdown>
+                <a uib-dropdown-toggle>Empleados <span class="caret"></span></a>
+                <ul uib-dropdown-menu>
+                  <li><a ui-sref="EmployeeIndex">Empleados</a></li>
+                  <li><a ui-sref="AbsencyCreate">Faltas</a></li>
+                  <li><a ui-sref="AdvanceCreate">Adelantos</a></li>
+                  <li><a ui-sref="GoodsSoldCreate">Mercadería</a></li>
+                  <li><a ui-sref="LoanCreate">Préstamo</a></li>
+                  <li><a ui-sref="Payroll">Sueldos</a></li>
+                </ul>
+              </li>
               <li uib-dropdown>
                 <a uib-dropdown-toggle>Administración <span class="caret"></span></a>
                 <ul uib-dropdown-menu>
                   <li><a ui-sref="FamilyIndex">Categorías</a></li>
-                  <li><a ui-sref="CatalogIndex">Listas de precio</a></li>
-                  <li class="divider"></li>
-                  <li><a ui-sref="CustomerIndex">Clientes</a></li>
-                  <li><a ui-sref="EmployeeIndex">Empleados</a></li>
                   <li><a ui-sref="ZoneIndex">Zonas</a></li>
                 </ul>
               </li>
@@ -95,6 +104,8 @@
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/absency/create.js"></script>
+    <script src="scripts/controllers/advance/create.js"></script>
     <script src="scripts/controllers/catalog/create.js"></script>
     <script src="scripts/controllers/catalog/index.js"></script>
     <script src="scripts/controllers/catalog/show.js"></script>
@@ -109,13 +120,17 @@
     <script src="scripts/controllers/employee/index.js"></script>
     <script src="scripts/controllers/employee/update.js"></script>
     <script src="scripts/controllers/employee/show.js"></script>
+    <script src="scripts/controllers/employee/payroll.js"></script>
     <script src="scripts/controllers/family/create.js"></script>
     <script src="scripts/controllers/family/index.js"></script>
     <script src="scripts/controllers/family/show.js"></script>
     <script src="scripts/controllers/family/update.js"></script>
+    <script src="scripts/controllers/goods/create.js"></script>
     <script src="scripts/controllers/invoice/ticket.js"></script>
     <script src="scripts/controllers/invoice/invoice.js"></script>
     <script src="scripts/controllers/invoice/show.js"></script>
+    <script src="scripts/controllers/loan/create.js"></script>
+    <script src="scripts/controllers/loan/show.js"></script>
     <script src="scripts/controllers/product/create.js"></script>
     <script src="scripts/controllers/product/index.js"></script>
     <script src="scripts/controllers/product/update.js"></script>
@@ -136,27 +151,37 @@
     <script src="scripts/directives/navigate.js"></script>
     <script src="scripts/directives/selectonclick.js"></script>
     <script src="scripts/directives/restrict-decimal.js"></script>
+    <script src="scripts/routes/absency.js"></script>
+    <script src="scripts/routes/advance.js"></script>
     <script src="scripts/routes/catalog.js"></script>
     <script src="scripts/routes/customer.js"></script>
     <script src="scripts/routes/delivery.js"></script>
     <script src="scripts/routes/employee.js"></script>
     <script src="scripts/routes/family.js"></script>
+    <script src="scripts/routes/goods.js"></script>
     <script src="scripts/routes/invoice.js"></script>
+    <script src="scripts/routes/loan.js"></script>
     <script src="scripts/routes/product.js"></script>
     <script src="scripts/routes/payment.js"></script>
+    <script src="scripts/routes/payroll.js"></script>
     <script src="scripts/routes/settings.js"></script>
     <script src="scripts/routes/transaction.js"></script>
     <script src="scripts/routes/zone.js"></script>
-    <script src="scripts/services/delivery.js"></script>
+    <script src="scripts/services/absency.js"></script>
+    <script src="scripts/services/advance.js"></script>
     <script src="scripts/services/catalog.js"></script>
     <script src="scripts/services/customer.js"></script>
+    <script src="scripts/services/delivery.js"></script>
     <script src="scripts/services/employee.js"></script>
     <script src="scripts/services/family.js"></script>
+    <script src="scripts/services/goods.js"></script>
+    <script src="scripts/services/loan.js"></script>
     <script src="scripts/services/pending-delivery-check.js"></script>
     <script src="scripts/services/healthcheck.js"></script>
     <script src="scripts/services/invoice.js"></script>
     <script src="scripts/services/product.js"></script>
     <script src="scripts/services/payment.js"></script>
+    <script src="scripts/services/payroll.js"></script>
     <script src="scripts/services/transaction.js"></script>
     <script src="scripts/services/zone.js"></script>
     <script src="scripts/services/config.js"></script>

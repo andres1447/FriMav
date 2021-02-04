@@ -1,0 +1,27 @@
+<header>
+  <h3>Préstamo {{:: loan.employeeCode }} {{:: loan.employeeName}}</h3>
+  <div>
+    <a ui-sref="EmployeeIndex" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i><span class="key-shortcut">esc</span></a>
+    <a ng-if="canCancel" ng-click="delete(loan)" class="btn btn-danger">Eliminar<span class="key-shortcut">-</span></a>
+  </div>
+</header>
+<div class="">
+  <div class="col-md-offset-2 col-md-8">
+    <table class="table table-condensed table-bordered">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th class="col-md-2">Liquidada</th>
+          <th class="col-md-3 text-right">Monto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="it in loan.fees">
+          <td>{{:: it.date | date:'dd/MM/yyyy' }}</td>
+          <td>{{:: it.isLiquidated ? 'Si' : 'No' }}</td>
+          <td class="text-right">${{:: it.amount | number: 2 }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

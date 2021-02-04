@@ -32,6 +32,8 @@ namespace FriMav.Delivery.Api
                 .WithServiceDefaultInterfaces()
                 .Configure(x => x.Interceptors<TransactionalInterceptor>())
                 .LifestyleScoped());
+
+            container.Register(Component.For<ITime, Time>());
         }
     }
 }

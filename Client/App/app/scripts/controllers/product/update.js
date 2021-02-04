@@ -11,7 +11,7 @@ angular.module('client')
           description: 'Guardar',
           allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
           callback: function () {
-              $scope.submit($scope.product);
+              $scope.update($scope.product);
           }
       })
       .add({

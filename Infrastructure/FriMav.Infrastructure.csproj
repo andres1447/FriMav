@@ -78,6 +78,14 @@
     <Compile Include="Mappings\InvoiceItemMapping.cs" />
     <Compile Include="Mappings\InvoiceMapping.cs" />
     <Compile Include="Mappings\NumberSequenceMapping.cs" />
+    <Compile Include="Mappings\Payrolls\GoodsSoldItemMapping.cs" />
+    <Compile Include="Mappings\Payrolls\PayrollMapping.cs" />
+    <Compile Include="Mappings\Payrolls\LoanMapping.cs" />
+    <Compile Include="Mappings\Payrolls\LoanFeeMapping.cs" />
+    <Compile Include="Mappings\Payrolls\SalaryMapping.cs" />
+    <Compile Include="Mappings\Payrolls\AdvanceMapping.cs" />
+    <Compile Include="Mappings\Payrolls\GoodsSoldMapping.cs" />
+    <Compile Include="Mappings\Payrolls\LiquidationDocumentMapping.cs" />
     <Compile Include="Mappings\PersonMapping.cs" />
     <Compile Include="Mappings\ProductMapping.cs" />
     <Compile Include="Mappings\ProductTypeMapping.cs" />
@@ -95,7 +103,12 @@
     <Compile Include="Migrations\202101060138052_DeliveryConfirmation.designer.cs">
       <DependentUpon>202101060138052_DeliveryConfirmation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101210252279_Payroll.cs" />
+    <Compile Include="Migrations\202101210252279_Payroll.designer.cs">
+      <DependentUpon>202101210252279_Payroll.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\202101210252279_PayrollSql.cs" />
     <Compile Include="MissingDllHack.cs" />
     <Compile Include="DocumentNumberGenerator.cs" />
     <Compile Include="PagedList.cs" />
@@ -124,6 +137,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101060138052_DeliveryConfirmation.resx">
       <DependentUpon>202101060138052_DeliveryConfirmation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101210252279_Payroll.resx">
+      <DependentUpon>202101210252279_Payroll.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -158,9 +158,18 @@
     <Compile Include="Client.cs" />
     <Compile Include="Models\CatalogModel.cs" />
     <Compile Include="Models\DeliveryModel.cs" />
+    <Compile Include="Models\EmployeeAbsencyModel.cs" />
+    <Compile Include="Models\EmployeeAdvanceModel.cs" />
+    <Compile Include="Models\EmployeeDocumentModel.cs" />
+    <Compile Include="Models\EmployeeLoanModel.cs" />
+    <Compile Include="Models\EmployeeTicketModel.cs" />
     <Compile Include="Models\InvoiceModel.cs" />
+    <Compile Include="Models\LoanFeeModel.cs" />
+    <Compile Include="Models\PayrollModel.cs" />
     <Compile Include="Models\TicketModel.cs" />
     <Compile Include="Printer\Modes\PrintEpsonCommandsToPrinter.cs" />
+    <Compile Include="Printer\Modes\PrintOff.cs" />
+    <Compile Include="Printer\Modes\PrintToFile.cs" />
     <Compile Include="Printer\Pos\Command\AlignCenter.cs" />
     <Compile Include="Printer\Pos\Command\CutFull.cs" />
     <Compile Include="Printer\Pos\Command\NewLine.cs" />
@@ -194,6 +203,12 @@
     <Compile Include="Utils\CefHelper.cs" />
     <Compile Include="Utils\ClientConfig.cs" />
     <Compile Include="Utils\SelectItem.cs" />
+    <Content Include="App\app\scripts\controllers\employee\payroll.js" />
+    <Content Include="App\app\scripts\controllers\loan\show.js" />
+    <Content Include="App\app\scripts\controllers\loan\create.js" />
+    <Content Include="App\app\scripts\controllers\absency\create.js" />
+    <Content Include="App\app\scripts\controllers\advance\create.js" />
+    <Content Include="App\app\scripts\controllers\goods\create.js" />
     <Content Include="App\app\scripts\controllers\payment\create.js" />
     <Content Include="App\app\scripts\controllers\zone\create.js" />
     <Content Include="App\app\scripts\controllers\zone\index.js" />
@@ -205,11 +220,30 @@
     <Content Include="App\app\scripts\directives\keyprev.js" />
     <Content Include="App\app\scripts\directives\restrict-decimal.js" />
     <Content Include="App\app\scripts\directives\form-group.js" />
+    <Content Include="App\app\scripts\routes\payroll.js" />
+    <Content Include="App\app\scripts\routes\loan.js" />
+    <Content Include="App\app\scripts\routes\goods.js" />
+    <Content Include="App\app\scripts\routes\advance.js" />
+    <Content Include="App\app\scripts\routes\absency.js" />
     <Content Include="App\app\scripts\routes\zone.js" />
+    <Content Include="App\app\scripts\services\payroll.js" />
+    <Content Include="App\app\scripts\services\loan.js" />
+    <Content Include="App\app\scripts\services\goods.js" />
+    <Content Include="App\app\scripts\services\advance.js" />
+    <Content Include="App\app\scripts\services\absency.js" />
     <Content Include="App\app\scripts\services\pending-delivery-check.js" />
     <Content Include="App\app\scripts\services\zone.js" />
     <Content Include="App\app\scripts\services\healthcheck.js" />
+    <Content Include="App\app\views\advance\create.html" />
+    <Content Include="App\app\views\advance\_form.html" />
+    <Content Include="App\app\views\absency\_form.html" />
     <Content Include="App\app\views\delivery\show.html" />
+    <Content Include="App\app\views\absency\create.html" />
+    <Content Include="App\app\views\employee\payroll.html" />
+    <Content Include="App\app\views\goods\create.html" />
+    <Content Include="App\app\views\loan\create.html" />
+    <Content Include="App\app\views\loan\show.html" />
+    <Content Include="App\app\views\loan\_form.html" />
     <Content Include="App\app\views\payment\create.html" />
     <Content Include="App\app\views\zone\create.html" />
     <Content Include="App\app\views\zone\index.html" />
@@ -217,16 +251,35 @@
     <Content Include="App\app\views\zone\update.html" />
     <Content Include="App\app\views\zone\_form.html" />
     <Content Include="App\app\views\family\show.html" />
-    <Content Include="App\dist\scripts\scripts.c0c9372e.js">
+    <Content Include="App\dist\images\yeoman.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App\dist\scripts\vendor.7c2b40a4.js">
+    <Content Include="App\dist\scripts\scripts.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App\dist\styles\main.6e2d3fbe.css">
+    <Content Include="App\dist\scripts\vendor.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App\dist\styles\vendor.16c1ee70.css">
+    <Content Include="App\dist\styles\main.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App\dist\styles\vendor.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\EscpPayroll.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\EscpEmployeeAbsency.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\EscpEmployeeAdvance.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\EscpEmployeeLoan.xml">
+      <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\EscpInvoice.xml">
@@ -234,6 +287,10 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Templates\EscpDelivery.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\EscpEmployeeTicket.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -392,9 +449,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App\dist\fonts\glyphicons-halflings-regular.svg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App\dist\images\yeoman.c582c4d1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App\dist\index.html">

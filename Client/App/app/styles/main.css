@@ -57,6 +57,13 @@ header > h1, header > h2, header > h3 {
 .content > * {
   padding: 20px 30px;
 }
+.btn-toolbar {
+    margin-bottom: 20px;
+}
+.previous-ticket {
+  margin-right: 0;
+  margin-bottom: 0;
+}
 .selectrow {
    margin-top: 8px;
 }
@@ -78,6 +85,12 @@ header > h1, header > h2, header > h3 {
 .selectrow .description {
     padding-left: 20px;
     padding-right: 20px;
+    flex-grow: 1;
+}
+.flex-row {
+    display: flex;
+}
+.flex-row > .flex-grow {
     flex-grow: 1;
 }
 .selectrow > label  .subtitle {
@@ -149,7 +162,8 @@ text-danger {
     font-weight: bolder;
 }
 .glyphicon {
-  vertical-align: middle;
+    top: auto !important;
+    vertical-align: middle;
 }
 .notification-icon {
   display: inline-block;

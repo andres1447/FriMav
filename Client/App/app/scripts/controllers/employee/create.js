@@ -22,11 +22,14 @@ angular.module('client')
           }
       });
 
-      $scope.employee = {};
+      $scope.employee = {
+        joinDate: new Date()
+      };
+
       $scope.codes = codes;
 
       $scope.init = function () {
-            $scope.broadcast('InitForm');
+          $scope.broadcast('InitForm');
       };
 
       $scope.init();

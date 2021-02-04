@@ -21,7 +21,7 @@ angular.module('client')
           persistent: false,
           callback: function (e) {
             $state.go('CustomerShow', { id: $scope.invoice.personId });
-              e.preventDefault();
+            e.preventDefault();
           }
       })
       .add({
