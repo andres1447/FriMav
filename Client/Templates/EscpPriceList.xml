@@ -4,9 +4,7 @@
   <NewLine/>
   <NewLine>
     <Center>
-      <Emphasis>
-        <Text>Malvinas</Text>
-      </Emphasis>
+		<Text Size="2">@Model.EmployeeCode - @Model.EmployeeName</Text>
     </Center>
   </NewLine>
   <NewLine>

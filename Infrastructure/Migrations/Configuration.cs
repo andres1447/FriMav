@@ -14,24 +14,18 @@
 
         protected override void Seed(FriMavDbContext context)
         {
-            context.Set<Customer>().AddOrUpdate(x => x.Id, new Customer
+            if (!context.Set<Customer>().Any(x => x.Code == "0"))
             {
-                Id = Customer.TicketCustomerId,
-                Name = "Cliente Ticket",
-                Code = "T",
-                CreationDate = new DateTime(2020, 12, 25).ToUniversalTime(),
-                PaymentMethod = PaymentMethod.Cash,
-                Shipping = Shipping.Self
-            });
-            context.Set<Customer>().AddOrUpdate(x => x.Id, new Customer
-            {
-                Id = Customer.DefaultCustomerId,
-                Name = "Cliente Mostrador",
-                Code = "0",
-                CreationDate = new DateTime(2020, 12, 25).ToUniversalTime(),
-                PaymentMethod = PaymentMethod.Cash,
-                Shipping = Shipping.Self
-            });
+                context.Set<Customer>().Add(new Customer
+                {
+                    Id = Customer.DefaultCustomerId,
+                    Name = "Cliente Mostrador",
+                    Code = "0",
+                    CreationDate = new DateTime(2020, 12, 25).ToUniversalTime(),
+                    PaymentMethod = PaymentMethod.Cash,
+                    Shipping = Shipping.Self
+                });
+            }
         }
     }
 }
