@@ -1,0 +1,148 @@
+﻿<html>
+<head>
+    <style type="text/css">
+        html, body {
+            font-family: Consolas;
+            text-transform: uppercase;
+            font-size: 13px;
+            height: 100%;
+            min-height: 100%;
+            width: 100%;
+        }
+        .content {
+            padding: 30px;
+            height: 100%;
+            min-height: 100%;
+            width: 100%;
+        }
+        .document {
+            height: 48%;
+            min-height: 48%;
+            width: 100%;
+        }
+        .top {
+            min-height: 78%;
+            width: 100%;
+        }
+        .header {
+            padding-top: 1mm;
+            padding-bottom: 1mm;
+            border-bottom: 1px solid;
+            font-size: 15px;
+            width: 100%;
+        }
+        .title {
+            margin-top: 1mm;
+            text-align: center;
+        }
+        .invoice-item-list table {
+            font-family: Consolas;
+            text-transform: uppercase;
+            font-size: 13px;
+            width: 100%;
+        }
+        .invoice-item-list table tr {
+            border-bottom: 1px solid #ccc
+        }
+        .invoice-item-list {
+            padding-top: 3mm;
+        }
+        .invoice-total {
+            border-top: 1px solid;
+            padding-top: 2mm;
+        }
+        .invoice-total table {
+            font-family: Consolas;
+            text-transform: uppercase;
+            font-size: 13px;
+            width: 40%;
+        }
+        .invoice-total th {
+            text-align: left;
+        }
+        .invoice-total td {
+            text-align: right;
+        }
+        .total-separator {
+            margin-top: 11px;
+            border-top: 1px solid black;
+        }
+        h1 {
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+        .separator {
+            margin-top: 20px;
+            border-top: 1px dashed black;
+            margin-bottom: 20px;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .text-left {
+            text-align: left;
+        }
+        .top {
+
+        }
+        @("@")page {
+            size: legal;
+        }
+        .dont-split {
+            page-break-inside: avoid;
+            break-inside: avoid;
+            display: inline;
+            width: 100%;
+        }
+        table tr td, table tr th {
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="document dont-split">
+            <div class="top dont-split">
+                <div class="header dont-split">
+                    <h3 class="title">Malvinas</h3>
+                    <h4>Cuenta corriente</h4>
+                    <br />
+                    <div><strong>Cliente: @Model.CustomerCode - @Model.CustomerName</strong></div>
+                    <div><strong>Dirección: @Model.DeliveryAddress</strong></div>
+                    <br />
+                </div>
+                <div class="invoice-item-list dont-split">
+                    <table class="dont-split">
+                        <thead>
+                            <tr>
+                                <th width="20%" class="text-left">Fecha</th>
+                                <th width="40%" class="text-left">Descripción</th>
+                                <th width="20%" class="text-right">Total</th>
+                                <th width="20%" class="text-right">Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var transaction in Model.Transactions)
+                            {
+                            <tr>
+                                <td class="text-left">@transaction.Date.ToString("dd/MM/yyyy")</td>
+                                <td class="text-left">@transaction.Description</td>
+                                <td class="text-right">$@transaction.Total.ToString("N2")</td>
+                                <td class="text-right">$@transaction.Balance.ToString("N2")</td>
+                            </tr>
+                            }
+                            <tr class="total-separator">
+                                <td></td>
+                                <td class="text-right"></td>
+                                <td class="text-right"></td>
+                                <td class="text-right"><strong>$@Model.Balance.ToString("N2")</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

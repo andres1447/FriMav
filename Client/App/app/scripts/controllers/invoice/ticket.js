@@ -86,16 +86,20 @@ angular.module('client')
         $scope.ticket.items.splice(index, 1);
       }
 
-      $scope.print = function (ticket) {
-          ticket.items = $.grep(ticket.items, function (it) {
-              return hasValue(it.product) && hasValue(it.quantity) && hasValue(it.price);
-          });
-          Notification.success('Imprimiendo ticket...');
-          var model = $scope.getPrintModel(ticket);
-          $scope.sendToPrinter(model);
-          $state.go($state.current, { previousTicket: model }, {
-            reload: true, inherit: false, notify: true
-          });
+    $scope.print = function (ticket) {
+      if ($scope.printing) return;
+
+      $scope.printing = true;
+      ticket.items = $.grep(ticket.items, function (it) {
+          return hasValue(it.product) && hasValue(it.quantity) && hasValue(it.price);
+      });
+      Notification.success('Imprimiendo ticket...');
+      var model = $scope.getPrintModel(ticket);
+      $scope.sendToPrinter(model);
+      $scope.printing = false;
+      $state.go($state.current, { previousTicket: model }, {
+        reload: true, inherit: false, notify: true
+      });
       };
 
       $scope.sendToPrinter = function (model) {

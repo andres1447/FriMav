@@ -37,6 +37,7 @@ angular.module('client')
           case "EmployeeTicket": return "Mercadería empleados";
           case "Loan": return "Préstamo";
           case "Payroll": return "Liquidación sueldo";
+          case "CustomerAccount": return "Cuenta cliente";
         }
       }
 

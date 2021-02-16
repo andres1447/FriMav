@@ -20,10 +20,9 @@
 	</NewLine>
 	<NewLine/>
 	<NewLine>
-		<Left>
-			<Text Width="24" Align="L">Monto:</Text>
-			<Text Width="24" Align="R">$@Model.Amount</Text>
-		</Left>
+		<Right>
+			<Text Size="2">Monto: $@Model.Amount</Text>
+		</Right>
 	</NewLine>
 	<NewLine/>
 	<Line>48</Line>
@@ -50,10 +49,9 @@
 	</NewLine>
 	<NewLine/>
 	<NewLine>
-		<Left>
-			<Text Width="24" Align="L">Monto:</Text>
-			<Text Width="24" Align="R">$@Model.Amount</Text>
-		</Left>
+		<Right>
+			<Text Size="2">Monto: $@Model.Amount</Text>
+		</Right>
 	</NewLine>
 	<NewLine/>
 	<Line>48</Line>

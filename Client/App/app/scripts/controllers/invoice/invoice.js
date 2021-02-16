@@ -3,7 +3,7 @@
 angular.module('client')
   .controller('InvoiceCtrl', function ($scope, $state, $filter, hotkeys, Notification, Customer, Invoice, products, customers) {
       $scope.products = orderByCode($filter, products);
-      $scope.baseProducts = products;
+      $scope.baseProducts = orderByCode($filter, products);
       $scope.customers = orderByCode($filter, customers);
       $scope.dontPrint = false;
 

@@ -3,5 +3,5 @@
     <input id="zone_name" type="text" class="form-control" ng-model="zone.name" ae-autofocus="InitZoneCreate" autocomplete="off" ae-key-tab="[13]" required />
 </div>
 <div class="form-actions">
-  <button type="submit" class="btn btn-success">Guardar<span class="key-shortcut">F5</span></button>
+  <button type="submit" class="btn btn-success" ng-disabled="sending">Guardar<span class="key-shortcut">F5</span></button>
 </div>

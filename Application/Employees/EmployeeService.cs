@@ -246,10 +246,13 @@ namespace FriMav.Application
 
         private List<UnliquidatedDocument> BuildLiquidation(decimal salary, decimal balance, List<UnliquidatedDocument> unliquidated)
         {
+            var firstDayOfWeek = GetFirstDayOfWeek();
+            var minimumDay = unliquidated.Select(x => x.Date).DefaultIfEmpty(firstDayOfWeek).Min();
+            var previousBalanceDay = minimumDay < firstDayOfWeek ? minimumDay : firstDayOfWeek;
             var result = new List<UnliquidatedDocument>();
             result.Add(new UnliquidatedDocument
             {
-                Date = GetFirstDayOfWeek(),
+                Date = previousBalanceDay,
                 Type = LiquidationDocumentType.Previous,
                 Amount = balance,
             });

@@ -11,7 +11,7 @@ angular.module('client')
           description: 'Imprimir',
           allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
           callback: function () {
-            $scope.print($scope.goodsSold);
+            $scope.submit($scope.goodsSold);
           }
       })
       .add({
@@ -19,8 +19,18 @@ angular.module('client')
           description: 'Reiniciar',
           allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
           callback: function () {
-              $scope.reload();
+            $state.go('EmployeeIndex');
+            e.preventDefault();
           }
+      })
+      .add({
+        combo: 'end',
+        description: 'Reiniciar',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        callback: function () {
+          $scope.reload();
+          e.preventDefault();
+        }
       })
       .add({
       combo: 'del',
@@ -92,13 +102,17 @@ angular.module('client')
         $scope.goodsSold.items.splice(index, 1);
       }
 
-      $scope.submit = function (goodsSold) {
+    $scope.submit = function (goodsSold) {
+        if ($scope.sending) return;
+
+        $scope.sending = true;
         goodsSold.items = $.grep(goodsSold.items, function (it) {
           return hasValue(it.product) && hasValue(it.quantity) && hasValue(it.price);
         });
         GoodsSold.save(goodsSold, function (res) {
           PrintHelper.print('EmployeeTicket', JSON.stringify($scope.getPrintModel(goodsSold)));
           Notification.success('Imprimiendo ticket...');
+          $scope.sending = false;
           $state.reload();
         })
       };

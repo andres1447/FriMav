@@ -7,7 +7,7 @@
 <div>
     <div class="form-group">
         <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-search"></i><span class="key-shortcut">F2</span></span>
+            <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-search"></i><span class="key-shortcut">F12</span></span>
             <input id="invoice_customer" type="text" ng-model="productSearch" class="form-control" autocomplete="off" ae-select-on-click=""
                    uib-typeahead="product as (product.code + ' - ' + product.name) for product in getMatchingProducts($viewValue) | limitTo:8"
                    typeahead-on-select="goToProduct(productSearch)" typeahead-is-open="typeaheadOpen"

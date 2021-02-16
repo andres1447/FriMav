@@ -3,6 +3,7 @@
   <div>
     <a ui-sref="CustomerIndex" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i><span class="key-shortcut">esc</span></a>
     <a ui-sref="CustomerPaymentCreate({ id: customer.id })" class="btn btn-success">Pago<span class="key-shortcut">+</span></a>
+    <a class="btn btn-warning" ng-click="print()">Imprimir<span class="key-shortcut">F5</span></a>
   </div>
 </header>
 <div>
@@ -24,7 +25,7 @@
     <tbody>
       <tr ng-repeat="it in transactions" ng-class="{'alert-info': $index == transactionIndex}">
         <td>{{:: it.date | date:'dd/MM/yyyy' }}</td>
-        <td>{{:: description(it) }}</td>
+        <td>{{:: description(it) }} <span class="text-muted">{{::it.description }}</span></td>
         <td>${{:: it.total | number: 2 }}</td>
         <td ng-class="{'strong': it.balance == 0 && isLastTransaction($index), 'strong text-danger': it.balance > 0 && isLastTransaction($index), 'strong text-success': it.balance < 0 && isLastTransaction($index)}">${{:: it.balance | number: 2 }}</td>
         <td>

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('client')
-  .controller('CustomerShowCtrl', function ($scope, $state, hotkeys, customer, Transaction) {
+  .controller('CustomerShowCtrl', function ($scope, $state, hotkeys, customer, Transaction, Notification) {
       $scope.transactionIndex = 0;
 
       $scope.transactions = [];
@@ -13,23 +13,32 @@ angular.module('client')
       $scope.customer = customer;
 
       hotkeys.bindTo($scope)
-        .add({
-          combo: '+',
-          description: 'Nuevo pago',
-          persistent: false,
-          callback: function (e) {
-            $state.go('CustomerPaymentCreate', { id: customer.id });
-          }
-        })
-        .add({
-          combo: '-',
-          description: 'Anular la entrada',
-          persistent: false,
-          callback: function (e) {
-              var entry = $scope.transactions[$scope.transactionIndex];
-              $scope.refund(entry);
-              e.preventDefault();
-          }
+      .add({
+        combo: '+',
+        description: 'Nuevo pago',
+        persistent: false,
+        callback: function (e) {
+          $state.go('CustomerPaymentCreate', { id: customer.id });
+        }
+      })
+      .add({
+        combo: '-',
+        description: 'Anular la entrada',
+        persistent: false,
+        callback: function (e) {
+            var entry = $scope.transactions[$scope.transactionIndex];
+            $scope.refund(entry);
+            e.preventDefault();
+        }
+      })
+      .add({
+        combo: 'f5',
+        description: 'Imprimir',
+        persistent: false,
+        callback: function (e) {
+          $scope.print();
+          e.preventDefault();
+        }
       })
       .add({
           combo: 'enter',
@@ -146,16 +155,38 @@ angular.module('client')
 
       function creditNoteDescription(transaction) {
         return 'Nota de crédito #{0}'.format(transaction.number) +
-          (transaction.refundedDocument ? ' - Cancelación de {0} #{1}'.format(
+          (transaction.refundedDocument ? ' ({0} #{1})'.format(
           transactionTypeDescription(transaction.refundedDocument.transactionType),
           transaction.refundedDocument.number) : '')
       }
 
       function debitNoteDescription(transaction) {
         return 'Nota de débito #{0}'.format(transaction.number) +
-          (transaction.refundedDocument ? ' - Anulación de {0} #{1}'.format(
+          (transaction.refundedDocument ? ' ({0} #{1})'.format(
             transactionTypeDescription(transaction.refundedDocument.transactionType),
             transaction.refundedDocument.number) : '')
+      }
+
+      $scope.print = function () {
+        PrintHelper.print('CustomerAccount', JSON.stringify(getPrintModel()));
+        Notification.success('Factura guardada correctamente.');
+      }
+
+      function getPrintModel() {
+        return {
+          customerCode: customer.code,
+          customerName: customer.name,
+          deliveryAddress: customer.deliveryAddress,
+          balance: customer.balance,
+          transactions: $.map($scope.transactions, function (tran) {
+            return {
+              date: tran.date,
+              description: $scope.description(tran),
+              total: tran.total,
+              balance: tran.balance
+            }
+          })
+        }
       }
 
       $scope.showEntry = function (transaction) {

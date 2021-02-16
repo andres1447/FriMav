@@ -6,7 +6,7 @@ angular.module('client')
       $scope.customers = orderByCode($filter, customers);
 
       hotkeys.bindTo($scope).add({
-          combo: 'f2',
+          combo: 'f12',
           description: 'Buscar cliente',
           allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
           persistent: false,
@@ -40,6 +40,7 @@ angular.module('client')
           allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
           persistent: false,
           callback: function (e) {
+            if ($scope.customerSearch != null) return;
             $state.go('CustomerShow', { id: $scope.customers[$scope.customerIndex].id });
               e.preventDefault();
           }
@@ -60,6 +61,7 @@ angular.module('client')
           allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
           persistent: false,
           callback: function (e) {
+            if ($scope.typeaheadOpen) return;
               if ($scope.customerIndex > 0) {
                   $scope.customerIndex--;
                   e.preventDefault();
@@ -72,6 +74,7 @@ angular.module('client')
           allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
           persistent: false,
           callback: function (e) {
+            if ($scope.typeaheadOpen) return;
               if ($scope.customerIndex < customers.length - 1) {
                   $scope.customerIndex++;
                   e.preventDefault();

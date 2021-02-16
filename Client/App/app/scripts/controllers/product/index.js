@@ -6,7 +6,7 @@ angular.module('client')
       $scope.products = orderByCode($filter, products)
 
       hotkeys.bindTo($scope).add({
-          combo: 'f2',
+          combo: 'f12',
           description: 'Buscar producto',
           allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
           persistent: false,
@@ -51,6 +51,7 @@ angular.module('client')
           persistent: false,
           allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
           callback: function (e) {
+            if ($scope.typeaheadOpen) return;
             if ($scope.productIndex > 0 && !$scope.typeaheadOpen) {
                 $scope.productIndex--;
                 e.preventDefault();
@@ -63,6 +64,7 @@ angular.module('client')
           persistent: false,
           allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
           callback: function (e) {
+            if ($scope.typeaheadOpen) return;
             if ($scope.productIndex < products.length - 1 && !$scope.typeaheadOpen) {
                 $scope.productIndex++;
                 e.preventDefault();
