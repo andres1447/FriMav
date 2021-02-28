@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('client')
-  .controller('AdvanceCreateCtrl', function ($scope, $state, hotkeys, Notification, Advance, employees, $filter) {
+  .controller('AdvanceCreateCtrl', function ($scope, $state, hotkeys, Notification, Advance, employees, $filter, Employee) {
       $scope.employees = orderByCode($filter, employees);
+      $scope.balance = 0;
 
       $scope.advance = {
         date: new Date()
@@ -67,7 +68,13 @@ angular.module('client')
     };
 
     $scope.setEmployee = function () {
-      $scope.advance.employeeId = $scope.advance.employee.id;
+      var id = $scope.advance.employee.id
+      $scope.advance.employeeId = id;
+      Employee.unliquidated({ id: id }).$promise.then(function (result) {
+        $scope.balance = result.length > 0
+          ? result[result.length - 1].balance
+          : 0
+      });
     };
 
     $scope.clearEmployee = function () {

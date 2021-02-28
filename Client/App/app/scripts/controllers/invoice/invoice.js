@@ -79,7 +79,7 @@ angular.module('client')
         }
       };
 
-    $scope.getMatchingCustomer = function ($viewValue) {
+      $scope.getMatchingCustomer = function ($viewValue) {
         var term = $viewValue.toLowerCase();
         return $.grep($scope.customers, function (it) {
           return it.name.toLowerCase().indexOf(term) != -1 || it.code.toLowerCase().indexOf(term) == 0;
@@ -88,7 +88,7 @@ angular.module('client')
 
       $scope.setCustomer = function (invoice) {
           Customer.products({ id: invoice.customer.id }).$promise.then(function (productList) {
-              $scope.products = productList;
+              $scope.products = orderByCode($filter, productList);
           });
           $scope.invoice.personId = invoice.customer.id;
           $scope.invoice.customerName = invoice.customer.name;

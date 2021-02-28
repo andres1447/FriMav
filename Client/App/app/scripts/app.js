@@ -35,7 +35,6 @@ if (!Date.prototype.toLocal) {
   }
 }
 
-
 if (!String.prototype.format) {
     String.prototype.format = function () {
         var args = arguments;
@@ -58,6 +57,12 @@ if (!Date.prototype.addDays) {
 if (!Date.prototype.toIsoString) {
   Date.prototype.toIsoString = function () {
     return new Date(this.getTime() - (this.getTimezoneOffset() * 60000)).toISOString()
+  }
+}
+
+if (!Date.prototype.firstDayOfWeek) {
+  Date.prototype.firstDayOfWeek = function () {
+    return (new Date(this.setDate(this.getDate() - this.getDay())));
   }
 }
 

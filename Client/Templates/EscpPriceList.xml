@@ -4,7 +4,7 @@
   <NewLine/>
   <NewLine>
     <Center>
-		<Text Size="2">@Model.EmployeeCode - @Model.EmployeeName</Text>
+		<Text Size="2">Malvinas</Text>
     </Center>
   </NewLine>
   <NewLine>
@@ -27,7 +27,7 @@
   <NewLine/>
   <NewLine>
     <Right>
-      <Text>Valida al @DateTime.Now.ToString("dd/MM/yyyy")</Text>
+      <Text>Válida al @DateTime.Now.ToString("dd/MM/yyyy")</Text>
     </Right>
   </NewLine>
   <Line>40</Line>
