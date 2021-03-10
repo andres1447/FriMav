@@ -32,7 +32,7 @@
           <tbody>
             <tr>
               <td>Saldo anterior</td>
-              <td>${{:: invoice.previousBalance | number:2 }}</td>
+              <td>${{:: (invoice.balance - invoice.total) | number:2 }}</td>
             </tr>
             <tr>
               <td>Total</td>

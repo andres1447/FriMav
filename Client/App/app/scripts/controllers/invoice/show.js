@@ -56,7 +56,7 @@ angular.module('client')
               customerCode: invoice.person.code,
               customerName: invoice.customerName,
               number: invoice.number,
-              balance: 0,
+              balance: invoice.balance,
               items: []
           };
           angular.forEach(invoice.items, function (item) {
