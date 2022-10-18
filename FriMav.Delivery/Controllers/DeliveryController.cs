@@ -15,9 +15,9 @@ namespace FriMav.Api.Controllers
 
         [HttpGet]
         [Route("")]
-        public IHttpActionResult GetAll()
+        public IHttpActionResult GetAll([FromUri] bool closed = false, [FromUri] int offset = 0, [FromUri] int count = 20)
         {
-            return Ok(_deliveryService.GetListing());
+            return Ok(_deliveryService.GetListing(closed, offset, count));
         }
 
         [HttpGet]

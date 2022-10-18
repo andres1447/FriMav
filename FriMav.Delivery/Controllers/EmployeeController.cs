@@ -113,6 +113,13 @@ namespace FriMav.Api.Controllers
         }
 
         [HttpGet]
+        [Route("goods/{id:int}")]
+        public IHttpActionResult GetGood(int id)
+        {
+            return Ok(_goodSoldService.Get(id));
+        }
+
+        [HttpGet]
         [Route("{id}")]
         public IHttpActionResult Get(int id)
         {
@@ -125,6 +132,13 @@ namespace FriMav.Api.Controllers
         public IHttpActionResult UnliquidatedDocuments(int id)
         {
             return Ok(_employeeService.GetUnliquidatedDocuments(id));
+        }
+
+        [HttpGet]
+        [Route("{id:int}/liquidated")]
+        public IHttpActionResult UnliquidatedDocuments(int id, int offset = 0, int count = 20)
+        {
+            return Ok(_employeeService.GetLiquidatedDocuments(id, offset, count));
         }
 
         [HttpPost]

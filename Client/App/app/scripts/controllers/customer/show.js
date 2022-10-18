@@ -89,11 +89,7 @@ angular.module('client')
         persistent: false,
         callback: function (e) {
           e.preventDefault();
-          if ($scope.pageNumber >= $scope.totalPages - 1)
-            return;
-
-          $scope.pageNumber++;
-          $scope.loadTransactions();
+          $scope.prevPage();
         }
       })
       .add({
@@ -103,13 +99,25 @@ angular.module('client')
         persistent: false,
         callback: function (e) {
           e.preventDefault();
-          if ($scope.pageNumber <= 0)
-            return;
-
-          $scope.pageNumber--;
-          $scope.loadTransactions();
+          $scope.nextPage();
         }
       });
+
+      $scope.prevPage = function () {
+        if ($scope.pageNumber >= $scope.totalPages - 1)
+          return;
+
+        $scope.pageNumber++;
+        $scope.loadTransactions();
+      }
+
+      $scope.nextPage = function () {
+        if ($scope.pageNumber <= 0)
+          return;
+
+        $scope.pageNumber--;
+        $scope.loadTransactions();
+      }
 
       $scope.loadTransactions = function () {
         Transaction.account({ id: customer.id, offset: $scope.pageNumber, count: $scope.itemsPerPage }).$promise.then(function (response) {
@@ -181,7 +189,7 @@ angular.module('client')
           transactions: $.map($scope.transactions, function (tran) {
             return {
               date: tran.date,
-              description: $scope.description(tran),
+              description: $scope.description(tran) + " " + (tran.description ? tran.description : ''),
               total: tran.total,
               balance: tran.balance
             }

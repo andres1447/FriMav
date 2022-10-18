@@ -31,7 +31,7 @@
     <NewLine>
       <Text Align="L" Width="30">@item.Product</Text>
       <Text Align="R" Width="10">@item.Quantity.ToString("N2")</Text>
-      <Text Align="R" Width="10">@item.Price.ToString("N2")</Text>
+      <Text Align="R" Width="10">@item.Price.ToString("N3")</Text>
       <Text Align="R" Width="10">@item.Amount().ToString("N2")</Text>
     </NewLine>
     }

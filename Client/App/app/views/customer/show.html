@@ -9,8 +9,8 @@
 <div>
   <h5>Balance: <span ng-class="{'strong text-danger': customer.balance > 0, 'strong text-success': customer.balance < 0}">${{::customer.balance|number:2}}</span></h5>
   <div class="btn-toolbar">
-    <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-arrow-up"></i> Anteriores<span class="key-shortcut">repg</span></button>
-    <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-arrow-down"></i> Posteriores<span class="key-shortcut">avpg</span></button>
+    <button type="button" class="btn btn-default" ng-click="prevPage()"><i class="glyphicon glyphicon-arrow-up"></i> Anteriores<span class="key-shortcut">repg</span></button>
+    <button type="button" class="btn btn-default" ng-click="nextPage()"><i class="glyphicon glyphicon-arrow-down"></i> Posteriores<span class="key-shortcut">avpg</span></button>
   </div>
   <table class="table table-bordered table-condensed">
     <thead>

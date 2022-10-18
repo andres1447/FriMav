@@ -205,6 +205,8 @@
     <Compile Include="Utils\ClientConfig.cs" />
     <Compile Include="Utils\SelectItem.cs" />
     <Content Include="App\app\scripts\controllers\employee\payroll.js" />
+    <Content Include="App\app\scripts\controllers\employee\liquidated.js" />
+    <Content Include="App\app\scripts\controllers\goods\show.js" />
     <Content Include="App\app\scripts\controllers\loan\show.js" />
     <Content Include="App\app\scripts\controllers\loan\create.js" />
     <Content Include="App\app\scripts\controllers\absency\create.js" />
@@ -246,7 +248,9 @@
     <Content Include="App\app\views\delivery\show.html" />
     <Content Include="App\app\views\absency\create.html" />
     <Content Include="App\app\views\employee\payroll.html" />
+    <Content Include="App\app\views\employee\liquidated.html" />
     <Content Include="App\app\views\goods\create.html" />
+    <Content Include="App\app\views\goods\show.html" />
     <Content Include="App\app\views\loan\create.html" />
     <Content Include="App\app\views\loan\show.html" />
     <Content Include="App\app\views\loan\_form.html" />
@@ -486,7 +490,7 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 y x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

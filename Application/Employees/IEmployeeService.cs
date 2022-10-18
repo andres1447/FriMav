@@ -27,5 +27,6 @@ namespace FriMav.Application
         List<string> UsedCodes();
         List<UnliquidatedDocument> GetUnliquidatedDocuments(int id);
         List<PayrollResponse> GetPayrolls();
+        EmployeeAccountResponse GetLiquidatedDocuments(int employeeId, int offset = 0, int count = 20);
     }
 }

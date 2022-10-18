@@ -4,6 +4,15 @@
     <a ui-sref="DeliveryCreate" class="btn btn-success">Nuevo<span class="key-shortcut">+</span></a>
   </div>
 </header>
+<div class="btn-toolbar">
+  <button type="button" class="btn btn-default" ng-click="prevPage()"><i class="glyphicon glyphicon-arrow-up"></i> Anteriores<span class="key-shortcut">repg</span></button>
+  <button type="button" class="btn btn-default" ng-click="nextPage()"><i class="glyphicon glyphicon-arrow-down"></i> Posteriores<span class="key-shortcut">avpg</span></button>
+  <div class="checkbox col-md-3">
+    <label>
+      <input type="checkbox" ng-model="closedDeliveries" ng-change="loadDeliveries()" /> Cerrados
+    </label>
+  </div>
+</div>
 <div>
     <table class="table table-bordered table-condensed">
         <thead>

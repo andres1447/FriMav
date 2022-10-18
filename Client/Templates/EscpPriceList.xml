@@ -17,10 +17,8 @@
   @foreach (var item in Model.Products)
   {
   <NewLine>
-    <Text>@item.Name</Text>
-    <Right>
-      <Text>$@item.Price.ToString("N2")</Text>
-    </Right>
+	<Text Width="36" Align="L">@item.Name</Text>
+	<Text Width="12" Align="R">$@item.Price.ToString("N2")</Text>
   </NewLine>
   }
   <Line>40</Line>
