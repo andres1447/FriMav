@@ -28,7 +28,7 @@
 		<Text Width="48" Align="L">@item.Product</Text>
 	</NewLine>
 	<NewLine>
-		<Text Width="30" Align="L">@item.Quantity.ToString("N2") x $@item.Price.ToString("N2")</Text>
+		<Text Width="30" Align="L">@item.Quantity.ToString("N2") x $@item.Price.ToString("N3")</Text>
 		<Text Width="18" Align="R">$@item.Amount().ToString("N2")</Text>
 	</NewLine>
 }

@@ -16,4 +16,14 @@ angular
                 }
             }
         })
+        .state('GoodsSoldShow', {
+          url: '/goods/:id',
+          templateUrl: 'views/goods/show.html',
+          controller: 'GoodsSoldShowCtrl',
+          resolve: {
+            goodsSold: function (GoodsSold, $stateParams) {
+              return GoodsSold.get({ id: $stateParams.id }).$promise;
+            }
+          }
+        })
   });

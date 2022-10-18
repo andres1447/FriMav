@@ -95,6 +95,7 @@ angular.module('client')
           $scope.invoice.deliveryAddress = invoice.customer.address;
           $scope.invoice.shipping = invoice.customer.shipping;
           $scope.invoice.paymentMethod = invoice.customer.paymentMethod;
+          $scope.customerPaymentMethod = $filter('filter')($scope.paymentMethodOptions, { id: invoice.customer.paymentMethod }, true)[0];
       };
 
       $scope.clearCustomer = function () {
@@ -102,6 +103,7 @@ angular.module('client')
         $scope.invoice.person = null;
         $scope.invoice.customerName = null;
         $scope.invoice.deliveryAddress = null;
+        $scope.customerPaymentMethod = null;
         $scope.products = $scope.baseProducts;
       }
 

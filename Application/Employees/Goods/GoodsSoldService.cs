@@ -68,5 +68,11 @@ namespace FriMav.Application
         {
             return request.Items.Select(x => x.Quantity * x.Price).DefaultIfEmpty(0).Sum();
         }
+
+        public GoodsSoldResponse Get(int id)
+        {
+            var goods = _goodsSoldRepository.Get(id, x => x.Items);
+            return goods.ToGoodsSoldResponse();
+        }
     }
 }

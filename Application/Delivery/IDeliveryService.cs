@@ -9,7 +9,7 @@ namespace FriMav.Application
     {
         IEnumerable<Delivery> GetAll();
         DeliveryResponse Get(int id);
-        List<DeliveryListing> GetListing();
+        DeliveryListingResponse GetListing(bool closed, int offset, int count);
         IEnumerable<UndeliveredInvoice> GetUndeliveredInvoices();
         PendingDeliveriesResponse HasPendingDeliveries();
         DeliveryCloseResponse GetForClose(int id);

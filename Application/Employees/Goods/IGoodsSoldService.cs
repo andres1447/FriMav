@@ -9,5 +9,7 @@ namespace FriMav.Application
 
         [Transactional]
         void Delete(int id);
+
+        GoodsSoldResponse Get(int id);
     }
 }

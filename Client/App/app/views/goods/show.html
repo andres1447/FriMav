@@ -1,0 +1,48 @@
+<header>
+  <h4>Mercadería vendida</h4>
+  <div>
+    <a ui-sref="EmployeeLiquidated({ id: goodsSold.employeeId })" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i><span class="key-shortcut">esc</span></a>
+  </div>
+</header>
+<div>
+  <div>
+    <div class="row">
+      <div class="col-md-6">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td>Fecha</td>
+              <td>{{:: goodsSold.date | date:'dd/MM/yyyy' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div>
+    <table class="table table-bordered table-condensed">
+      <thead>
+        <tr>
+          <th class="col-md-4">Producto</th>
+          <th class="col-md-2 text-right">Cantidad</th>
+          <th class="col-md-2 text-right">Precio</th>
+          <th class="col-md-2 text-right">Importe</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="it in goodsSold.items">
+          <td>{{:: it.productName }}</td>
+          <td class="text-right">{{:: it.quantity }}</td>
+          <td class="text-right">${{:: it.price | number:2 }}</td>
+          <td class="text-right">${{:: it.quantity * it.price | number:2 }}</td>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th class="text-right">${{::goodsSold.total | number:2 }}</th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

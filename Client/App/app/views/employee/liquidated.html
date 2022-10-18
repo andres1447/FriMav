@@ -1,0 +1,34 @@
+<header>
+  <h3>{{::employee.name}}</h3>
+  <div>
+    <a ui-sref="EmployeeShow({ id: employee.id })" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i><span class="key-shortcut">esc</span></a>
+  </div>
+</header>
+<div>
+  <div class="btn-toolbar">
+    <button type="button" class="btn btn-default" ng-click="prevPage()"><i class="glyphicon glyphicon-arrow-up"></i> Anteriores<span class="key-shortcut">repg</span></button>
+    <button type="button" class="btn btn-default" ng-click="nextPage()"><i class="glyphicon glyphicon-arrow-down"></i> Posteriores<span class="key-shortcut">avpg</span></button>
+  </div>
+  <table class="table table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th class="col-md-1">Fecha</th>
+        <th class="col-md-5">Descripcion</th>
+        <th class="col-md-2 text-right">Monto</th>
+        <th class="col-md-2 text-right">Balance</th>
+        <th class="col-md-2 text-center">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="it in liquidatedDocuments" ng-class="{'alert-info': $index == entryIndex}">
+        <td>{{:: it.date | date:'dd/MM/yyyy' }}</td>
+        <td>{{:: description(it) }} <span class="text-muted">{{::it.description}}</span></td>
+        <td class="text-right">${{:: it.amount | number: 2 }}</td>
+        <td class="text-right" ng-class="{'strong': it.balance == 0 && isLastTransaction($index), 'strong text-danger': it.balance < 0 && isLastTransaction($index), 'strong text-success': it.balance > 0 && isLastTransaction($index)}">${{:: it.balance | number: 2 }}</td>
+        <td class="text-center">
+          <button ng-if="canShow(it)" type="button" class="btn btn-info" ng-click="showEntry(it)"><i class="glyphicon glyphicon-th-list"></i><span class="key-shortcut">&crarr;</span></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

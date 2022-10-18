@@ -298,6 +298,37 @@ namespace FriMav.Application
             }
         }
 
+        public EmployeeAccountResponse GetLiquidatedDocuments(int employeeId, int offset = 0, int count = 20)
+        {
+            var lastDayOfWeek = GetLastDayOfWeek();
+            var employeeDocuments = _liquidationDocumentRepository.Query()
+                            .Where(x => x.EmployeeId == employeeId && !x.DeleteDate.HasValue && x.CreationDate <= lastDayOfWeek);
+            var totalCount = employeeDocuments.Count();
+
+            var items = employeeDocuments
+                .OrderByDescending(x => x.Date).ThenByDescending(x => x.Id)
+                .Select(x => new UnliquidatedDocument
+                {
+                    Id = x.Id,
+                    Date = x.Date,
+                    Description = x.Description,
+                    Type = x is Advance ? LiquidationDocumentType.Advance :
+                           x is Absency ? LiquidationDocumentType.Absency :
+                           x is GoodsSold ? LiquidationDocumentType.GoodsSold :
+                           x is Salary ? LiquidationDocumentType.Salary
+                                : LiquidationDocumentType.LoanFee,
+                    Amount = x.Amount,
+                    Balance = x.Amount + employeeDocuments.Where(d => d.CreationDate < x.Date).Select(d => d.Amount).DefaultIfEmpty(0).Sum(),
+                    LoanId = x is LoanFee ? (x as LoanFee).LoanId : default(int?)
+                })
+                .Skip(offset * count)
+                .Take(count)
+                .OrderBy(x => x.Date).ThenBy(x => x.Id)
+                .ToList();
+
+            return new EmployeeAccountResponse(totalCount, items);
+        }
+
         private static readonly Expression<Func<LiquidationDocument, UnliquidatedDocument>> MapUnliquidatedDocument = x => new UnliquidatedDocument
         {
             Id = x.Id,
@@ -306,8 +337,10 @@ namespace FriMav.Application
             Type = x is Advance ? LiquidationDocumentType.Advance :
                    x is Absency ? LiquidationDocumentType.Absency :
                    x is GoodsSold ? LiquidationDocumentType.GoodsSold :
-                   LiquidationDocumentType.LoanFee,
+                   x is Salary ? LiquidationDocumentType.Salary
+                                : LiquidationDocumentType.LoanFee,
             Amount = x.Amount,
+            Balance = 0,
             LoanId = x is LoanFee ? (x as LoanFee).LoanId : default(int?)
         };
     }

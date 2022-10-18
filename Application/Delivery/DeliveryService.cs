@@ -4,6 +4,7 @@ using System.Linq;
 using FriMav.Domain.Proyections;
 using FriMav.Domain.Entities;
 using System;
+using System.Linq.Expressions;
 
 namespace FriMav.Application
 {
@@ -174,11 +175,22 @@ namespace FriMav.Application
             return delivery;
         }
 
-        public List<DeliveryListing> GetListing()
+        public DeliveryListingResponse GetListing(bool closed, int offset, int count)
         {
-            return _deliveryRepository
-                .Query()
-                .Where(x => !x.DeleteDate.HasValue && !x.CloseDate.HasValue)
+            var deliveries = _deliveryRepository.Query()
+                .Where(x => !x.DeleteDate.HasValue);
+
+            if (closed)
+                deliveries = deliveries.Where(x => x.CloseDate.HasValue);
+            else
+                deliveries = deliveries.Where(x => !x.CloseDate.HasValue);
+
+            var totalCount = deliveries.Count();
+
+            var items = deliveries
+                .OrderByDescending(x => x.CreationDate)
+                .Skip(offset * count)
+                .Take(count)
                 .Select(x => new DeliveryListing
                 {
                     Id = x.Id,
@@ -187,6 +199,8 @@ namespace FriMav.Application
                     Number = x.Number,
                     Invoices = x.Invoices.Count()
                 }).ToList();
+
+            return new DeliveryListingResponse(totalCount, items);
         }
 
         public IEnumerable<UndeliveredInvoice> GetUndeliveredInvoices()

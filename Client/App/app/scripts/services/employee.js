@@ -15,6 +15,10 @@ angular.module('client').factory('Employee', function ($resource, ApiConfig) {
           method: 'GET',
           isArray: true
         },
+        liquidated: {
+          url: ApiConfig.host + 'employee/:id/liquidated',
+          method: 'GET'
+        },
         closePayroll: {
           method: 'POST',
           url: ApiConfig.host + '/employee/:id/payroll'

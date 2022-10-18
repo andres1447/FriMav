@@ -1,9 +1,14 @@
 'use strict';
 
 angular.module('client')
-  .controller('DeliveryIndexCtrl', function ($scope, $state, hotkeys, Delivery, Notification, ModalService, deliveries, PendingDeliveryCheck) {
+  .controller('DeliveryIndexCtrl', function ($scope, $state, hotkeys, Delivery, Notification, ModalService, PendingDeliveryCheck) {
       $scope.deliveryIndex = 0;
-      $scope.deliveries = deliveries;
+      $scope.deliveries = [];
+      $scope.pageNumber = 0
+      $scope.itemsPerPage = 20;
+      $scope.totalCount = 0;
+      $scope.totalPages = 0;
+      $scope.closedDeliveries = false;
 
       hotkeys.bindTo($scope).add({
           combo: '+',
@@ -62,12 +67,60 @@ angular.module('client')
           description: 'Mover abajo',
           persistent: false,
           callback: function (e) {
-              if ($scope.deliveryIndex < deliveries.length - 1) {
-                  $scope.deliveryIndex++;
-                  e.preventDefault();
-              }
+            if ($scope.deliveryIndex < $scope.deliveries.length - 1) {
+              $scope.deliveryIndex++;
+              e.preventDefault();
+            }
           }
+      })
+      .add({
+        combo: 'pageup',
+        description: 'Cargar envios anteriores',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        persistent: false,
+        callback: function (e) {
+          e.preventDefault();
+          $scope.prevPage();
+        }
+      })
+      .add({
+        combo: 'pagedown',
+        description: 'Cargar envios mas recientes',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        persistent: false,
+        callback: function (e) {
+          e.preventDefault();
+          $scope.nextPage();
+        }
       });
+
+      $scope.prevPage = function () {
+        if ($scope.pageNumber >= $scope.totalPages - 1)
+          return;
+
+        $scope.pageNumber++;
+        $scope.loadDeliveries();
+      }
+
+      $scope.nextPage = function () {
+        if ($scope.pageNumber <= 0)
+          return;
+
+        $scope.pageNumber--;
+        $scope.loadDeliveries();
+      }
+
+    $scope.loadDeliveries = function () {
+        Delivery.get({ closed: $scope.closedDeliveries, offset: $scope.pageNumber, count: $scope.itemsPerPage }).$promise.then(function (response) {
+          $scope.deliveries = response.items;
+          $scope.totalCount = response.totalCount;
+          $scope.totalPages = Math.ceil($scope.totalCount / $scope.itemsPerPage);
+          if ($scope.deliveryIndex >= $scope.deliveries.length)
+            $scope.deliveryIndex = 0;
+        });
+      }
+
+      $scope.loadDeliveries();
       
       $scope.delete = function (index) {
         ModalService.show({ title: 'Envío', message: 'Desea borrar el envio?' }).then(function (res) {

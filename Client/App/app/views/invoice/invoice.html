@@ -38,12 +38,8 @@
              clear-on-backspace="invoice.shipping = null" typeahead-on-select="invoice.shipping = $item.id" required />
     </div>
     <div class="form-group col-md-2">
-      <label class="control-label" for="invoice_payment">Forma de pago</label>
-      <input id="invoice_payment" class="form-control" ae-key-tab="[13, 9]" ng-model="invoice.paymentMethod"
-             uib-typeahead="option as (option.id + ' - ' + option.name) for option in paymentMethodOptions | filter:$viewValue"
-             typeahead-select-on-blur="true" ae-select-on-click="" typeahead-input-formatter="paymentView($model)"
-             typeahead-focus-on-select="false" typeahead-editable="false" autocomplete="off" ae-key-prev="[37, 38]"
-             clear-on-backspace="invoice.paymentMethod = null" typeahead-on-select="invoice.paymentMethod = $item.id" required />
+      <label class="control-label">Forma de pago</label>
+      <div class="form-control-static"><span ng-if="customerPaymentMethod">{{customerPaymentMethod.id}} - {{customerPaymentMethod.name}}</span></div>
     </div>
   </div>
   <div>
@@ -74,7 +70,7 @@
           </td>
           <td><input type="text" class="form-control" ng-model="it.quantity" ae-key-tab="[13, 9]" ae-tab-validator="hasQuantity(it)" restrict-decimal></td>
           <td><input type="text" class="form-control" step="0.01" ng-model="it.price" ae-key-tab="[13, 9]" ae-before-tab="AddItem(it)" restrict-decimal></td>
-          <td>${{::it.basePrice | number:2}} (${{it.price - it.basePrice | number:2}})</td>
+          <td>${{::it.basePrice | number:3}} (${{it.price - it.basePrice | number:3}})</td>
           <td>${{it.quantity*it.price | number:2}}</td>
         </tr>
         <tr>

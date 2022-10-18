@@ -49,4 +49,14 @@ angular
                 }
             }
         })
+        .state('EmployeeLiquidated', {
+          url: '/employee/:id/liquidated',
+          templateUrl: 'views/employee/liquidated.html',
+          controller: 'EmployeeLiquidatedCtrl',
+          resolve: {
+            employee: function ($stateParams, Employee) {
+              return Employee.get({ id: $stateParams.id }).$promise;
+            }
+          }
+        })
   });

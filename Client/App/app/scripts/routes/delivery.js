@@ -7,11 +7,6 @@ angular
             url: '/delivery',
             templateUrl: 'views/delivery/index.html',
             controller: 'DeliveryIndexCtrl',
-            resolve: {
-                deliveries: function (Delivery) {
-                    return Delivery.query().$promise;
-                }
-            }
         })
         .state('DeliveryCreate', {
             url: '/delivery/create',

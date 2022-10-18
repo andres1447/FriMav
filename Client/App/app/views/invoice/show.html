@@ -32,15 +32,15 @@
           <tbody>
             <tr>
               <td>Saldo anterior</td>
-              <td>${{:: (invoice.balance - invoice.total) | number:2 }}</td>
+              <td class="text-right">${{:: (invoice.balance - invoice.total) | number:2 }}</td>
             </tr>
             <tr>
               <td>Total</td>
-              <td>${{:: invoice.total | number:2 }}</td>
+              <td class="text-right">${{:: invoice.total | number:2 }}</td>
             </tr>
             <tr>
               <td>Balance</td>
-              <td>${{:: invoice.balance | number:2 }}</td>
+              <td class="text-right">${{:: invoice.balance | number:2 }}</td>
             </tr>
           </tbody>
         </table>
@@ -48,7 +48,7 @@
     </div>
   </div>
   <div>
-    <table class="table table-bordered">
+    <table class="table table-bordered table-condensed">
       <thead>
         <tr>
           <th class="col-md-4">Producto</th>
@@ -60,9 +60,9 @@
       <tbody>
         <tr ng-repeat="it in invoice.items">
           <td>{{:: it.productName }}</td>
-          <td>{{:: it.quantity }}</td>
-          <td>${{:: it.price | number:2 }}</td>
-          <td>${{:: it.quantity * it.price | number:2 }}</td>
+          <td class="text-right">{{:: it.quantity }}</td>
+          <td class="text-right">${{:: it.price | number:3 }}</td>
+          <td class="text-right">${{:: it.quantity * it.price | number:2 }}</td>
         </tr>
         <tr>
           <th class="text-right">{{::totals.quantity}}</th>
