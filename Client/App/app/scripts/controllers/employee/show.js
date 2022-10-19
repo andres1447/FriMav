@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('client')
-  .controller('EmployeeShowCtrl', function ($scope, $state, hotkeys, Notification, employee, unliquidatedDocuments, Advance, Absency, GoodsSold, Loan, ModalService) {
+  .controller('EmployeeShowCtrl', function ($scope, $state, hotkeys, Notification, employee, unliquidatedDocuments, loanFees, Advance, Absency, GoodsSold, Loan, ModalService) {
       $scope.entryIndex = 0;
       $scope.unliquidatedDocuments = unliquidatedDocuments;
       $scope.employee = employee;
+      $scope.loanFees = loanFees;
 
       hotkeys.bindTo($scope)
         .add({

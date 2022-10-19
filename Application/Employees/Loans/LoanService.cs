@@ -1,6 +1,7 @@
 ﻿using FriMav.Domain;
 using FriMav.Domain.Entities;
 using FriMav.Domain.Entities.Payrolls;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace FriMav.Application
@@ -23,10 +24,43 @@ namespace FriMav.Application
 
         public void Create(LoanCreate request)
         {
+            if (HasUnliquidatedFee(request.EmployeeId))
+                throw new ValidationException("Ya tiene un préstamo activo.");
+
             var employee = _employeeRepository.GetById(request.EmployeeId);
             var loan = MapLoan(request, employee);
 
             _loanRepository.Add(loan);
+        }
+
+        public List<LoanFeeResponse> GetRemainingFees(int employeeId)
+        {
+            return GetUnliquidatedFeesQuery(employeeId).Select(x => new LoanFeeResponse
+            {
+                Id = x.Id,
+                Date = x.Date,
+                Amount = x.Amount,
+                IsLiquidated = false
+            }).ToList();
+        }
+
+        private bool HasUnliquidatedFee(int employeeId)
+        {
+            return GetUnliquidatedFeesQuery(employeeId).Any();
+        }
+
+        private IQueryable<LoanFee> GetUnliquidatedFeesQuery(int employeeId)
+        {
+            var liquidatedFees = _payrollRepository.Query()
+                            .Where(x => x.EmployeeId == employeeId && !x.DeleteDate.HasValue)
+                            .SelectMany(x => x.Liquidation)
+                            .OfType<LoanFee>()
+                            .Select(x => x.Id);
+
+            return _loanRepository.Query()
+                .Where(x => x.EmployeeId == employeeId && !x.DeleteDate.HasValue)
+                .SelectMany(x => x.Fees)
+                .Where(x => !liquidatedFees.Contains(x.Id));
         }
 
         public void Delete(int id)

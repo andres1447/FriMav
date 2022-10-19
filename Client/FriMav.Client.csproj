@@ -164,6 +164,7 @@
     <Compile Include="Models\EmployeeDocumentModel.cs" />
     <Compile Include="Models\EmployeeLoanModel.cs" />
     <Compile Include="Models\EmployeeTicketModel.cs" />
+    <Compile Include="Models\EmployeeVacationModel.cs" />
     <Compile Include="Models\InvoiceModel.cs" />
     <Compile Include="Models\LoanFeeModel.cs" />
     <Compile Include="Models\PayrollModel.cs" />
@@ -204,6 +205,7 @@
     <Compile Include="Utils\CefHelper.cs" />
     <Compile Include="Utils\ClientConfig.cs" />
     <Compile Include="Utils\SelectItem.cs" />
+    <Content Include="App\app\scripts\controllers\vacation\create.js" />
     <Content Include="App\app\scripts\controllers\employee\payroll.js" />
     <Content Include="App\app\scripts\controllers\employee\liquidated.js" />
     <Content Include="App\app\scripts\controllers\goods\show.js" />
@@ -225,6 +227,7 @@
     <Content Include="App\app\scripts\directives\number-input.js" />
     <Content Include="App\app\scripts\directives\restrict-decimal.js" />
     <Content Include="App\app\scripts\directives\form-group.js" />
+    <Content Include="App\app\scripts\routes\vacation.js" />
     <Content Include="App\app\scripts\routes\payroll.js" />
     <Content Include="App\app\scripts\routes\loan.js" />
     <Content Include="App\app\scripts\routes\goods.js" />
@@ -241,6 +244,8 @@
     <Content Include="App\app\scripts\services\config-values.js" />
     <Content Include="App\app\scripts\services\zone.js" />
     <Content Include="App\app\scripts\services\healthcheck.js" />
+    <Content Include="App\app\views\vacation\create.html" />
+    <Content Include="App\app\views\vacation\_form.html" />
     <Content Include="App\app\views\advance\create.html" />
     <Content Include="App\app\views\advance\_form.html" />
     <Content Include="App\app\views\absency\_form.html" />
@@ -274,6 +279,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App\dist\styles\vendor.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\Vacaciones.xml">
+      <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\EscpPayroll.xml">

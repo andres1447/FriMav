@@ -5,28 +5,46 @@
     <a ui-sref="EmployeeLiquidated({ id: employee.id })" class="btn btn-info">Cuenta<span class="key-shortcut">*</span></a>
   </div>
 </header>
-<div>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th class="col-md-1">Fecha</th>
-                <th class="col-md-5">Descripcion</th>
-                <th class="col-md-2 text-right">Monto</th>
-                <th class="col-md-2 text-right">Balance</th>
-                <th class="col-md-2 text-center">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="it in unliquidatedDocuments" ng-class="{'alert-info': $index == entryIndex}">
-            <td>{{:: it.date | date:'dd/MM/yyyy' }}</td>
-            <td>{{:: description(it) }}</td>
-            <td class="text-right">${{:: it.amount | number: 2 }}</td>
-            <td class="text-right" ng-class="{'strong': it.balance == 0 && isLastTransaction($index), 'strong text-danger': it.balance < 0 && isLastTransaction($index), 'strong text-success': it.balance > 0 && isLastTransaction($index)}">${{:: it.balance | number: 2 }}</td>
-            <td class="text-center">
-              <button ng-if="canShow(it)" type="button" class="btn btn-info" ng-click="showEntry(it)"><i class="glyphicon glyphicon-th-list"></i><span class="key-shortcut">&crarr;</span></button>
-              <button ng-if="canCancel(it)" type="button" class="btn btn-danger" ng-click="delete(it)"><i class="glyphicon glyphicon-trash"></i><span class="key-shortcut">&minus;</span></button>
-            </td>
-          </tr>
-        </tbody>
-    </table>
+<div ng-if="loanFees.length > 0" class="col-md-6">
+  <h4>Préstamo pendiente</h4>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="col-md-6">Fecha</th>
+        <th class="col-md-6">Monto</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="it in loanFees">
+        <td>{{:: it.date | date:'dd/MM/yyyy' }}</td>
+        <td class="text-right">${{:: it.amount | number: 2 }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="col-md-12">
+  <h4>Cuenta</h4>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="col-md-1">Fecha</th>
+        <th class="col-md-5">Descripcion</th>
+        <th class="col-md-2 text-right">Monto</th>
+        <th class="col-md-2 text-right">Balance</th>
+        <th class="col-md-2 text-center">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="it in unliquidatedDocuments" ng-class="{'alert-info': $index == entryIndex}">
+        <td>{{:: it.date | date:'dd/MM/yyyy' }}</td>
+        <td>{{:: description(it) }}</td>
+        <td class="text-right">${{:: it.amount | number: 2 }}</td>
+        <td class="text-right" ng-class="{'strong': it.balance == 0 && isLastTransaction($index), 'strong text-danger': it.balance < 0 && isLastTransaction($index), 'strong text-success': it.balance > 0 && isLastTransaction($index)}">${{:: it.balance | number: 2 }}</td>
+        <td class="text-center">
+          <button ng-if="canShow(it)" type="button" class="btn btn-info" ng-click="showEntry(it)"><i class="glyphicon glyphicon-th-list"></i><span class="key-shortcut">&crarr;</span></button>
+          <button ng-if="canCancel(it)" type="button" class="btn btn-danger" ng-click="delete(it)"><i class="glyphicon glyphicon-trash"></i><span class="key-shortcut">&minus;</span></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

@@ -1,0 +1,22 @@
+<form-group>
+  <input id="vacation_employee" name="employee" type="text" ng-model="vacation.employee" class="form-control"
+         ae-key-tab="[13, 9]" autocomplete="off" ae-autofocus="InitVacationCreate" clear-on-backspace="clearEmployee()"
+         uib-typeahead="employee as (employee.code + ' - ' + employee.name) for employee in getMatchingEmployees($viewValue) | limitTo:8"
+         typeahead-select-on-blur="true" typeahead-focus-on-select="false" ae-select-on-click=""
+         typeahead-editable="false" typeahead-on-select="setEmployee(vacation); $event.target.blur()" required>
+</form-group>
+<form-group input="form.date" label="Fecha">
+  <input id="vacation_date" name="date" type="date" class="form-control" ng-model="vacation.date" ae-key-tab="[13, 9, 40]"
+         ae-key-prev="[37, 38]" autocomplete="off" required />
+</form-group>
+<form-group input="form.weeks" label="Cantidad de semanas">
+  <input id="vacation_weeks" name="weeks" type="number" class="form-control" ng-model="vacation.weeks" ae-key-tab="[13, 9, 40]"
+         ae-key-prev="[37, 38]" autocomplete="off" required />
+</form-group>
+<form-group input="form.description" label="Descripción">
+  <textarea id="vacation_description" name="description" class="form-control" ng-model="vacation.description" ae-key-tab="[13, 9, 40]"
+            ae-key-prev="[37, 38]" autocomplete="off"></textarea>
+</form-group>
+<div class="form-group form-actions">
+  <button type="submit" class="btn btn-success" ng-disabled="sending">Guardar<span class="key-shortcut">F5</span></button>
+</div>

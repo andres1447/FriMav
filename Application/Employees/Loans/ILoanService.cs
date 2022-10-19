@@ -1,4 +1,5 @@
 ﻿using FriMav.Domain;
+using System.Collections.Generic;
 
 namespace FriMav.Application
 {
@@ -11,5 +12,6 @@ namespace FriMav.Application
         void Delete(int id);
 
         LoanResponse Get(int id);
+        List<LoanFeeResponse> GetRemainingFees(int employeeId);
     }
 }
