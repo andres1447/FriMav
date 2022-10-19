@@ -46,6 +46,9 @@ angular
                 },
                 unliquidatedDocuments: function ($stateParams, Employee) {
                   return Employee.unliquidated({ id: $stateParams.id }).$promise;
+                },
+                loanFees: function ($stateParams, Employee) {
+                  return Employee.loanFees({ id: $stateParams.id }).$promise;
                 }
             }
         })

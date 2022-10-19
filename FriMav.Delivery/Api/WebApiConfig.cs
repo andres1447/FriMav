@@ -36,6 +36,7 @@ namespace FriMav.Delivery.Api
             config.EnableCors(new EnableCorsAttribute(origins: "*", headers: "*", methods: "*"));
             config.Filters.Add(new ModelStateValidationFilterAttribute());
             config.Filters.Add(new NotFoundExceptionFilterAttribute());
+            config.Filters.Add(new ValidationExceptionFilterAttribute());
 
             container.AddFacility<AspNetWebApiFacility>(x => x.UsingConfiguration(config).UsingSelfHosting());
 

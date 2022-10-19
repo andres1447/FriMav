@@ -128,6 +128,14 @@ namespace FriMav.Api.Controllers
         }
 
         [HttpGet]
+        [Route("{id}/loanFees")]
+        public IHttpActionResult LoanFees(int id)
+        {
+            var fees = _loanService.GetRemainingFees(id);
+            return Ok(fees);
+        }
+
+        [HttpGet]
         [Route("{id:int}/unliquidated")]
         public IHttpActionResult UnliquidatedDocuments(int id)
         {

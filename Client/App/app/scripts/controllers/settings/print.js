@@ -38,6 +38,7 @@ angular.module('client')
           case "Loan": return "Préstamo";
           case "Payroll": return "Liquidación sueldo";
           case "CustomerAccount": return "Cuenta cliente";
+          case "Vacation": return "Vacaciones";
         }
       }
 

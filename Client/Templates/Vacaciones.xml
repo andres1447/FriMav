@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<EscCommandTemplate>
+	<Line>48</Line>
+	<NewLine/>
+	<NewLine>
+		<Right>
+			<Text>@Model.Date.ToString("dd/MM/yyyy HH:mm")</Text>
+		</Right>
+	</NewLine>
+	<NewLine/>
+	<NewLine>
+		<Center>
+			<Text Size="2">@Model.EmployeeCode - @Model.EmployeeName</Text>
+		</Center>
+	</NewLine>
+	<NewLine>
+		<Center>
+			<Text Size="2">Vacaciones</Text>
+		</Center>
+	</NewLine>
+	<NewLine>
+		<Left>
+			<Text Size="2">Desde: @Model.Date.ToString("dd/MM/yyyy")</Text>
+		</Left>
+	</NewLine>
+	<NewLine>
+		<Left>
+			<Text Size="2">Hasta: @Model.Until().ToString("dd/MM/yyyy") (@Model.Weeks semanas)</Text>
+		</Left>
+	</NewLine>
+	<NewLine/>
+	<NewLine/>
+	<Line>48</Line>
+	<NewLine/>
+	<Feed>14</Feed>
+	<CutPartial></CutPartial>
+	<Line>48</Line>
+	<NewLine/>
+	<NewLine>
+		<Right>
+			<Text>@Model.Date.ToString("dd/MM/yyyy HH:mm")</Text>
+		</Right>
+	</NewLine>
+	<NewLine/>
+	<NewLine>
+		<Center>
+			<Text Size="2">@Model.EmployeeCode - @Model.EmployeeName</Text>
+		</Center>
+	</NewLine>
+	<NewLine>
+		<Center>
+			<Text Size="2">Vacaciones</Text>
+		</Center>
+	</NewLine>
+	<NewLine>
+		<Left>
+			<Text Size="2">Desde: @Model.Date.ToString("dd/MM/yyyy")</Text>
+		</Left>
+	</NewLine>
+	<NewLine>
+		<Left>
+			<Text Size="2">Hasta: @Model.Until().ToString("dd/MM/yyyy") (@Model.Weeks semanas)</Text>
+		</Left>
+	</NewLine>
+	<NewLine/>
+	<NewLine/>
+	<Line>48</Line>
+	<NewLine/>
+	<Feed>14</Feed>
+	<CutFull></CutFull>
+</EscCommandTemplate>
