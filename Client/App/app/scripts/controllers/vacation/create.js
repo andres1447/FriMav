@@ -55,6 +55,7 @@ angular.module('client')
         employeeName: vacation.employee.name,
         date: vacation.date,
         weeks: vacation.weeks,
+        salary: vacation.employee.salary,
         description: vacation.description
       }
     }

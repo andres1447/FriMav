@@ -20,13 +20,18 @@
 	</NewLine>
 	<NewLine>
 		<Left>
-			<Text Size="2">Desde: @Model.Date.ToString("dd/MM/yyyy")</Text>
+			<Text>Desde: @Model.Date.ToString("dd/MM/yyyy")</Text>
 		</Left>
 	</NewLine>
 	<NewLine>
 		<Left>
-			<Text Size="2">Hasta: @Model.Until().ToString("dd/MM/yyyy") (@Model.Weeks semanas)</Text>
+			<Text>Hasta: @Model.Until().ToString("dd/MM/yyyy") (@Model.Weeks semanas)</Text>
 		</Left>
+	</NewLine>
+	<NewLine>
+		<Center>
+			<Text Size="2">Monto: $@Model.Amount().ToString("N2")</Text>
+		</Center>
 	</NewLine>
 	<NewLine/>
 	<NewLine/>
@@ -54,13 +59,18 @@
 	</NewLine>
 	<NewLine>
 		<Left>
-			<Text Size="2">Desde: @Model.Date.ToString("dd/MM/yyyy")</Text>
+			<Text>Desde: @Model.Date.ToString("dd/MM/yyyy")</Text>
 		</Left>
 	</NewLine>
 	<NewLine>
 		<Left>
-			<Text Size="2">Hasta: @Model.Until().ToString("dd/MM/yyyy") (@Model.Weeks semanas)</Text>
+			<Text>Hasta: @Model.Until().ToString("dd/MM/yyyy") (@Model.Weeks semanas)</Text>
 		</Left>
+	</NewLine>
+	<NewLine>
+		<Center>
+			<Text Size="2">Monto: $@Model.Amount().ToString("N2")</Text>
+		</Center>
 	</NewLine>
 	<NewLine/>
 	<NewLine/>
