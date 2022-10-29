@@ -54,12 +54,14 @@ namespace FriMav.Application
             var liquidatedFees = _payrollRepository.Query()
                             .Where(x => x.EmployeeId == employeeId && !x.DeleteDate.HasValue)
                             .SelectMany(x => x.Liquidation)
+                            .Where(x => !x.DeleteDate.HasValue)
                             .OfType<LoanFee>()
                             .Select(x => x.Id);
 
             return _loanRepository.Query()
                 .Where(x => x.EmployeeId == employeeId && !x.DeleteDate.HasValue)
                 .SelectMany(x => x.Fees)
+                .Where(x => !x.DeleteDate.HasValue)
                 .Where(x => !liquidatedFees.Contains(x.Id));
         }
 
