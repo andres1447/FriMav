@@ -39,6 +39,7 @@ angular.module('client')
           case "Payroll": return "Liquidación sueldo";
           case "CustomerAccount": return "Cuenta cliente";
           case "Vacation": return "Vacaciones";
+          case "Bonus": return "Aguinaldo";
         }
       }
 

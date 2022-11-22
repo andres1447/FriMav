@@ -28,6 +28,7 @@ namespace FriMav.Client.Printer
                 new SelectItem("Mercadería empleados", "EmployeeTicket"),
                 new SelectItem("Préstamo", "Loan"),
                 new SelectItem("Vacaciones", "Vacation"),
+                new SelectItem("Aguinaldo", "Bonus"),
                 new SelectItem("Liquidación sueldo", "Payroll"),
                 new SelectItem("Cuenta cliente", "CustomerAccount")
             };

@@ -161,6 +161,7 @@
     <Compile Include="Models\DeliveryModel.cs" />
     <Compile Include="Models\EmployeeAbsencyModel.cs" />
     <Compile Include="Models\EmployeeAdvanceModel.cs" />
+    <Compile Include="Models\EmployeeBonusModel.cs" />
     <Compile Include="Models\EmployeeDocumentModel.cs" />
     <Compile Include="Models\EmployeeLoanModel.cs" />
     <Compile Include="Models\EmployeeTicketModel.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="Utils\CefHelper.cs" />
     <Compile Include="Utils\ClientConfig.cs" />
     <Compile Include="Utils\SelectItem.cs" />
+    <Content Include="App\app\scripts\controllers\bonus\create.js" />
     <Content Include="App\app\scripts\controllers\vacation\create.js" />
     <Content Include="App\app\scripts\controllers\employee\payroll.js" />
     <Content Include="App\app\scripts\controllers\employee\liquidated.js" />
@@ -227,6 +229,7 @@
     <Content Include="App\app\scripts\directives\number-input.js" />
     <Content Include="App\app\scripts\directives\restrict-decimal.js" />
     <Content Include="App\app\scripts\directives\form-group.js" />
+    <Content Include="App\app\scripts\routes\bonus.js" />
     <Content Include="App\app\scripts\routes\vacation.js" />
     <Content Include="App\app\scripts\routes\payroll.js" />
     <Content Include="App\app\scripts\routes\loan.js" />
@@ -244,6 +247,8 @@
     <Content Include="App\app\scripts\services\config-values.js" />
     <Content Include="App\app\scripts\services\zone.js" />
     <Content Include="App\app\scripts\services\healthcheck.js" />
+    <Content Include="App\app\views\bonus\create.html" />
+    <Content Include="App\app\views\bonus\_form.html" />
     <Content Include="App\app\views\vacation\create.html" />
     <Content Include="App\app\views\vacation\_form.html" />
     <Content Include="App\app\views\advance\create.html" />
@@ -269,6 +274,9 @@
     <Content Include="App\dist\images\yeoman.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="App\dist\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="App\dist\scripts\scripts.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -279,6 +287,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App\dist\styles\vendor.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\Aguinaldo.xml">
+      <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\Vacaciones.xml">
@@ -471,9 +483,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App\dist\fonts\glyphicons-halflings-regular.svg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App\dist\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App\dist\robots.txt">

@@ -29,7 +29,8 @@ namespace FriMav.Client.Printer
             { "Loan", typeof(EmployeeLoanModel) },
             { "Payroll", typeof(PayrollModel) },
             { "CustomerAccount", typeof(CustomerAccountModel) },
-            { "Vacation", typeof(EmployeeVacationModel) }
+            { "Vacation", typeof(EmployeeVacationModel) },
+            { "Bonus", typeof(EmployeeBonusModel) }
         };
 
         private PrintConfiguration Configuration { get; set; }
