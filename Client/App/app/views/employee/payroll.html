@@ -49,6 +49,13 @@
             <button ng-if="canCancel(it)" type="button" class="btn btn-danger" ng-click="refund(it)"><i class="glyphicon glyphicon-trash"></i><span class="key-shortcut">&minus;</span></button>
           </td>
         </tr>
+        <tr ng-if="currentPayroll.hasAttendBonus">
+          <td></td>
+          <td>Presentismo</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
       </tbody>
     </table>
   </div>

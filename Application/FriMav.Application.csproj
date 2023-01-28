@@ -50,6 +50,8 @@
     <Compile Include="Catalog\ICatalogService.cs" />
     <Compile Include="Catalog\CatalogService.cs" />
     <Compile Include="AlreadyExistsException.cs" />
+    <Compile Include="Configurations\ConfigurationService.cs" />
+    <Compile Include="Configurations\IConfigurationService.cs" />
     <Compile Include="Customer\CustomerCreate.cs" />
     <Compile Include="Customer\CustomerUpdate.cs" />
     <Compile Include="Customer\IZoneService.cs" />

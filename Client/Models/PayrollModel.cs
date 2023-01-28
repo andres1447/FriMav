@@ -15,6 +15,7 @@ namespace FriMav.Client.Models
         public List<UnliquidatedDocumentModel> Liquidation { get; set; }
         public decimal Balance { get; set; }
         public decimal Total { get; set; }
+        public bool HasAttendBonus { get; set; }
     }
 
     public class UnliquidatedDocumentModel

@@ -13,5 +13,6 @@ namespace FriMav.Application
         public decimal Balance { get; set; }
         public decimal Total { get; set; }
         public int EmployeeId { get; set; }
+        public bool HasAttendBonus { get; set; }
     }
 }

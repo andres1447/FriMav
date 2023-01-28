@@ -55,6 +55,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
+    <Compile Include="Entities\ConfigValue.cs" />
     <Compile Include="Entities\Payrolls\Absency.cs" />
     <Compile Include="Entities\Catalog.cs" />
     <Compile Include="Entities\CreditNote.cs" />
@@ -67,6 +69,7 @@
     <Compile Include="Entities\Invoice.cs" />
     <Compile Include="Entities\InvoiceItem.cs" />
     <Compile Include="Entities\Payrolls\Advance.cs" />
+    <Compile Include="Entities\Payrolls\AttendBonus.cs" />
     <Compile Include="Entities\Payrolls\GoodsSold.cs" />
     <Compile Include="Entities\Payrolls\LiquidationDocument.cs" />
     <Compile Include="Entities\Payrolls\LiquidationDocumentType.cs" />

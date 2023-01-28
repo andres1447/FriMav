@@ -1,3 +1,7 @@
+
+<div ng-if="loan.employee && loan.employee.isPenalized" class="alert alert-warning">
+    EL EMPLEADO FALTÓ HACE MENOS DE 2 MESES!
+</div>
 <div class="row">
   <div class="col-md-6">
     <form-group input="form.employee" label="Empleado">
@@ -11,7 +15,7 @@
   <div class="col-md-6">
     <form-group input="form.description" label="Descripción">
       <input id="loan_description" type="text" name="description" class="form-control" ng-model="loan.description" ae-key-tab="[13, 9, 40]"
-                ae-key-prev="[37, 38]" autocomplete="off">
+             ae-key-prev="[37, 38]" autocomplete="off">
     </form-group>
   </div>
 </div>

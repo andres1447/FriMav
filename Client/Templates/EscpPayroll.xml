@@ -35,6 +35,14 @@
 		<Text Width="12" Align="R">$@item.Amount.ToString("N2")</Text>
 	</NewLine>
 	}
+	@if (Model.HasAttendBonus)
+	{
+	<NewLine>
+		<Text Width="10" Align="L"></Text>
+		<Text Width="26" Align="L">Presentismo</Text>
+		<Text Width="12" Align="R"></Text>
+	</NewLine>
+	}
 	<NewLine/>
 	<Line>48</Line>
 	<NewLine/>
@@ -80,6 +88,14 @@
 		<Text Width="10" Align="L">@item.Date.ToString("dd/MM/yyyy")</Text>
 		<Text Width="26" Align="L">@item.Name</Text>
 		<Text Width="12" Align="R">$@item.Amount.ToString("N2")</Text>
+	</NewLine>
+	}
+	@if (Model.HasAttendBonus)
+	{
+	<NewLine>
+		<Text Width="10" Align="L"></Text>
+		<Text Width="26" Align="L">Presentismo</Text>
+		<Text Width="12" Align="R"></Text>
 	</NewLine>
 	}
 	<NewLine/>

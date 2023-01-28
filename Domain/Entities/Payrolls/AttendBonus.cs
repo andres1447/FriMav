@@ -6,14 +6,7 @@ using System.Threading.Tasks;
 
 namespace FriMav.Domain.Entities.Payrolls
 {
-    public enum LiquidationDocumentType
+    public class AttendBonus : LiquidationDocument
     {
-        Previous,
-        Salary,
-        Advance,
-        Absency,
-        GoodsSold,
-        LoanFee,
-        AttendBonus
     }
 }

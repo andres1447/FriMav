@@ -130,6 +130,7 @@ angular.module('client')
             case 3: return 'Ausencia';
             case 4: return 'Mercadería';
             case 5: return 'Cuota prestamo';
+            case 6: return 'Presentismo';
           }
       };
 
@@ -190,6 +191,7 @@ angular.module('client')
           salary: payroll.salary,
           balance: payroll.balance,
           total: payroll.total,
+          hasAttendBonus: payroll.hasAttendBonus,
           liquidation: $.map(payroll.liquidation, function (it) {
             return {
               date: it.date,

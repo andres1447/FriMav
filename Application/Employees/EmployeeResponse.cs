@@ -10,5 +10,6 @@
         public decimal Balance { get; set; }
         public bool IsLiquidated { get; set; }
         public decimal LiquidationBalance { get; set; }
+        public bool IsPenalized { get; set; }
     }
 }

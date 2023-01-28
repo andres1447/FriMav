@@ -1,0 +1,33 @@
+<header>
+  <h3>Parámetros</h3>
+  <div>
+  </div>
+</header>
+<div>
+    <table class="table table-bordered table-condensed">
+        <thead>
+            <tr>
+                <th class="col-md-3">Descripción</th>
+                <th class="col-md-3">Valor</th>
+                <th class="col-md-2">Guardar</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="it in configValues">
+            <td>{{::it.description}}</td>
+            <td ng-if="it.type == 0">
+              <input id="{{::it.code}}_intValue" name="{{::it.code}}_intValue" type="text" class="form-control" ng-model="it.intValue" autocomplete="off" number-input required />
+            </td>
+            <td ng-if="it.type == 1">
+              <input id="{{::it.code}}_stringValue" name="{{::it.code}}_stringValue" type="text" class="form-control" ng-model="it.stringValue" autocomplete="off" required />
+            </td>
+            <td ng-if="it.type == 2">
+              <input id="{{::it.code}}_decimalValue" name="{{::it.code}}_decimalValue" type="text" class="form-control" ng-model="it.decimalValue" autocomplete="off" restrict-decimal required />
+            </td>
+            <td>
+              <button type="button" class="btn btn-success" ng-click="update(it)"><i class="glyphicon glyphicon-save"></i> </button>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+</div>

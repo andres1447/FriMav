@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using FriMav.Application.Configurations;
 using FriMav.Domain;
 using FriMav.Domain.Entities;
 using FriMav.Domain.Entities.Payrolls;
@@ -17,10 +18,12 @@ namespace FriMav.Application.Test.Employees
 
         private EmployeeService _employeeService;
         private ITime _time;
-        private IRepository<Employee> _employeeRepository = new MemoryRepository<Employee>();
-        private IRepository<Zone> _zoneRepository = new MemoryRepository<Zone>();
-        private IRepository<Payroll> _payrollRepository = new MemoryRepository<Payroll>();
-        private IRepository<LiquidationDocument> _liquidationDocumentRepository = new MemoryRepository<LiquidationDocument>();
+        private IRepository<Employee> _employeeRepository;
+        private IRepository<Zone> _zoneRepository;
+        private IRepository<Payroll> _payrollRepository;
+        private IRepository<LiquidationDocument> _liquidationDocumentRepository;
+        private IRepository<ConfigValue> _configurationRepository;
+        private IConfigurationService _configurationService;
 
         [TestInitialize]
         public void SetUp()
@@ -28,12 +31,19 @@ namespace FriMav.Application.Test.Employees
             _time = Substitute.For<ITime>();
             _time.UtcNow().Returns(DateTime.UtcNow);
 
+            _employeeRepository = new MemoryRepository<Employee>();
+            _zoneRepository = new MemoryRepository<Zone>();
+            _payrollRepository = new MemoryRepository<Payroll>();
+            _liquidationDocumentRepository = new MemoryRepository<LiquidationDocument>();
+            _configurationRepository = new MemoryRepository<ConfigValue>();
+            _configurationService = new ConfigurationService(_configurationRepository);
+
             _employeeService = new EmployeeService(
                 _time,
                 _employeeRepository,
                 _zoneRepository,
                 _payrollRepository,
-                _liquidationDocumentRepository);
+                _liquidationDocumentRepository, _configurationService);
         }
 
         [TestMethod]
@@ -90,6 +100,103 @@ namespace FriMav.Application.Test.Employees
             GivenAnExistingPayrollForEmployee(ID);
 
             WhenClosePayrollForEmployee(ID);
+        }
+
+        [TestMethod]
+        public void AddAttendBonusIfIsLastWeekOfMonthAndNoAbsencyInMonth()
+        {
+            GivenAnEmployee(ID, SALARY);
+            GivenConfiguration(Constants.AttendBonusPercentageKey, 0.10m);
+            GivenDateIs(new DateTime(2023, 02, 03));
+
+            var payroll = WhenClosePayrollForEmployee(ID);
+
+            ThenPayrollHasAttendBonus(payroll, 4 * SALARY * 0.10m);
+        }
+
+        [TestMethod]
+        public void DontAddAttendBonusIfPercentageIsZero()
+        {
+            GivenAnEmployee(ID, SALARY);
+            GivenConfiguration(Constants.AttendBonusPercentageKey, 0m);
+            GivenDateIs(new DateTime(2023, 02, 03));
+
+            var payroll = WhenClosePayrollForEmployee(ID);
+
+            ThenPayrollHasNoAttendBonus(payroll);
+        }
+
+        [TestMethod]
+        public void DontAddAttendBonusIfNotIsLastWeekOfMonth()
+        {
+            GivenAnEmployee(ID, SALARY);
+            GivenConfiguration(Constants.AttendBonusPercentageKey, 0.10m);
+            GivenDateIs(new DateTime(2023, 01, 15));
+
+            var payroll = WhenClosePayrollForEmployee(ID);
+
+            ThenPayrollHasNoAttendBonus(payroll);
+        }
+
+        [TestMethod]
+        public void DontAddAttendBonusIfHasAbsencyInClosingMonth()
+        {
+            GivenAnEmployee(ID, SALARY);
+            GivenConfiguration(Constants.AttendBonusPercentageKey, 0.1m);
+            GivenDateIs(new DateTime(2023, 02, 03));
+            GivenEmployeeHasAbsencyOnDate(new DateTime(2023, 01, 15));
+
+            var payroll = WhenClosePayrollForEmployee(ID);
+
+            ThenPayrollHasNoAttendBonus(payroll);
+        }
+
+        [TestMethod]
+        public void AddAttendBonusIfHasAbsencyInNextMonthSameWeek()
+        {
+            GivenAnEmployee(ID, SALARY);
+            GivenConfiguration(Constants.AttendBonusPercentageKey, 0.1m);
+            GivenDateIs(new DateTime(2023, 02, 03));
+            GivenEmployeeHasAbsencyOnDate(new DateTime(2023, 02, 04));
+
+            var payroll = WhenClosePayrollForEmployee(ID);
+
+            ThenPayrollHasAttendBonus(payroll, 4 * SALARY * 0.10m);
+        }
+
+        private void GivenEmployeeHasAbsencyOnDate(DateTime dateTime)
+        {
+            _liquidationDocumentRepository.Add(new Absency
+            {
+                EmployeeId = ID,
+                Employee = _employeeRepository.Get(ID),
+                Date = dateTime
+            });
+        }
+
+        private void GivenDateIs(DateTime dateTime)
+        {
+            _time.UtcNow().Returns(dateTime);
+        }
+
+        private void ThenPayrollHasNoAttendBonus(Payroll payroll)
+        {
+            Assert.AreEqual(0, payroll.Liquidation.OfType<AttendBonus>().Count());
+        }
+
+        private void ThenPayrollHasAttendBonus(Payroll payroll, decimal value)
+        {
+            Assert.AreEqual(1, payroll.Liquidation.OfType<AttendBonus>().Count());
+            Assert.AreEqual(value, payroll.Liquidation.OfType<AttendBonus>().First().Amount);
+        }
+
+        private void GivenConfiguration(string code, decimal value)
+        {
+            _configurationRepository.Add(new ConfigValue
+            {
+                Code = code,
+                DecimalValue = value
+            });
         }
 
         private void GivenAnExistingPayrollForEmployee(int id)

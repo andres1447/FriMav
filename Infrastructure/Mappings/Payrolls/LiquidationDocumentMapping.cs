@@ -1,11 +1,5 @@
-﻿using FriMav.Domain.Entities;
-using FriMav.Domain.Entities.Payrolls;
-using System;
-using System.Collections.Generic;
+﻿using FriMav.Domain.Entities.Payrolls;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FriMav.Infrastructure.Mappings.Payrolls
 {
@@ -20,6 +14,7 @@ namespace FriMav.Infrastructure.Mappings.Payrolls
             Map<Absency>(m => m.Requires("Type").HasValue((int)LiquidationDocumentType.Absency));
             Map<GoodsSold>(m => m.Requires("Type").HasValue((int)LiquidationDocumentType.GoodsSold));
             Map<LoanFee>(m => m.Requires("Type").HasValue((int)LiquidationDocumentType.LoanFee));
+            Map<AttendBonus>(m => m.Requires("Type").HasValue((int)LiquidationDocumentType.AttendBonus));
 
             HasRequired(x => x.Employee).WithMany().HasForeignKey(x => x.EmployeeId);
 

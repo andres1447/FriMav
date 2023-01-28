@@ -150,6 +150,7 @@
     <Compile Include="Api\ModelStateValidationFilterAttribute.cs" />
     <Compile Include="Api\NotFoundExceptionFilterAttribute.cs" />
     <Compile Include="Api\WebApiConfig.cs" />
+    <Compile Include="Controllers\ConfigValuesController.cs" />
     <Compile Include="Controllers\CatalogController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />

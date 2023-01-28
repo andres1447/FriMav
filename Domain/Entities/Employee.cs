@@ -13,6 +13,7 @@ namespace FriMav.Domain.Entities
 
         public decimal Salary { get; set; }
         public DateTime JoinDate { get; set; }
+        public decimal MonthlySalary => 4 * Salary;
 
         public decimal DailySalary()
         {

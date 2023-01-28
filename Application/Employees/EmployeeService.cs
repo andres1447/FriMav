@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using FriMav.Application.Configurations;
 using FriMav.Domain;
 using FriMav.Domain.Entities;
 using FriMav.Domain.Entities.Payrolls;
@@ -15,19 +16,22 @@ namespace FriMav.Application
         private readonly IRepository<Zone> _zoneRepository;
         private readonly IRepository<Payroll> _payrollRepository;
         private readonly IRepository<LiquidationDocument> _liquidationDocumentRepository;
+        private readonly IConfigurationService _configurationService;
 
         public EmployeeService(
             ITime time,
             IRepository<Employee> employeeRepository,
             IRepository<Zone> zoneRepository,
             IRepository<Payroll> payrollRepository,
-            IRepository<LiquidationDocument> liquidationDocumentRepository)
+            IRepository<LiquidationDocument> liquidationDocumentRepository,
+            IConfigurationService configurationService)
         {
             _time = time;
             _employeeRepository = employeeRepository;
             _zoneRepository = zoneRepository;
             _payrollRepository = payrollRepository;
             _liquidationDocumentRepository = liquidationDocumentRepository;
+            _configurationService = configurationService;
         }
 
         public void Create(EmployeeCreate request)
@@ -71,25 +75,36 @@ namespace FriMav.Application
             var payrolls = GetThisWeekPayrolls().Select(x => x.EmployeeId);
             var employees = GetActiveEmployees();
             var unliquidatedMovements = GetUnliquidatedDocuments(lastDayOfWeek);
-
-            return employees.GroupJoin(unliquidatedMovements, x => x.Id, x => x.EmployeeId, (employee, unliquidated) =>
+            var penalizedEmployees = GetPenalizedEmployees();
+            return employees
+                .GroupJoin(penalizedEmployees, e => e.Id, e => e, (Employee, Penalized) => new { Employee, IsPenalized = Penalized.Any() ? true : false })
+                .GroupJoin(unliquidatedMovements, x => x.Employee.Id, x => x.EmployeeId, (x, unliquidated) =>
             new EmployeeResponse
             {
-                Id = employee.Id,
-                Name = employee.Name,
-                Code = employee.Code,
-                Salary = employee.Salary,
-                IsLiquidated = payrolls.Contains(employee.Id),
+                Id = x.Employee.Id,
+                Name = x.Employee.Name,
+                Code = x.Employee.Code,
+                Salary = x.Employee.Salary,
+                IsLiquidated = payrolls.Contains(x.Employee.Id),
                 Absences = unliquidated.OfType<Absency>().Count(),
-                LiquidationBalance = unliquidated.Select(x => x.Amount).DefaultIfEmpty(0).Sum() + employee.Balance + employee.Salary,
-                Balance = employee.Balance
+                LiquidationBalance = unliquidated.Select(d => d.Amount).DefaultIfEmpty(0).Sum() + x.Employee.Balance + x.Employee.Salary,
+                Balance = x.Employee.Balance,
+                IsPenalized = x.IsPenalized
             }).ToList();
         }
 
-        private DateTime GetLastDayOfWeek()
+        private IQueryable<int> GetPenalizedEmployees()
         {
-            return _time.UtcNow().LastDayOfWeek().EndOfDay();
+            var currentDate = _time.UtcNow();
+            var twoMonthsBefore = currentDate.AddMonths(-2);
+            return _liquidationDocumentRepository.Query()
+                .OfType<Absency>()
+                .Where(x => x.Date <= currentDate && x.Date >= twoMonthsBefore)
+                .Select(x => x.EmployeeId)
+                .Distinct();
         }
+
+        private DateTime GetLastDayOfWeek() => _time.UtcNow().LastDayOfWeek().EndOfDay();
 
         private IQueryable<LiquidationDocument> GetUnliquidatedDocuments(DateTime until)
         {
@@ -127,11 +142,13 @@ namespace FriMav.Application
             if (ExistsClosedPayrollForThisWeek(employeeId))
                 throw new AlreadyExistsException();
 
+            var attendBonus = GetAttendBonusContext();
+
             var lastDayOfWeek = GetLastDayOfWeek();
             var employee = GetById(employeeId);
 
             var liquidation = GetUnliquidatedDocuments(employeeId, lastDayOfWeek);
-            var payroll = ClosePayroll(employee, liquidation);
+            var payroll = ClosePayroll(employee, liquidation, attendBonus);
 
             return payroll;
         }
@@ -156,10 +173,13 @@ namespace FriMav.Application
             return _time.UtcNow().FirstDayOfWeek().Date;
         }
 
-        private Payroll ClosePayroll(Employee employee, List<LiquidationDocument> liquidation)
+        private Payroll ClosePayroll(Employee employee, List<LiquidationDocument> liquidation, AttendBonusContext attendBonus)
         {
             liquidation.OfType<Absency>().ToList().ForEach(absency => absency.Amount = -employee.DailySalary());
             liquidation.Add(new Salary { Amount = employee.Salary, Employee = employee, EmployeeId = employee.Id });
+
+            if (attendBonus.IsEgible(employee))
+                liquidation.Add(new AttendBonus { Amount = employee.MonthlySalary * attendBonus.Percentage, Employee = employee, EmployeeId = employee.Id });
 
             var payroll = new Payroll()
             {
@@ -180,17 +200,50 @@ namespace FriMav.Application
         public List<Payroll> ClosePayroll()
         {
             var lastDayOfWeek = GetLastDayOfWeek();
-
             var employees = GetActiveEmployees().ToList();
             var unliquidatedDocuments = GetUnliquidatedDocuments(lastDayOfWeek).ToList();
+            var attendBonus = GetAttendBonusContext();
 
             var response = new List<Payroll>();
             foreach (var employee in employees)
             {
                 var employeeDocuments = unliquidatedDocuments.Where(x => x.EmployeeId == employee.Id).ToList();
-                response.Add(ClosePayroll(employee, employeeDocuments));
+                response.Add(ClosePayroll(employee, employeeDocuments, attendBonus));
             }
             return response;
+        }
+
+        private AttendBonusContext GetAttendBonusContext()
+        {
+            var percentage = _configurationService.GetDecimal(Constants.AttendBonusPercentageKey);
+
+            var currentDate = _time.UtcNow();
+            var firstDateOfWeek = currentDate.FirstDayOfWeek();
+            var lastDateOfWeek = currentDate.LastDayOfWeek();
+            var isClosingMonth = lastDateOfWeek.Month != firstDateOfWeek.Month || lastDateOfWeek.IsLastDayOfMonth();
+
+            var absencies = percentage <= 0
+                ? new List<int>()
+                : isClosingMonth
+                    ? GetAbsenciesInMonthOf(firstDateOfWeek)
+                    : GetAbsenciesInMonthOf(currentDate);
+
+            return new AttendBonusContext
+            {
+                IsClosingMonth = isClosingMonth,
+                Percentage = percentage,
+                MonthlyAbsents = absencies
+            };
+        }
+
+        private List<int> GetAbsenciesInMonthOf(DateTime currentDate)
+        {
+            return _liquidationDocumentRepository.Query()
+                .OfType<Absency>()
+                .Where(x => x.Date.Month == currentDate.Month && x.Date.Month == currentDate.Month)
+                .Select(x => x.Employee.Id)
+                .Distinct()
+                .ToList();
         }
 
         private List<LiquidationDocument> GetUnliquidatedDocuments(int employeeId, DateTime lastDayOfWeek)
@@ -220,49 +273,63 @@ namespace FriMav.Application
 
             var lastDayOfWeek = GetLastDayOfWeek();
             var unliquidatedDocuments = GetUnliquidatedDocuments(lastDayOfWeek);
-            var payrolls = unliquidatedEmployees.Select(x => new PayrollResponse
+
+            var payrolls = unliquidatedEmployees.Select(x => new EmployeeLiquidation
             {
-                EmployeeId = x.Id,
-                EmployeeCode = x.Code,
-                EmployeeName = x.Name,
-                Salary = x.Salary,
-                Balance = x.Balance,
-                Liquidation = unliquidatedDocuments.Where(l => l.EmployeeId == x.Id)
-                                .Select(MapUnliquidatedDocument).ToList()
+                Employee = x,
+                Liquidation = unliquidatedDocuments.Where(l => l.EmployeeId == x.Id).Select(MapUnliquidatedDocument).ToList()
             }).ToList();
-            BuildPayrolls(payrolls);
-            return payrolls;
+            
+            return BuildPayrolls(payrolls);
         }
 
-        private void BuildPayrolls(List<PayrollResponse> payrolls)
+        private List<PayrollResponse> BuildPayrolls(List<EmployeeLiquidation> payrolls)
         {
-            foreach (var payroll in payrolls)
+            var attendBonus = GetAttendBonusContext();
+            return payrolls.Select(x =>
             {
-                payroll.Date = DateTime.UtcNow;
-                payroll.Liquidation = BuildLiquidation(payroll.Salary, payroll.Balance, payroll.Liquidation);
-                payroll.Total = payroll.Liquidation.Last().Balance;
-            }
+                var liquidation = BuildLiquidation(x, attendBonus);
+                return new PayrollResponse
+                {
+                    EmployeeCode = x.Employee.Code,
+                    EmployeeId = x.Employee.Id,
+                    EmployeeName = x.Employee.Name,
+                    Balance = x.Employee.Balance,
+                    Salary = x.Employee.Salary,
+                    Date = DateTime.UtcNow,
+                    Liquidation = liquidation,
+                    Total = liquidation.Last().Balance,
+                    HasAttendBonus = !attendBonus.IsClosingMonth && attendBonus.WillApply(x.Employee.Id)
+                };
+            }).ToList();
         }
 
-        private List<UnliquidatedDocument> BuildLiquidation(decimal salary, decimal balance, List<UnliquidatedDocument> unliquidated)
+        private List<UnliquidatedDocument> BuildLiquidation(EmployeeLiquidation payroll, AttendBonusContext attendBonus)
         {
             var firstDayOfWeek = GetFirstDayOfWeek();
-            var minimumDay = unliquidated.Select(x => x.Date).DefaultIfEmpty(firstDayOfWeek).Min();
+            var minimumDay = payroll.Liquidation.Select(x => x.Date).DefaultIfEmpty(firstDayOfWeek).Min();
             var previousBalanceDay = minimumDay < firstDayOfWeek ? minimumDay : firstDayOfWeek;
             var result = new List<UnliquidatedDocument>();
             result.Add(new UnliquidatedDocument
             {
                 Date = previousBalanceDay,
                 Type = LiquidationDocumentType.Previous,
-                Amount = balance,
+                Amount = payroll.Employee.Balance,
             });
-            result.AddRange(unliquidated);
+            result.AddRange(payroll.Liquidation);
             result.Add(new UnliquidatedDocument
             {
                 Date = GetLastDayOfWeek(),
                 Type = LiquidationDocumentType.Salary,
-                Amount = salary
+                Amount = payroll.Employee.Salary
             });
+            if (attendBonus.IsEgible(payroll.Employee))
+                result.Add(new UnliquidatedDocument
+                {
+                    Date = GetLastDayOfWeek(),
+                    Type = LiquidationDocumentType.AttendBonus,
+                    Amount = attendBonus.Percentage * payroll.Employee.MonthlySalary
+                });
             CalculateBalance(result);
             return result;
         }
@@ -281,8 +348,16 @@ namespace FriMav.Application
                             .Where(x => x.EmployeeId == employee.Id)
                             .OrderBy(x => x.Date).ThenBy(x => x.Id)
                             .Select(MapUnliquidatedDocument).ToList();
-            
-            return BuildLiquidation(employee.Salary, employee.Balance, unliquidated);
+
+            var attendBonus = GetAttendBonusContext();
+
+            var liquidation = new EmployeeLiquidation
+            {
+                Employee = employee,
+                Liquidation = unliquidated
+            };
+
+            return BuildLiquidation(liquidation, attendBonus);
         }
 
         private static void CalculateBalance(List<UnliquidatedDocument> unliquidated)
@@ -303,12 +378,40 @@ namespace FriMav.Application
             Id = x.Id,
             Date = x.Date,
             Description = x.Description,
-            Type = x is Advance ? LiquidationDocumentType.Advance :
-                   x is Absency ? LiquidationDocumentType.Absency :
-                   x is GoodsSold ? LiquidationDocumentType.GoodsSold :
-                   LiquidationDocumentType.LoanFee,
+            Type = x is Advance
+                ? LiquidationDocumentType.Advance
+                : x is Absency
+                    ? LiquidationDocumentType.Absency
+                    : x is GoodsSold
+                        ? LiquidationDocumentType.GoodsSold
+                        : x is LoanFee
+                            ? LiquidationDocumentType.LoanFee
+                            : LiquidationDocumentType.AttendBonus,
             Amount = x.Amount,
             LoanId = x is LoanFee ? (x as LoanFee).LoanId : default(int?)
         };
+
+        private class EmployeeLiquidation
+        {
+            public Employee Employee { get; set; }
+            public List<UnliquidatedDocument> Liquidation { get; set; }
+        }
+
+        private class AttendBonusContext
+        {
+            public bool IsClosingMonth { get; set; }
+            public decimal Percentage { get; set; }
+            public List<int> MonthlyAbsents { get; set; }
+
+            internal bool IsEgible(Employee employee)
+            {
+                return IsClosingMonth && WillApply(employee.Id);
+            }
+
+            internal bool WillApply(int employeeId)
+            {
+                return Percentage > 0 && !MonthlyAbsents.Contains(employeeId);
+            }
+        }
     }
 }

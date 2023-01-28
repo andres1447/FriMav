@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FriMav.Application
 {
@@ -15,14 +10,10 @@ namespace FriMav.Application
             return date.AddDays(-1 * diff).Date;
         }
 
-        public static DateTime LastDayOfWeek(this DateTime date)
-        {
-            return FirstDayOfWeek(date).AddDays(6);
-        }
+        public static DateTime LastDayOfWeek(this DateTime date) => FirstDayOfWeek(date).AddDays(6);
 
-        public static DateTime EndOfDay(this DateTime date)
-        {
-            return date.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
-        }
+        public static DateTime EndOfDay(this DateTime date) => date.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
+
+        public static bool IsLastDayOfMonth(this DateTime date) => date.AddDays(1).Month != date.Month;
     }
 }

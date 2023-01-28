@@ -211,6 +211,7 @@
     <Content Include="App\app\scripts\controllers\advance\create.js" />
     <Content Include="App\app\scripts\controllers\goods\create.js" />
     <Content Include="App\app\scripts\controllers\payment\create.js" />
+    <Content Include="App\app\scripts\controllers\configValues\update.js" />
     <Content Include="App\app\scripts\controllers\zone\create.js" />
     <Content Include="App\app\scripts\controllers\zone\index.js" />
     <Content Include="App\app\scripts\controllers\zone\show.js" />
@@ -227,6 +228,7 @@
     <Content Include="App\app\scripts\routes\goods.js" />
     <Content Include="App\app\scripts\routes\advance.js" />
     <Content Include="App\app\scripts\routes\absency.js" />
+    <Content Include="App\app\scripts\routes\configValues.js" />
     <Content Include="App\app\scripts\routes\zone.js" />
     <Content Include="App\app\scripts\services\payroll.js" />
     <Content Include="App\app\scripts\services\loan.js" />
@@ -234,11 +236,13 @@
     <Content Include="App\app\scripts\services\advance.js" />
     <Content Include="App\app\scripts\services\absency.js" />
     <Content Include="App\app\scripts\services\pending-delivery-check.js" />
+    <Content Include="App\app\scripts\services\config-values.js" />
     <Content Include="App\app\scripts\services\zone.js" />
     <Content Include="App\app\scripts\services\healthcheck.js" />
     <Content Include="App\app\views\advance\create.html" />
     <Content Include="App\app\views\advance\_form.html" />
     <Content Include="App\app\views\absency\_form.html" />
+    <Content Include="App\app\views\configValues\update.html" />
     <Content Include="App\app\views\delivery\show.html" />
     <Content Include="App\app\views\absency\create.html" />
     <Content Include="App\app\views\employee\payroll.html" />

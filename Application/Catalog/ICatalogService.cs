@@ -1,6 +1,5 @@
 ﻿using FriMav.Domain;
 using FriMav.Domain.Entities;
-using FriMav.Domain.Proyections;
 using System.Collections.Generic;
 
 namespace FriMav.Application

@@ -1,5 +1,6 @@
 ﻿namespace FriMav.Infrastructure.Migrations
 {
+    using FriMav.Domain;
     using FriMav.Domain.Entities;
     using System;
     using System.Data.Entity;
@@ -24,6 +25,18 @@
                     CreationDate = new DateTime(2020, 12, 25).ToUniversalTime(),
                     PaymentMethod = PaymentMethod.Cash,
                     Shipping = Shipping.Self
+                });
+            }
+
+            if (!context.Set<ConfigValue>().Any(x => x.Code == Constants.AttendBonusPercentageKey))
+            {
+                context.Set<ConfigValue>().Add(new ConfigValue
+                {
+                    Code = Constants.AttendBonusPercentageKey,
+                    Description = "Presentismo - Porcentaje",
+                    CreationDate = DateTime.Now.ToUniversalTime(),
+                    Type = ConfigurationType.Decimal,
+                    DecimalValue = 0.10m
                 });
             }
         }
