@@ -99,7 +99,7 @@ namespace FriMav.Application
             var twoMonthsBefore = currentDate.AddMonths(-2);
             return _liquidationDocumentRepository.Query()
                 .OfType<Absency>()
-                .Where(x => x.Date <= currentDate && x.Date >= twoMonthsBefore)
+                .Where(x => !x.DeleteDate.HasValue && x.Date <= currentDate && x.Date >= twoMonthsBefore)
                 .Select(x => x.EmployeeId)
                 .Distinct();
         }
@@ -240,7 +240,7 @@ namespace FriMav.Application
         {
             return _liquidationDocumentRepository.Query()
                 .OfType<Absency>()
-                .Where(x => x.Date.Month == currentDate.Month && x.Date.Month == currentDate.Month)
+                .Where(x => !x.DeleteDate.HasValue && x.Date.Month == currentDate.Month && x.Date.Month == currentDate.Month)
                 .Select(x => x.Employee.Id)
                 .Distinct()
                 .ToList();
