@@ -240,7 +240,7 @@ namespace FriMav.Application
         {
             return _liquidationDocumentRepository.Query()
                 .OfType<Absency>()
-                .Where(x => !x.DeleteDate.HasValue && x.Date.Month == currentDate.Month && x.Date.Month == currentDate.Month)
+                .Where(x => !x.DeleteDate.HasValue && x.Date.Month == currentDate.Month && x.Date.Year == currentDate.Year)
                 .Select(x => x.Employee.Id)
                 .Distinct()
                 .ToList();
