@@ -177,6 +177,19 @@ namespace FriMav.Application.Test.Employees
             ThenPayrollHasAttendBonus(payroll, 4 * SALARY * 0.10m);
         }
 
+        [TestMethod]
+        public void AddAttendBonusIfHasAbsencyInSameMonthDifferentYear()
+        {
+            GivenAnEmployee(ID, SALARY);
+            GivenConfiguration(Constants.AttendBonusPercentageKey, 0.1m);
+            GivenDateIs(new DateTime(2023, 02, 03));
+            GivenEmployeeHasAbsencyOnDate(new DateTime(2022, 01, 04));
+
+            var payroll = WhenClosePayrollForEmployee(ID);
+
+            ThenPayrollHasAttendBonus(payroll, 4 * SALARY * 0.10m);
+        }
+
         private void GivenEmployeeHasAbsencyOnDate(DateTime dateTime)
         {
             _liquidationDocumentRepository.Add(new Absency
