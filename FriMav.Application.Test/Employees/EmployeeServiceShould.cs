@@ -152,6 +152,19 @@ namespace FriMav.Application.Test.Employees
         }
 
         [TestMethod]
+        public void AddAttendBonusIfHasDeletedAbsencyInClosingMonth()
+        {
+            GivenAnEmployee(ID, SALARY);
+            GivenConfiguration(Constants.AttendBonusPercentageKey, 0.1m);
+            GivenDateIs(new DateTime(2023, 02, 03));
+            GivenEmployeeHasDeletedAbsencyOnDate(new DateTime(2023, 01, 15));
+
+            var payroll = WhenClosePayrollForEmployee(ID);
+
+            ThenPayrollHasAttendBonus(payroll, 4 * SALARY * 0.10m);
+        }
+
+        [TestMethod]
         public void AddAttendBonusIfHasAbsencyInNextMonthSameWeek()
         {
             GivenAnEmployee(ID, SALARY);
@@ -171,6 +184,17 @@ namespace FriMav.Application.Test.Employees
                 EmployeeId = ID,
                 Employee = _employeeRepository.Get(ID),
                 Date = dateTime
+            });
+        }
+
+        private void GivenEmployeeHasDeletedAbsencyOnDate(DateTime dateTime)
+        {
+            _liquidationDocumentRepository.Add(new Absency
+            {
+                EmployeeId = ID,
+                Employee = _employeeRepository.Get(ID),
+                Date = dateTime,
+                DeleteDate = dateTime
             });
         }
 
