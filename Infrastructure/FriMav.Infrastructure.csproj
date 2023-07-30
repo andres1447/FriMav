@@ -112,6 +112,10 @@
     <Compile Include="Migrations\202301270115276_AttendBonus.designer.cs">
       <DependentUpon>202301270115276_AttendBonus.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202307302051014_InvoiceExternalReferenceNumber.cs" />
+    <Compile Include="Migrations\202307302051014_InvoiceExternalReferenceNumber.designer.cs">
+      <DependentUpon>202307302051014_InvoiceExternalReferenceNumber.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202101210252279_PayrollSql.cs" />
     <Compile Include="MissingDllHack.cs" />
@@ -148,6 +152,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202301270115276_AttendBonus.resx">
       <DependentUpon>202301270115276_AttendBonus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202307302051014_InvoiceExternalReferenceNumber.resx">
+      <DependentUpon>202307302051014_InvoiceExternalReferenceNumber.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

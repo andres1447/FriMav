@@ -207,6 +207,7 @@
     <Compile Include="Utils\ClientConfig.cs" />
     <Compile Include="Utils\SelectItem.cs" />
     <Content Include="App\app\scripts\controllers\bonus\create.js" />
+    <Content Include="App\app\scripts\controllers\transaction\updateExternalReferenceNumber.js" />
     <Content Include="App\app\scripts\controllers\vacation\create.js" />
     <Content Include="App\app\scripts\controllers\employee\payroll.js" />
     <Content Include="App\app\scripts\controllers\employee\liquidated.js" />
@@ -249,6 +250,7 @@
     <Content Include="App\app\scripts\services\healthcheck.js" />
     <Content Include="App\app\views\bonus\create.html" />
     <Content Include="App\app\views\bonus\_form.html" />
+    <Content Include="App\app\views\transaction\updateExternalReferenceNumber.html" />
     <Content Include="App\app\views\vacation\create.html" />
     <Content Include="App\app\views\vacation\_form.html" />
     <Content Include="App\app\views\advance\create.html" />

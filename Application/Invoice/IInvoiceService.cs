@@ -15,5 +15,8 @@ namespace FriMav.Application
 
         [Transactional]
         void DontDeliver(int id);
+
+        [Transactional]
+        void AssignExternalReferenceNumber(int id, string referenceNumber);
     }
 }

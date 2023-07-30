@@ -19,6 +19,7 @@ namespace FriMav.Client.Models
     {
         public DateTime Date { get; set; }
         public string Description { get; set; }
+        public string ExternalDocumentNumber { get; set; }
         public decimal Total { get; set; }
         public decimal Balance { get; set; }
     }

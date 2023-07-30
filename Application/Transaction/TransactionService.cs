@@ -78,6 +78,7 @@ namespace FriMav.Application
                     Number = x.Number,
                     Description = x.Description,
                     IsRefunded = x.IsRefunded,
+                    ExternalDocumentNumber = x.ExternalReferenceNumber, 
                     RefundedDocument = x.ReferencedDocumentId.HasValue ? new TransactionEntryReference
                     {
                         Number = x.ReferencedDocument.Number,

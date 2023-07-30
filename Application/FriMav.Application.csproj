@@ -112,6 +112,7 @@
     <Compile Include="Product\ProductUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Time.cs" />
+    <Compile Include="Transaction\AssignExternalReferenceNumberRequest.cs" />
     <Compile Include="Transaction\CancelTransaction.cs" />
     <Compile Include="Transaction\CreatePayment.cs" />
     <Compile Include="Transaction\ITransactionService.cs" />

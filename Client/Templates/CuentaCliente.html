@@ -116,10 +116,11 @@
                     <table class="dont-split">
                         <thead>
                             <tr>
-                                <th width="20%" class="text-left">Fecha</th>
-                                <th width="40%" class="text-left">Descripción</th>
-                                <th width="20%" class="text-right">Total</th>
-                                <th width="20%" class="text-right">Balance</th>
+                                <th width="15%" class="text-left">Fecha</th>
+                                <th width="35%" class="text-left">Descripción</th>
+                                <th width="20%" class="text-left">Fiscal</th>
+                                <th width="15%" class="text-right">Total</th>
+                                <th width="15%" class="text-right">Balance</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -128,11 +129,13 @@
                             <tr>
                                 <td class="text-left">@transaction.Date.ToString("dd/MM/yyyy")</td>
                                 <td class="text-left">@transaction.Description</td>
+                                <td class="text-left">@transaction.ExternalDocumentNumber</td>
                                 <td class="text-right">$@transaction.Total.ToString("N2")</td>
                                 <td class="text-right">$@transaction.Balance.ToString("N2")</td>
                             </tr>
                             }
                             <tr class="total-separator">
+                                <td></td>
                                 <td></td>
                                 <td class="text-right"></td>
                                 <td class="text-right"></td>

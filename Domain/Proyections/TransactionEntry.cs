@@ -18,7 +18,7 @@ namespace FriMav.Domain.Proyections
         public string Description { get; set; }
         public int PersonId { get; set; }
         public bool IsRefunded { get; set; }
-
+        public string ExternalDocumentNumber { get; set; }
         public TransactionEntryReference RefundedDocument { get; set; }
     }
 

@@ -13,6 +13,10 @@ angular.module('client').factory('Invoice', function ($resource, ApiConfig) {
         dontDeliver: {
           url: ApiConfig.host + 'invoice/:id/dontDeliver',
           method: 'POST'
+        },
+        updateExternalReferenceNumber: {
+          url: ApiConfig.host + 'invoice/:id/externalReferenceNumber',
+          method: 'POST'
         }
     });
 });

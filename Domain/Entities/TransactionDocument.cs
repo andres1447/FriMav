@@ -20,6 +20,7 @@ namespace FriMav.Domain.Entities
         public int? ReferencedDocumentId { get; set; }
         public Person Person { get; set; }
         public DateTime? DeleteDate { get; set; }
+        public string ExternalReferenceNumber { get; set; }
 
         public abstract TransactionDocument CreateVoidDocument(IDocumentNumberGenerator numberGenerator);
 

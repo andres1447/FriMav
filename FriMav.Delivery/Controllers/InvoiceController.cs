@@ -4,7 +4,7 @@ using System.Web.Http;
 namespace FriMav.Api.Controllers
 {
     [RoutePrefix("api/invoice")]
-    public class InvoiceController : ApiController
+    public partial class InvoiceController : ApiController
     {
         private IInvoiceService _invoiceService;
         private IDeliveryService _deliveryService;
@@ -52,6 +52,14 @@ namespace FriMav.Api.Controllers
         public IHttpActionResult DontSend([FromUri]int id)
         {
             _invoiceService.DontDeliver(id);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("{id}/externalReferenceNumber")]
+        public IHttpActionResult AssignExternalReferenceNumber([FromUri] int id, AssignExternalReferenceNumberRequest request)
+        {
+            _invoiceService.AssignExternalReferenceNumber(id, request.Number);
             return Ok();
         }
     }

@@ -153,5 +153,12 @@ namespace FriMav.Application
                 }
             }
         }
+
+        public void AssignExternalReferenceNumber(int id, string referenceNumber)
+        {
+            var invoice = _invoiceRepository.Get(id);
+            if (invoice == null) throw new NotFoundException();
+            invoice.ExternalReferenceNumber = referenceNumber;
+        }
     }
 }

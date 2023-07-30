@@ -1,0 +1,11 @@
+<div class="modal-header">
+  <h4>Número de ticket</h4>
+</div>
+<div class="modal-body">
+  <p>Ingrese el número de ticket para la factura #{{::$ctrl.transactionDocument.number}}</p>
+  <input id="external-reference-number" type="text" class="form-control" ng-model="$ctrl.externalDocumentNumber" autocomplete="off" ae-autofocus="InitUpdateExternalReferenceNumber"/>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-success" data-ng-click="$ctrl.submit();"><i class="glyphicon glyphicon-ok"></i> Guardar</button>
+  <button type="button" class="btn btn-danger" data-ng-click="$ctrl.cancel()"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
+</div>

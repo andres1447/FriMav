@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('client')
-  .controller('CustomerShowCtrl', function ($scope, $state, hotkeys, customer, Transaction, Notification) {
+  .controller('CustomerShowCtrl', function ($scope, $state, hotkeys, customer, Transaction, Notification, $uibModal) {
       $scope.transactionIndex = 0;
 
       $scope.transactions = [];
@@ -154,7 +154,9 @@ angular.module('client')
       };
 
       function invoiceDescription(transaction) {
-          return 'Factura #' + transaction.number + (transaction.isRefunded ? ' (Cancelada)' : '');
+        return 'Factura #' + transaction.number
+          + (transaction.ExternalReferenceNumber ? ' [Ticket: ' + ExternalReferenceNumber + ']' : '')
+          + (transaction.isRefunded ? ' (Cancelada)' : '');
       }
 
       function paymentDescription(transaction) {
@@ -190,6 +192,7 @@ angular.module('client')
             return {
               date: tran.date,
               description: $scope.description(tran) + " " + (tran.description ? tran.description : ''),
+              externalDocumentNumber: tran.externalDocumentNumber,
               total: tran.total,
               balance: tran.balance
             }
@@ -207,4 +210,20 @@ angular.module('client')
         if (!transaction.isRefunded)
             $state.go('TransactionRefund', { id: transaction.id });
       };
+
+      $scope.updateExternalReferenceNumber = function (transaction) {
+        $uibModal.open({
+          templateUrl: 'views/transaction/updateExternalReferenceNumber.html',
+          controller: 'UpdateExternalReferenceNumberCtrl',
+          controllerAs: '$ctrl',
+          resolve: {
+            transactionDocument: function () {
+              return transaction;
+            }
+          }
+        }).result.then(function () {
+            $scope.loadTransactions();
+        }, function () { });
+        $scope.broadcast('InitUpdateExternalReferenceNumber')
+      }
   });

@@ -254,3 +254,8 @@ table > tbody > tr > td {
 table .btn {
     padding: 4px 8px !important;
 }
+@media print {
+  .no-print, .no-print * {
+    display: none !important;
+  }
+}
