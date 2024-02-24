@@ -20,5 +20,10 @@ namespace FriMav.Domain.Entities
         {
             DeleteDate = DateTime.UtcNow;
         }
+
+        public void UndoDelete()
+        {
+            DeleteDate = null;
+        }
     }
 }

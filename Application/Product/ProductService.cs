@@ -75,6 +75,8 @@ namespace FriMav.Application
             saved.Code = product.Code;
             if (!product.Active)
                 saved.Delete();
+            else
+                saved.UndoDelete();
         }
 
         public void Delete(int id)
