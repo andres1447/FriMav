@@ -10,14 +10,17 @@
       <label for="ticket_date" class="control-label">Fecha</label>
       <input id="ticket_date" type="date" class="form-control" ng-model="ticket.date">
     </div>
-    <div ng-if="previousTicket != null" class="col-md-offset-6 col-md-4">
+    <div ng-if="previousTicket != null" class="col-md-offset-4 col-md-6">
       <div class="row alert alert-success previous-ticket">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label>Venta anterior</label>
           <div>${{::previousTicket.total|number:2}}</div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <button type="button" ng-click="sendToPrinter(previousTicket)" class="btn btn-success"><i class="glyphicon glyphicon-print"></i> Reimprimir<span class="key-shortcut">F8</span></button>
+        </div>
+        <div class="col-md-4">
+          <button type="button" ng-click="cancel(previousTicket)" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> Anular<span class="key-shortcut">F9</span></button>
         </div>
       </div>
     </div>

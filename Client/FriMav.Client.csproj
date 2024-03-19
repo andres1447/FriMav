@@ -206,6 +206,7 @@
     <Compile Include="Utils\CefHelper.cs" />
     <Compile Include="Utils\ClientConfig.cs" />
     <Compile Include="Utils\SelectItem.cs" />
+    <Content Include="App\app\scripts\controllers\billing\report.js" />
     <Content Include="App\app\scripts\controllers\bonus\create.js" />
     <Content Include="App\app\scripts\controllers\transaction\updateExternalReferenceNumber.js" />
     <Content Include="App\app\scripts\controllers\vacation\create.js" />
@@ -230,7 +231,9 @@
     <Content Include="App\app\scripts\directives\number-input.js" />
     <Content Include="App\app\scripts\directives\restrict-decimal.js" />
     <Content Include="App\app\scripts\directives\form-group.js" />
+    <Content Include="App\app\scripts\directives\scroll.js" />
     <Content Include="App\app\scripts\routes\bonus.js" />
+    <Content Include="App\app\scripts\routes\billing.js" />
     <Content Include="App\app\scripts\routes\vacation.js" />
     <Content Include="App\app\scripts\routes\payroll.js" />
     <Content Include="App\app\scripts\routes\loan.js" />
@@ -239,6 +242,7 @@
     <Content Include="App\app\scripts\routes\absency.js" />
     <Content Include="App\app\scripts\routes\configValues.js" />
     <Content Include="App\app\scripts\routes\zone.js" />
+    <Content Include="App\app\scripts\services\billing.js" />
     <Content Include="App\app\scripts\services\payroll.js" />
     <Content Include="App\app\scripts\services\loan.js" />
     <Content Include="App\app\scripts\services\goods.js" />
@@ -248,6 +252,7 @@
     <Content Include="App\app\scripts\services\config-values.js" />
     <Content Include="App\app\scripts\services\zone.js" />
     <Content Include="App\app\scripts\services\healthcheck.js" />
+    <Content Include="App\app\views\billing\report.html" />
     <Content Include="App\app\views\bonus\create.html" />
     <Content Include="App\app\views\bonus\_form.html" />
     <Content Include="App\app\views\transaction\updateExternalReferenceNumber.html" />

@@ -15,6 +15,7 @@ namespace FriMav.Application
         public Shipping? Shipping { get; set; }
         public PaymentMethod? PaymentMethod { get; set; }
         public string DeliveryAddress { get; set; }
+        public decimal Surcharge { get; set; }
 
         public List<InvoiceItemCreate> Items { get; set; }
     }

@@ -23,7 +23,7 @@ namespace FriMav.Domain.Entities
         {
             Date = Date,
             Number = number,
-            PersonId = Id,
+            PersonId = PersonId,
             Person = Person,
             Total = -Total,
             Balance = Balance - Total
@@ -32,6 +32,17 @@ namespace FriMav.Domain.Entities
         public override TransactionDocument CreateVoidDocument(IDocumentNumberGenerator numberGenerator)
         {
             return new CreditNote { Number = numberGenerator.NextForCreditNote() };
+        }
+
+        public void ApplySurcharge(decimal surcharge)
+        {
+            if (surcharge == 0) return;
+
+            var coeficient = 1 + surcharge;
+            foreach (var item in Items)
+            {
+                item.Price *= coeficient;
+            }
         }
     }
 }

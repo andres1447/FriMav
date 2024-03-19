@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using FriMav.Application.Billing;
 using FriMav.Domain;
 using FriMav.Domain.Entities;
 
 namespace FriMav.Application
 {
+
     public class InvoiceService : IInvoiceService
     {
         private readonly IRepository<Invoice> _invoiceRepository;
@@ -13,6 +16,7 @@ namespace FriMav.Application
         private readonly IRepository<CustomerPrice> _customerPriceRepository;
         private readonly IRepository<Payment> _paymentRepository;
         private readonly IDocumentNumberGenerator _documentNumberGenerator;
+        private readonly IBillingService _billingService;
 
         public InvoiceService(
             IRepository<Invoice> invoiceRepository,
@@ -20,7 +24,8 @@ namespace FriMav.Application
             IRepository<Customer> customerRepository,
             IRepository<CustomerPrice> priceForCustomerRepository,
             IDocumentNumberGenerator documentNumberGenerator,
-            IRepository<Payment> paymentRepository)
+            IRepository<Payment> paymentRepository,
+            IBillingService billingService)
         {
             _invoiceRepository = invoiceRepository;
             _productRepository = productRepository;
@@ -28,6 +33,7 @@ namespace FriMav.Application
             _customerPriceRepository = priceForCustomerRepository;
             _documentNumberGenerator = documentNumberGenerator;
             _paymentRepository = paymentRepository;
+            _billingService = billingService;
         }
 
         public InvoiceResult Create(InvoiceCreate request)
@@ -36,7 +42,13 @@ namespace FriMav.Application
 
             var invoice = MapInvoice(request, customer);
 
+            UpdateCustomerPrices(customer, invoice);
+
+            invoice.ApplySurcharge(request.Surcharge);
+            invoice.Total = invoice.CalculateTotal();
+
             customer.Accept(invoice);
+            customer.LastSurcharge = request.Surcharge;
 
             _invoiceRepository.Add(invoice);
 
@@ -45,9 +57,19 @@ namespace FriMav.Application
                 CreateCancellingPayment(invoice, customer);
             }
 
-            UpdateCustomerPrices(customer, invoice);
+            _billingService.SaveBilling(BillingSource.Invoice, invoice.Date, invoice.Total);
 
             return new InvoiceResult(invoice.Number, invoice.Total, invoice.Balance);
+        }
+
+        public void CreateTicket(TicketCreate request)
+        {
+            _billingService.SaveBilling(BillingSource.Ticket, DateTime.UtcNow, request.Total());
+        }
+
+        public void CancelTicket(TicketCreate request)
+        {
+            _billingService.SaveBilling(BillingSource.Ticket, DateTime.UtcNow, -request.Total());
         }
 
         private void CreateCancellingPayment(Invoice invoice, Customer customer)
@@ -62,6 +84,7 @@ namespace FriMav.Application
 
         private Invoice MapInvoice(InvoiceCreate request, Customer customer)
         {
+            var items = MapInvoiceItems(request);
             var invoice = new Invoice
             {
                 Person = customer,
@@ -71,9 +94,8 @@ namespace FriMav.Application
                 PaymentMethod = request.PaymentMethod ?? customer.PaymentMethod ?? PaymentMethod.Cash,
                 Number = _documentNumberGenerator.NextForInvoice(),
                 DeliveryAddress = request.DeliveryAddress,
-                Items = MapInvoiceItems(request)
+                Items = items
             };
-            invoice.Total = invoice.CalculateTotal();
             return invoice;
         }
 
@@ -85,7 +107,8 @@ namespace FriMav.Application
                 Price = x.Price,
                 Quantity = x.Quantity,
                 ProductId = x.ProductId,
-                ProductName = y.Name
+                ProductName = y.Name,
+                Product = y
             }).ToList();
         }
 

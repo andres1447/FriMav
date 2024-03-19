@@ -75,6 +75,7 @@ angular.module('client')
         var items = $scope.invoice.items;
         if (items.length === 0 || $scope.hasProduct(items[items.length - 1])) {
           $scope.invoice.items.push({ quantity: 1, price: 0 });
+          $scope.broadcast('AddInvoiceItem');
           return true;
         }
       };
@@ -94,6 +95,8 @@ angular.module('client')
           $scope.invoice.customerName = invoice.customer.name;
           $scope.invoice.deliveryAddress = invoice.customer.address;
           $scope.invoice.shipping = invoice.customer.shipping;
+          $scope.invoice.surcharge = invoice.customer.lastSurcharge;
+          $scope.surcharge = invoice.customer.lastSurcharge * 100;
           $scope.invoice.paymentMethod = invoice.customer.paymentMethod;
           $scope.customerPaymentMethod = $filter('filter')($scope.paymentMethodOptions, { id: invoice.customer.paymentMethod }, true)[0];
       };
@@ -129,6 +132,7 @@ angular.module('client')
       }
 
       $scope.getPrintModel = function (invoice) {
+          var surchargeRatio = (1 + invoice.surcharge);
           var model = {
               date: invoice.date,
               deliveryAddress: invoice.deliveryAddress,
@@ -138,7 +142,7 @@ angular.module('client')
               items: []
           };
           angular.forEach(invoice.items, function (item) {
-              model.items.push({ product: item.product.name, quantity: item.quantity, price: item.price });
+            model.items.push({ product: item.product.name, quantity: item.quantity, price: item.price * surchargeRatio });
           });
           return model;
       };
@@ -163,6 +167,7 @@ angular.module('client')
       function print(invoice, result) {
         Notification.success('Imprimiendo factura...');
         var model = $scope.getPrintModel(invoice);
+        console.log(model);
         model.number = result.number;
         model.total = result.total;
         model.balance = result.balance;
@@ -191,12 +196,19 @@ angular.module('client')
           }
       };
 
-      $scope.$watch(function () { return $scope.invoice; }, function (newVal) {
-          $scope.totals = { quantity: 0, count: 0, subtotal: 0 };
-          angular.forEach(newVal.items, function (item) {
-              $scope.totals.subtotal += item.quantity && item.price ? item.quantity * item.price : 0;
-              $scope.totals.count += item.quantity && item.price ? 1 : 0;
-          });
-          $scope.totals.price = $scope.totals.weight ? $scope.totals.subtotal / $scope.totals.weight : 0;
-      }, true);
+    $scope.$watch(function () { return $scope.invoice; }, function (newVal) {
+      var surcharge = $scope.invoice.surcharge;
+      var surchargeRatio = (1 + $scope.invoice.surcharge);
+      $scope.totals = { quantity: 0, count: 0, subtotal: 0, surcharge: 0 };
+      angular.forEach(newVal.items, function (item) {
+        $scope.totals.subtotal += item.quantity && item.price ? item.quantity * item.price * surchargeRatio : 0;
+        $scope.totals.count += item.quantity && item.price ? 1 : 0;
+        $scope.totals.surcharge += item.quantity && item.price ? item.quantity * item.price * surcharge : 0;
+      });
+      $scope.totals.price = $scope.totals.weight ? $scope.totals.subtotal / $scope.totals.weight : 0;
+    }, true);
+
+    $scope.$watch(function () { return $scope.surcharge; }, function (newVal) {
+      $scope.invoice.surcharge = newVal / 100;
+    }, true);
   });

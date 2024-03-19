@@ -11,6 +11,7 @@ namespace FriMav.Domain.Entities
         public const int TicketCustomerId = 1;
         public const int DefaultCustomerId = 2;
 
+        public decimal LastSurcharge { get; set; }
         public ICollection<CustomerPrice> CustomerPrices { get; set; } = new List<CustomerPrice>();
     }
 }

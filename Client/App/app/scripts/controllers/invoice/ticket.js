@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('client')
-  .controller('TicketCtrl', function ($scope, $state, $filter, hotkeys, Notification, products, $stateParams) {
+  .controller('TicketCtrl', function ($scope, $state, $filter, hotkeys, Notification, products, $stateParams, Invoice) {
       $scope.products = orderByCode($filter, products);
       $scope.previousTicket = $stateParams.previousTicket;
 
@@ -86,24 +86,39 @@ angular.module('client')
         $scope.ticket.items.splice(index, 1);
       }
 
-    $scope.print = function (ticket) {
-      if ($scope.printing) return;
+      $scope.print = function (ticket) {
+        if ($scope.printing) return;
 
-      $scope.printing = true;
-      ticket.items = $.grep(ticket.items, function (it) {
-          return hasValue(it.product) && hasValue(it.quantity) && hasValue(it.price);
-      });
-      Notification.success('Imprimiendo ticket...');
-      var model = $scope.getPrintModel(ticket);
-      $scope.sendToPrinter(model);
-      $scope.printing = false;
-      $state.go($state.current, { previousTicket: model }, {
-        reload: true, inherit: false, notify: true
-      });
+        $scope.printing = true;
+        ticket.items = $.grep(ticket.items, function (it) {
+            return hasValue(it.product) && hasValue(it.quantity) && hasValue(it.price);
+        });
+        Notification.success('Imprimiendo ticket...');
+        var model = $scope.getPrintModel(ticket);
+        Invoice.ticket(model, function () {
+
+        });
+        $scope.sendToPrinter(model);
+        $scope.printing = false;
+        $state.go($state.current, { previousTicket: model }, {
+          reload: true, inherit: false, notify: true
+        });
       };
 
       $scope.sendToPrinter = function (model) {
         PrintHelper.print('Ticket', JSON.stringify(model));
+      }
+
+      $scope.cancel = function (model) {
+        if ($scope.canceling) return;
+        Notification.info('Anulando ticket...');
+        $scope.canceling = true;
+        Invoice.cancelTicket(model, function (res) {
+          $scope.canceling = false;
+          $state.go($state.current, { }, {
+            reload: true, inherit: false, notify: true
+          });
+        });
       }
 
       $scope.getPrintModel = function (ticket) {
@@ -113,7 +128,7 @@ angular.module('client')
               items: []
           };
           angular.forEach(ticket.items, function (item) {
-            printModel.items.push({ product: item.product.name, quantity: item.quantity, price: item.price });
+            printModel.items.push({ productId: item.product.id, product: item.product.name, quantity: item.quantity, price: item.price });
             printModel.total += item.quantity * item.price;
           });
           return printModel;

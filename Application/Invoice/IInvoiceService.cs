@@ -14,6 +14,12 @@ namespace FriMav.Application
         InvoiceResult Create(InvoiceCreate request);
 
         [Transactional]
+        void CreateTicket(TicketCreate request);
+
+        [Transactional]
+        void CancelTicket(TicketCreate request);
+
+        [Transactional]
         void DontDeliver(int id);
 
         [Transactional]

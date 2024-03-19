@@ -75,6 +75,7 @@
     <Compile Include="Mappings\ConfigValueMapping.cs" />
     <Compile Include="Mappings\CustomerMapping.cs" />
     <Compile Include="Mappings\CustomerPriceMapping.cs" />
+    <Compile Include="Mappings\DailyBillingMapping.cs" />
     <Compile Include="Mappings\DeliveryMapping.cs" />
     <Compile Include="Mappings\InvoiceItemMapping.cs" />
     <Compile Include="Mappings\InvoiceMapping.cs" />
@@ -116,6 +117,14 @@
     <Compile Include="Migrations\202307302051014_InvoiceExternalReferenceNumber.designer.cs">
       <DependentUpon>202307302051014_InvoiceExternalReferenceNumber.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202403102213596_InvoiceSurcharge.cs" />
+    <Compile Include="Migrations\202403102213596_InvoiceSurcharge.designer.cs">
+      <DependentUpon>202403102213596_InvoiceSurcharge.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202403120152034_Billing.cs" />
+    <Compile Include="Migrations\202403120152034_Billing.designer.cs">
+      <DependentUpon>202403120152034_Billing.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202101210252279_PayrollSql.cs" />
     <Compile Include="MissingDllHack.cs" />
@@ -155,6 +164,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202307302051014_InvoiceExternalReferenceNumber.resx">
       <DependentUpon>202307302051014_InvoiceExternalReferenceNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202403102213596_InvoiceSurcharge.resx">
+      <DependentUpon>202403102213596_InvoiceSurcharge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202403120152034_Billing.resx">
+      <DependentUpon>202403120152034_Billing.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -17,6 +17,14 @@ angular.module('client').factory('Invoice', function ($resource, ApiConfig) {
         updateExternalReferenceNumber: {
           url: ApiConfig.host + 'invoice/:id/externalReferenceNumber',
           method: 'POST'
+        },
+        ticket: {
+          url: ApiConfig.host + 'invoice/ticket',
+          method: 'POST'
+        },
+        cancelTicket: {
+          url: ApiConfig.host + 'invoice/ticket/cancel',
+          method: 'POST'
         }
     });
 });

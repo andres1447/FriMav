@@ -152,6 +152,7 @@
     <Compile Include="Api\ValidationExceptionFilterAttribute.cs" />
     <Compile Include="Api\WebApiConfig.cs" />
     <Compile Include="Controllers\AssignExternalReferenceNumberRequest.cs" />
+    <Compile Include="Controllers\BillingController.cs" />
     <Compile Include="Controllers\ConfigValuesController.cs" />
     <Compile Include="Controllers\CatalogController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />

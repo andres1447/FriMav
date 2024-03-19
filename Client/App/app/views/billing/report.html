@@ -1,0 +1,48 @@
+<header>
+  <h3>Reporte de ventas</h3>
+</header>
+<form class="form" name="form" ng-submit="form.$valid && submit(request)">
+  <div class="row">
+    <form-group input="form.mode" label="Modo" class="col-md-offset-1 col-md-3">
+      <select id="report_mode" class="form-control" name="mode" ng-model="request.mode">
+        <option ng-value="0">Diario</option>
+        <option ng-value="1">Mensual</option>
+      </select>
+    </form-group>
+    <form-group input="form.date" label="Fecha" class="col-md-3" ng-if="request.mode == 0">
+      <input id="report_date" name="to" type="date" class="form-control" ng-model="request.date" ae-key-tab="[13, 9, 40]"
+             ae-key-prev="[37, 38]" autocomplete="off" required />
+    </form-group>
+    <form-group input="form.month" label="Mes" class="col-md-1" ng-if="request.mode == 1">
+      <input id="report_month" name="month" type="number" class="form-control" ng-model="request.month" ae-key-tab="[13, 9, 40]"
+             ae-key-prev="[37, 38]" autocomplete="off" required min="1" max="12" />
+    </form-group>
+    <form-group input="form.year" label="Año" class="col-md-2" ng-if="request.mode == 1">
+      <input id="report_year" name="year" type="number" class="form-control" ng-model="request.year" ae-key-tab="[13, 9, 40]"
+             ae-key-prev="[37, 38]" autocomplete="off" required min="2020" />
+    </form-group>
+    <div class="form-group form-actions col-md-3">
+      <button type="submit" class="btn btn-success" ng-disabled="sending">Buscar<span class="key-shortcut">F5</span></button>
+    </div>
+  </div>
+</form>
+<div ng-if="report" class="row">
+  <div class="col-md-offset-4 col-md-4">
+    <table class="table table-bordered table-condensed">
+      <tbody>
+        <tr>
+          <th>Facturas</th>
+          <td>${{ report.invoicesTotal}}</td>
+        </tr>
+        <tr>
+          <th>Tickets</th>
+          <td>${{ report.ticketsTotal}}</td>
+        </tr>
+        <tr>
+          <th>Total</th>
+          <td>${{ report.invoicesTotal + report.ticketsTotal}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

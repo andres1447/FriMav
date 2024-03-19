@@ -3,6 +3,7 @@ using System.Web.Http;
 
 namespace FriMav.Api.Controllers
 {
+
     [RoutePrefix("api/invoice")]
     public partial class InvoiceController : ApiController
     {
@@ -45,6 +46,22 @@ namespace FriMav.Api.Controllers
         {
             var invoice = _invoiceService.Create(request);
             return Ok(invoice);
+        }
+
+        [HttpPost]
+        [Route("ticket")]
+        public IHttpActionResult CreateTicket(TicketCreate request)
+        {
+            _invoiceService.CreateTicket(request);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("ticket/cancel")]
+        public IHttpActionResult CancelTicket(TicketCreate request)
+        {
+            _invoiceService.CancelTicket(request);
+            return Ok();
         }
 
         [HttpPost]

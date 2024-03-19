@@ -46,6 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Billing\BillingReportRequest.cs" />
+    <Compile Include="Billing\BillingReportResponse.cs" />
+    <Compile Include="Billing\BillingService.cs" />
+    <Compile Include="Billing\IBillingMediator.cs" />
+    <Compile Include="Billing\IBillingService.cs" />
     <Compile Include="Catalog\CatalogCreate.cs" />
     <Compile Include="Catalog\ICatalogService.cs" />
     <Compile Include="Catalog\CatalogService.cs" />
@@ -83,6 +88,8 @@
     <Compile Include="Employees\PayrollRepositoryExtensions.cs" />
     <Compile Include="Employees\PayrollResponse.cs" />
     <Compile Include="Employees\UnliquidatedDocument.cs" />
+    <Compile Include="Invoice\TicketCreate.cs" />
+    <Compile Include="Invoice\TicketItemCreate.cs" />
     <Compile Include="RepositoryExtensions.cs" />
     <Compile Include="Employees\EmployeeCreate.cs" />
     <Compile Include="Employees\EmployeeResponse.cs" />

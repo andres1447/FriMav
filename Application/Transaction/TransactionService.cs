@@ -4,6 +4,7 @@ using FriMav.Domain.Entities;
 using FriMav.Domain;
 using System.Linq;
 using FriMav.Domain.Proyections;
+using FriMav.Application.Billing;
 
 namespace FriMav.Application
 {
@@ -13,17 +14,20 @@ namespace FriMav.Application
         private readonly IRepository<TransactionDocument> _transactionRepository;
         private readonly IRepository<Customer> _customerRepository;
         private readonly IRepository<Payment> _paymentRepository;
+        private readonly IBillingService _billingService;
 
         public TransactionService(
             IDocumentNumberGenerator numberSequenceService,
             IRepository<TransactionDocument> transactionRepository,
             IRepository<Customer> customerRepository,
-            IRepository<Payment> paymentRepository)
+            IRepository<Payment> paymentRepository,
+            IBillingService billingService)
         {
             _numberSequenceService = numberSequenceService;
             _transactionRepository = transactionRepository;
             _customerRepository = customerRepository;
             _paymentRepository = paymentRepository;
+            _billingService = billingService;
         }
 
         public IEnumerable<TransactionDocument> GetAll()
@@ -105,6 +109,9 @@ namespace FriMav.Application
                 DeleteDocument(document);
             else
                 CancelDocument(document, request);
+
+            if (document is Invoice)
+                _billingService.SaveBilling(BillingSource.Invoice, document.Date, -document.Total);
         }
 
         private TransactionDocument GetById(int id)

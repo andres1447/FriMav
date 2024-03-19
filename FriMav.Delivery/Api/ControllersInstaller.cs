@@ -29,7 +29,7 @@ namespace FriMav.Delivery.Api
             container.Register(
                 Classes.FromAssemblyContaining<ProductService>()
                 .Pick().If(x => x.Name.Contains("Service"))
-                .WithServiceDefaultInterfaces()
+                .WithServiceAllInterfaces()
                 .Configure(x => x.Interceptors<TransactionalInterceptor>())
                 .LifestyleScoped());
 

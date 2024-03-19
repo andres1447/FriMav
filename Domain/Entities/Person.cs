@@ -12,7 +12,7 @@ namespace FriMav.Domain.Entities
         public string Name { get; set; }
         public string Cuit { get; set; }
         public string Address { get; set; }
-        public decimal Balance { get; protected set; }
+        public decimal Balance { get; set; }
         public Shipping? Shipping { get; set; }
         public PaymentMethod? PaymentMethod { get; set; }
         public int? ZoneId { get; set; }

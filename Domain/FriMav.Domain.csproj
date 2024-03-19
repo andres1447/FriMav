@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Entities\ConfigValue.cs" />
+    <Compile Include="Entities\DailyBilling.cs" />
     <Compile Include="Entities\Payrolls\Absency.cs" />
     <Compile Include="Entities\Catalog.cs" />
     <Compile Include="Entities\CreditNote.cs" />
