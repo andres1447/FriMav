@@ -61,7 +61,7 @@ namespace FriMav.Application
             if (employee == null)
                 throw new NotFoundException();
 
-            _employeeRepository.Delete(employee);
+            employee.Delete();
         }
 
         public Employee Get(int id)

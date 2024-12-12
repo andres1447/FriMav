@@ -125,6 +125,10 @@
     <Compile Include="Migrations\202403120152034_Billing.designer.cs">
       <DependentUpon>202403120152034_Billing.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202412122223363_CustomerLastSurchargeDefaultValue.cs" />
+    <Compile Include="Migrations\202412122223363_CustomerLastSurchargeDefaultValue.designer.cs">
+      <DependentUpon>202412122223363_CustomerLastSurchargeDefaultValue.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202101210252279_PayrollSql.cs" />
     <Compile Include="MissingDllHack.cs" />
@@ -170,6 +174,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202403120152034_Billing.resx">
       <DependentUpon>202403120152034_Billing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412122223363_CustomerLastSurchargeDefaultValue.resx">
+      <DependentUpon>202412122223363_CustomerLastSurchargeDefaultValue.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

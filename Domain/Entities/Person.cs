@@ -19,6 +19,9 @@ namespace FriMav.Domain.Entities
         public Zone Zone { get; set; }
         public DateTime? DeleteDate { get; set; }
 
+        // Solo lo usa Customer, fix para error de insert con null value
+        public decimal LastSurcharge { get; set; } = 0;
+
         public void Delete()
         {
             DeleteDate = DateTime.Now;

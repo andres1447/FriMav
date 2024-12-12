@@ -9,7 +9,7 @@ angular.module('client')
       };
 
       $scope.template = {
-        startFromDate: new Date().firstDayOfWeek().addDays(6)
+        startFromDate: new Date().firstDayOfWeek().addDays(6 + 7)
       };
 
       hotkeys.bindTo($scope)
