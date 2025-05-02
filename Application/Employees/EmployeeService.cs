@@ -36,7 +36,7 @@ namespace FriMav.Application
 
         public void Create(EmployeeCreate request)
         {
-            if (_employeeRepository.Query().Any(x => x.Code == request.Code))
+            if (UsedCodes().Contains(request.Code))
                 throw new AlreadyExistsException();
 
             var employee = new Employee
