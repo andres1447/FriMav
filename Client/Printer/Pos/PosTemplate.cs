@@ -43,7 +43,7 @@ namespace FriMav.Client.Printer.Pos
 
         public PosTemplate()
         {
-            CharactersPerLine = 40;
+            CharactersPerLine = 48;
             InlineCopies = 0;
             LinesPerPage = 0;
             Commands = new List<RawPrinterCommand>();
@@ -76,6 +76,7 @@ namespace FriMav.Client.Printer.Pos
         {
             var pages = new List<string>();
             var helper = new EpsonCommander(CharactersPerLine);
+            helper.Init();
             foreach (var command in Commands)
             {
                 command.Execute(helper);

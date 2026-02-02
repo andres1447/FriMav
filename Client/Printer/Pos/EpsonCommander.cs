@@ -29,6 +29,7 @@ namespace FriMav.Client.Printer.Pos
 
         private StringBuilder _buffer;
         private int _lineLength;
+        private Align _align;
         
         public EpsonCommander(int lineLenght)
         {
@@ -96,13 +97,39 @@ namespace FriMav.Client.Printer.Pos
 
         public EpsonCommander Text(string text)
         {
-            _buffer.Append(text);
+            switch (_align)
+            {
+                case Pos.Align.Left: _buffer.Append(text); break;
+                case Pos.Align.Right: WriteRight(text); break;
+                case Pos.Align.Center: WriteCenter(text); break;
+            }
+            
             return this;
+        }
+
+        private void WriteRight(string text)
+        {
+            for (var i = 0; i < _lineLength - text.Length; ++i)
+                _buffer.Append(' ');
+            _buffer.Append(text);
+        }
+
+        private void WriteCenter(string text)
+        {
+            var offset = GetCenteredOffset(_lineLength, text.Length);
+            for (var i = 0; i < offset; ++i)
+                _buffer.Append(' ');
+            _buffer.Append(text);
+        }
+
+        private int GetCenteredOffset(int width, int length)
+        {
+            return Math.Max(width / 2 - length / 2, 0);
         }
 
         public EpsonCommander Align(Align align)
         {
-            _buffer.Append(ESC + "a" + (char)((int)align));
+            _align = align;
             return this;
         }
 
@@ -126,7 +153,7 @@ namespace FriMav.Client.Printer.Pos
 
         public EpsonCommander CharacterSize(string size)
         {
-            _buffer.Append(ESC + "X" + size);
+            _buffer.Append(GS + "!" + size);
             return this;
         }
 
@@ -139,6 +166,12 @@ namespace FriMav.Client.Printer.Pos
         public string Build()
         {
             return _buffer.ToString();
+        }
+
+        public EpsonCommander Bold(bool value)
+        {
+            _buffer.Append(ESC + "E" + (value ? (char)1 : (char)0));
+            return this;
         }
     }
 }

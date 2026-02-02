@@ -10,7 +10,7 @@ namespace FriMav.Client.Printer.Pos.Command
     {
         public override void Apply(EpsonCommander commander)
         {
-            commander.Align(Align.Left).CarriageReturn();
+            commander.Align(Align.Left);
         }
 
         public override void Revert(EpsonCommander commander)

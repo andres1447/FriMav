@@ -25,7 +25,7 @@ namespace FriMav.Client.Printer.Pos.Command
         {
             if (Size != null)
             {
-                commander.CharacterSize(Size).CarriageReturn();
+                commander.Bold(true).CarriageReturn();
             }
             if (Value == null)
             {
@@ -72,7 +72,7 @@ namespace FriMav.Client.Printer.Pos.Command
         {
             if (Size != null)
             {
-                commander.CharacterSize("1").CarriageReturn();
+                commander.Bold(false);
             }
         }
     }
