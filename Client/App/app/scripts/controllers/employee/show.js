@@ -93,7 +93,7 @@ angular.module('client')
       }
 
       $scope.canCancel = function (entry) {
-        return entry.type > 1 && entry.type < 5;
+        return entry.type > 1 && entry.type < 5 || entry.type == 7;
       }
 
       $scope.delete = function (entry) {
