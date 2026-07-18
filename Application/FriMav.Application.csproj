@@ -87,6 +87,9 @@
     <Compile Include="Employees\Advances\IAdvanceService.cs" />
     <Compile Include="Employees\PayrollRepositoryExtensions.cs" />
     <Compile Include="Employees\PayrollResponse.cs" />
+    <Compile Include="Employees\Transferences\ITransferenceService.cs" />
+    <Compile Include="Employees\Transferences\TransferenceCreate.cs" />
+    <Compile Include="Employees\Transferences\TransferenceService.cs" />
     <Compile Include="Employees\UnliquidatedDocument.cs" />
     <Compile Include="Invoice\TicketCreate.cs" />
     <Compile Include="Invoice\TicketItemCreate.cs" />

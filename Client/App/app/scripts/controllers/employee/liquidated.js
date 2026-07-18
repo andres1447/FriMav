@@ -110,6 +110,8 @@ angular.module('client')
             case 3: return 'Ausencia';
             case 4: return 'Mercadería';
             case 5: return 'Cuota prestamo';
+            case 6: return 'Presentismo';
+            case 7: return 'Transferencia';
           }
       };
 
@@ -119,6 +121,7 @@ angular.module('client')
             case 3: $state.go('AbsencyShow', { id: entry.id }); break;
             case 4: $state.go('GoodsSoldShow', { id: entry.id }); break;
             case 5: $state.go('LoanShow', { id: entry.loanId }); break;
+            case 7: $state.go('TransferenceShow', { id: entry.id }); break;
           }
       };
 

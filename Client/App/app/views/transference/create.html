@@ -1,0 +1,9 @@
+<header>
+  <h3>Nueva transferencia</h3>
+  <div>
+    <a ui-sref="EmployeeIndex" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i><span class="key-shortcut">esc</span></a>
+  </div>
+</header>
+<form class="form" name="form" ng-submit="form.$valid && create(transference)" ng-disabled="sending">
+    <div ng-include="'views/transference/_form.html'" onload="init()"></div>
+</form>

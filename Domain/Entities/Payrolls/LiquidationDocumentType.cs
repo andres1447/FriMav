@@ -14,6 +14,7 @@ namespace FriMav.Domain.Entities.Payrolls
         Absency,
         GoodsSold,
         LoanFee,
-        AttendBonus
+        AttendBonus,
+        Transference
     }
 }

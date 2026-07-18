@@ -12,19 +12,22 @@ namespace FriMav.Api.Controllers
         private readonly IAdvanceService _advanceService;
         private readonly ILoanService _loanService;
         private readonly IGoodsSoldService _goodSoldService;
+        private readonly ITransferenceService _transferenceService;
 
         public EmployeeController(
             IEmployeeService employeeService,
             IAbsencyService absencyService,
             IAdvanceService advanceService,
             ILoanService loanService,
-            IGoodsSoldService goodSoldService)
+            IGoodsSoldService goodSoldService, 
+            ITransferenceService transferenceService)
         {
             _employeeService = employeeService;
             _absencyService = absencyService;
             _advanceService = advanceService;
             _loanService = loanService;
             _goodSoldService = goodSoldService;
+            _transferenceService = transferenceService;
         }
 
         [HttpGet]
@@ -54,6 +57,22 @@ namespace FriMav.Api.Controllers
         public IHttpActionResult DeleteAbsency(int id)
         {
             _absencyService.Delete(id);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("transference")]
+        public IHttpActionResult Transference(TransferenceCreate request)
+        {
+            _transferenceService.Create(request);
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("transference/{id:int}")]
+        public IHttpActionResult DeleteTransference(int id)
+        {
+            _transferenceService.Delete(id);
             return Ok();
         }
 

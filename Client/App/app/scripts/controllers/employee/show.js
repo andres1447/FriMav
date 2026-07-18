@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('client')
-  .controller('EmployeeShowCtrl', function ($scope, $state, hotkeys, Notification, employee, unliquidatedDocuments, loanFees, Advance, Absency, GoodsSold, Loan, ModalService) {
+  .controller('EmployeeShowCtrl', function ($scope, $state, hotkeys, Notification, employee, unliquidatedDocuments, loanFees, Advance, Absency, GoodsSold, Loan, Transference, ModalService) {
       $scope.entryIndex = 0;
       $scope.unliquidatedDocuments = unliquidatedDocuments;
       $scope.employee = employee;
@@ -69,6 +69,8 @@ angular.module('client')
             case 3: return 'Ausencia';
             case 4: return 'Mercadería';
             case 5: return 'Cuota prestamo';
+            case 6: return 'Presentismo';
+            case 7: return 'Transferencia';
           }
       };
 
@@ -78,6 +80,7 @@ angular.module('client')
             case 3: $state.go('AbsencyShow', { id: entry.id }); break;
             case 4: $state.go('GoodsSoldShow', { id: entry.id }); break;
             case 5: $state.go('LoanShow', { id: entry.loanId }); break;
+            case 7: $state.go('TransferenceShow', { id: entry.id }); break;
           }
       };
 
@@ -111,6 +114,7 @@ angular.module('client')
           case 3: return Absency;
           case 4: return GoodsSold;
           case 5: return Loan;
+          case 7: return Transference;
         }
       }
 
@@ -120,6 +124,7 @@ angular.module('client')
           case 3: return 'Eliminar ausencia';
           case 4: return 'Eliminar meradería vendida';
           case 5: return 'Eliminar prestamo';
+          case 7: return 'Eliminar transferencia';
         }
       }
 
@@ -129,6 +134,7 @@ angular.module('client')
           case 3: return '¿Desea eliminar la ausencia?';
           case 4: return '¿Desea eliminar la mercadería vendida?';
           case 5: return '¿Desea eliminar el préstamo?';
+          case 7: return '¿Desea eliminar la transferencia?';
         }
       }
 
@@ -138,6 +144,7 @@ angular.module('client')
           case 3: return 'Ausencia eliminada correctamente';
           case 4: return 'Mercadería vendida eliminada correctamente';
           case 5: return 'Préstamo eliminado correctamente';
+          case 7: return 'Transferencia eliminada correctamente';
         }
       }
   });

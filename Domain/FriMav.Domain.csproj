@@ -80,6 +80,7 @@
     <Compile Include="Entities\Payment.cs" />
     <Compile Include="Entities\PaymentMethod.cs" />
     <Compile Include="Entities\Payrolls\Payroll.cs" />
+    <Compile Include="Entities\Payrolls\Transference.cs" />
     <Compile Include="Entities\Person.cs" />
     <Compile Include="Entities\PersonType.cs" />
     <Compile Include="Entities\Product.cs" />

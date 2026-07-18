@@ -37,6 +37,16 @@ angular.module('client')
       })
       .add({
         combo: 'f7',
+        description: 'Transferencia',
+        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+        persistent: false,
+        callback: function (e) {
+          $state.go('TransferenceCreate');
+          e.preventDefault();
+        }
+      })
+      .add({
+        combo: 'f8',
         description: 'Mercadería',
         allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
         persistent: false,
@@ -46,7 +56,7 @@ angular.module('client')
         }
       })
       .add({
-        combo: 'f8',
+        combo: 'f9',
         description: 'Préstamo',
         allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
         persistent: false,
@@ -56,7 +66,7 @@ angular.module('client')
         }
       })
       .add({
-        combo: 'f9',
+        combo: 'f10',
         description: 'Liquidar sueldos',
         allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
         persistent: false,
@@ -122,7 +132,7 @@ angular.module('client')
       };
 
       $scope.init();
-      
+
       $scope.delete = function (index) {
           ModalService.show({ title: 'Empleados', message: 'Desea borrar al empleado?' }).then(function (res) {
             Employee.delete({ id: $scope.employees[index].id }, function (res) {

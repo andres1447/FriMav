@@ -25,6 +25,7 @@ namespace FriMav.Client.Printer
                 new SelectItem("Lista de precios", "PriceList"),
                 new SelectItem("Falta", "Absency"),
                 new SelectItem("Adelanto", "Advance"),
+                new SelectItem("Transferencia", "Transference"),
                 new SelectItem("Mercadería empleados", "EmployeeTicket"),
                 new SelectItem("Préstamo", "Loan"),
                 new SelectItem("Vacaciones", "Vacation"),

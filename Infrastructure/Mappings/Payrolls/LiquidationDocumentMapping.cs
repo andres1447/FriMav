@@ -15,6 +15,7 @@ namespace FriMav.Infrastructure.Mappings.Payrolls
             Map<GoodsSold>(m => m.Requires("Type").HasValue((int)LiquidationDocumentType.GoodsSold));
             Map<LoanFee>(m => m.Requires("Type").HasValue((int)LiquidationDocumentType.LoanFee));
             Map<AttendBonus>(m => m.Requires("Type").HasValue((int)LiquidationDocumentType.AttendBonus));
+            Map<Transference>(m => m.Requires("Type").HasValue((int)LiquidationDocumentType.Transference));
 
             HasRequired(x => x.Employee).WithMany().HasForeignKey(x => x.EmployeeId);
 

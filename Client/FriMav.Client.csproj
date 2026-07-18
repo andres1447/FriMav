@@ -165,6 +165,7 @@
     <Compile Include="Models\EmployeeDocumentModel.cs" />
     <Compile Include="Models\EmployeeLoanModel.cs" />
     <Compile Include="Models\EmployeeTicketModel.cs" />
+    <Compile Include="Models\EmployeeTransferenceModel.cs" />
     <Compile Include="Models\EmployeeVacationModel.cs" />
     <Compile Include="Models\InvoiceModel.cs" />
     <Compile Include="Models\LoanFeeModel.cs" />
@@ -209,6 +210,7 @@
     <Content Include="App\app\scripts\controllers\billing\report.js" />
     <Content Include="App\app\scripts\controllers\bonus\create.js" />
     <Content Include="App\app\scripts\controllers\transaction\updateExternalReferenceNumber.js" />
+    <Content Include="App\app\scripts\controllers\transference\create.js" />
     <Content Include="App\app\scripts\controllers\vacation\create.js" />
     <Content Include="App\app\scripts\controllers\employee\payroll.js" />
     <Content Include="App\app\scripts\controllers\employee\liquidated.js" />
@@ -234,6 +236,7 @@
     <Content Include="App\app\scripts\directives\scroll.js" />
     <Content Include="App\app\scripts\routes\bonus.js" />
     <Content Include="App\app\scripts\routes\billing.js" />
+    <Content Include="App\app\scripts\routes\transference.js" />
     <Content Include="App\app\scripts\routes\vacation.js" />
     <Content Include="App\app\scripts\routes\payroll.js" />
     <Content Include="App\app\scripts\routes\loan.js" />
@@ -250,12 +253,15 @@
     <Content Include="App\app\scripts\services\absency.js" />
     <Content Include="App\app\scripts\services\pending-delivery-check.js" />
     <Content Include="App\app\scripts\services\config-values.js" />
+    <Content Include="App\app\scripts\services\transference.js" />
     <Content Include="App\app\scripts\services\zone.js" />
     <Content Include="App\app\scripts\services\healthcheck.js" />
     <Content Include="App\app\views\billing\report.html" />
     <Content Include="App\app\views\bonus\create.html" />
     <Content Include="App\app\views\bonus\_form.html" />
     <Content Include="App\app\views\transaction\updateExternalReferenceNumber.html" />
+    <Content Include="App\app\views\transference\create.html" />
+    <Content Include="App\app\views\transference\_form.html" />
     <Content Include="App\app\views\vacation\create.html" />
     <Content Include="App\app\views\vacation\_form.html" />
     <Content Include="App\app\views\advance\create.html" />
@@ -297,6 +303,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\Aguinaldo.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\EscpEmployeeTransference.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -88,6 +88,7 @@
     <Compile Include="Mappings\Payrolls\AdvanceMapping.cs" />
     <Compile Include="Mappings\Payrolls\GoodsSoldMapping.cs" />
     <Compile Include="Mappings\Payrolls\LiquidationDocumentMapping.cs" />
+    <Compile Include="Mappings\Payrolls\TransferenceMapping.cs" />
     <Compile Include="Mappings\PersonMapping.cs" />
     <Compile Include="Mappings\ProductMapping.cs" />
     <Compile Include="Mappings\ProductTypeMapping.cs" />

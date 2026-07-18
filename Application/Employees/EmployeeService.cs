@@ -388,6 +388,7 @@ namespace FriMav.Application
                     Date = x.Date,
                     Description = x.Description,
                     Type = x is Advance ? LiquidationDocumentType.Advance :
+                           x is Transference ? LiquidationDocumentType.Transference :
                            x is Absency ? LiquidationDocumentType.Absency :
                            x is GoodsSold ? LiquidationDocumentType.GoodsSold :
                            x is Salary ? LiquidationDocumentType.Salary
@@ -411,13 +412,15 @@ namespace FriMav.Application
             Description = x.Description,
             Type = x is Advance
                 ? LiquidationDocumentType.Advance
-                : x is Absency
-                    ? LiquidationDocumentType.Absency
-                    : x is GoodsSold
-                        ? LiquidationDocumentType.GoodsSold
-                        : x is LoanFee
-                            ? LiquidationDocumentType.LoanFee
-                            : LiquidationDocumentType.AttendBonus,
+                : x is Transference
+                    ? LiquidationDocumentType.Transference
+                    : x is Absency
+                        ? LiquidationDocumentType.Absency
+                        : x is GoodsSold
+                            ? LiquidationDocumentType.GoodsSold
+                            : x is LoanFee
+                                ? LiquidationDocumentType.LoanFee
+                                : LiquidationDocumentType.AttendBonus,
             Amount = x.Amount,
             Balance = 0,
             LoanId = x is LoanFee ? (x as LoanFee).LoanId : default(int?)
