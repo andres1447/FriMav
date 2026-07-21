@@ -34,6 +34,7 @@ angular.module('client')
           case "PriceList": return "Lista de precios";
           case "Absency": return "Falta";
           case "Advance": return "Adelanto";
+          case "Transference": return "Transferencia";
           case "EmployeeTicket": return "Mercadería empleados";
           case "Loan": return "Préstamo";
           case "Payroll": return "Liquidación sueldo";
