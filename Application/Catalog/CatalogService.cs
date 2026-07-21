@@ -47,7 +47,14 @@ namespace FriMav.Application
 
         public Catalog Get(int id)
         {
-            return _catalogRepository.Get(id, x => x.Products);
+            var catalog = _catalogRepository.Get(id, x => x.Products);
+            return new Catalog
+            {
+                CreationDate = catalog.CreationDate,
+                Id = catalog.Id,
+                Name = catalog.Name,
+                Products = catalog.Products.Where(x => !x.DeleteDate.HasValue).ToList()
+            };
         }
 
         public void Update(Catalog catalog)
