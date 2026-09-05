@@ -1,0 +1,140 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <style type="text/css">
+        @page {
+            margin: 14mm 16mm;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            color: #1c1410;
+            background: #f7f1e8;
+            font-family: "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+        }
+
+        .page {
+            min-height: 100%;
+            padding: 28px 32px 36px;
+            background:
+                radial-gradient(ellipse at top, rgba(140, 28, 28, 0.08), transparent 55%),
+                linear-gradient(180deg, #fbf7f0 0%, #f3ebe0 100%);
+        }
+
+        .brand {
+            text-align: center;
+            letter-spacing: 0.08em;
+            margin-bottom: 8px;
+        }
+
+        .brand-name {
+            margin: 0;
+            font-size: 42px;
+            font-weight: 700;
+            color: #7a1515;
+            line-height: 1.05;
+            text-transform: uppercase;
+        }
+
+        .brand-tag {
+            margin: 10px 0 0;
+            font-size: 13px;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: #5a4638;
+        }
+
+        .rule {
+            height: 3px;
+            margin: 18px auto 22px;
+            max-width: 220px;
+            background: linear-gradient(90deg, transparent, #7a1515, transparent);
+        }
+
+        .group {
+            margin-bottom: 22px;
+            page-break-inside: avoid;
+        }
+
+        .group-name {
+            margin: 0 0 8px;
+            padding: 6px 0 6px 10px;
+            border-left: 4px solid #7a1515;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #2a1d16;
+            background: rgba(122, 21, 21, 0.06);
+        }
+
+        .products {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .products td {
+            padding: 7px 4px;
+            border-bottom: 1px dotted #c9b8a6;
+            vertical-align: bottom;
+        }
+
+        .product-name {
+            width: 72%;
+            font-size: 15px;
+        }
+
+        .product-price {
+            width: 28%;
+            text-align: right;
+            font-family: "Segoe UI", Tahoma, sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            color: #3a2a20;
+            white-space: nowrap;
+        }
+
+        .footer {
+            margin-top: 28px;
+            padding-top: 12px;
+            border-top: 1px solid #c9b8a6;
+            text-align: center;
+            font-family: "Segoe UI", Tahoma, sans-serif;
+            font-size: 12px;
+            letter-spacing: 0.06em;
+            color: #6a5648;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="brand">
+            <h1 class="brand-name">Carnes Malvinas</h1>
+            <p class="brand-tag">Lista de precios</p>
+        </header>
+        <div class="rule"></div>
+
+        @foreach (var group in Model.Groups)
+        {
+        <section class="group">
+            <h2 class="group-name">@group.Name</h2>
+            <table class="products">
+                @foreach (var item in group.Products)
+                {
+                <tr>
+                    <td class="product-name">@item.Name</td>
+                    <td class="product-price">$@item.Price.ToString("N2")</td>
+                </tr>
+                }
+            </table>
+        </section>
+        }
+
+        <footer class="footer">
+            Valida al @DateTime.Now.ToString("dd/MM/yyyy")
+        </footer>
+    </div>
+</body>
+</html>

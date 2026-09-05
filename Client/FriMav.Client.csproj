@@ -157,6 +157,7 @@
     </Compile>
     <Compile Include="Client.cs" />
     <Compile Include="Models\CatalogModel.cs" />
+    <Compile Include="Models\StorePriceListModel.cs" />
     <Compile Include="Models\CustomerAccountModel.cs" />
     <Compile Include="Models\DeliveryModel.cs" />
     <Compile Include="Models\EmployeeAbsencyModel.cs" />
@@ -343,6 +344,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\CuentaCliente.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\StorePriceList.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\Factura.html">

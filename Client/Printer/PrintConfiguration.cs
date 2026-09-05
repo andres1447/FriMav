@@ -23,6 +23,7 @@ namespace FriMav.Client.Printer
                 new SelectItem("Factura", "Invoice"),
                 new SelectItem("Reparto", "Delivery"),
                 new SelectItem("Lista de precios", "PriceList"),
+                new SelectItem("Lista de precios PDF", "StorePriceList"),
                 new SelectItem("Falta", "Absency"),
                 new SelectItem("Adelanto", "Advance"),
                 new SelectItem("Transferencia", "Transference"),

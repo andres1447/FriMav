@@ -119,6 +119,36 @@ namespace FriMav.Application
                 }).ToList();
         }
 
+        public IEnumerable<ProductPriceListGroup> GetGroupedPriceList()
+        {
+            var products = _productRepository.Query(x => x.Type)
+                .Where(x => !x.DeleteDate.HasValue && x.ProductTypeId.HasValue)
+                .ToList();
+
+            return products
+                .GroupBy(x => x.Type.Name)
+                .OrderBy(g => g.Key)
+                .Select(g => new ProductPriceListGroup
+                {
+                    Name = g.Key,
+                    Products = g
+                        .OrderBy(p => ParseCode(p.Code))
+                        .Select(p => new ProductPriceListItem
+                        {
+                            Name = p.Name,
+                            Price = p.Price
+                        })
+                        .ToList()
+                })
+                .ToList();
+        }
+
+        private static int ParseCode(string code)
+        {
+            int value;
+            return int.TryParse(code, out value) ? value : int.MaxValue;
+        }
+
         public List<string> UsedCodes()
         {
             return _productRepository.Query().Select(x => x.Code).ToList();

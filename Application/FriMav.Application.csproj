@@ -109,6 +109,7 @@
     <Compile Include="ITime.cs" />
     <Compile Include="NotFoundException.cs" />
     <Compile Include="Product\PriceListItem.cs" />
+    <Compile Include="Product\ProductPriceListGroup.cs" />
     <Compile Include="Product\ProductCreate.cs" />
     <Compile Include="Product\ProductResponse.cs" />
     <Compile Include="Product\ProductTypeService.cs" />

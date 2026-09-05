@@ -46,6 +46,16 @@ angular.module('client')
           }
       })
       .add({
+          combo: 'f5',
+          description: 'Publicar lista de precios',
+          allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+          persistent: false,
+          callback: function (e) {
+              $scope.publishPriceList();
+              e.preventDefault();
+          }
+      })
+      .add({
           combo: 'up',
           description: 'Mover arriba',
           persistent: false,
@@ -90,6 +100,28 @@ angular.module('client')
       $scope.goToProduct = function (product) {
         $state.go('ProductUpdate', { id: product.id });
       }
+
+      $scope.publishPriceList = function () {
+          Product.pricelist(function (groups) {
+              Notification.success('Generando lista de precios...');
+              var model = {
+                  groups: $.map(groups, function (group) {
+                      return {
+                          name: group.name,
+                          products: $.map(group.products || [], function (product) {
+                              return {
+                                  name: product.name,
+                                  price: product.price
+                              };
+                          })
+                      };
+                  })
+              };
+              PrintHelper.print('StorePriceList', JSON.stringify(model));
+          }, function (err) {
+              Notification.error(err.data || 'No se pudo obtener la lista de precios.');
+          });
+      };
       
       $scope.delete = function (index) {
           ModalService.show({ title: 'Productos', message: 'Desea borrar el producto?' }).then(function (res) {

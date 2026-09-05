@@ -36,6 +36,13 @@ namespace FriMav.Api.Controllers
         }
 
         [HttpGet]
+        [Route("pricelist")]
+        public IHttpActionResult GetPriceList()
+        {
+            return Ok(_productService.GetGroupedPriceList());
+        }
+
+        [HttpGet]
         [Route("{id}")]
         public IHttpActionResult Get(int id)
         {
