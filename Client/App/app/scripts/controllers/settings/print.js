@@ -32,6 +32,7 @@ angular.module('client')
           case "Invoice": return "Factura";
           case "Delivery": return "Reparto";
           case "PriceList": return "Lista de precios";
+          case "StorePriceList": return "Lista de precios Online";
           case "Absency": return "Falta";
           case "Advance": return "Adelanto";
           case "Transference": return "Transferencia";

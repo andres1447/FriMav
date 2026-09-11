@@ -6,6 +6,7 @@ using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.StaticFiles;
 using Newtonsoft.Json.Serialization;
 using Owin;
+using System;
 using System.Configuration;
 using System.IO;
 using System.Web.Http;
@@ -21,7 +22,11 @@ namespace FriMav.Delivery.Api
 
             var staticFilesPath = ConfigurationManager.AppSettings["StaticFilesPath"];
             if (!string.IsNullOrEmpty(staticFilesPath))
+            {
+                if (!Path.IsPathRooted(staticFilesPath))
+                    staticFilesPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, staticFilesPath));
                 HostClientWebpage(app, staticFilesPath);
+            }
         }
 
         private HttpConfiguration Register()
