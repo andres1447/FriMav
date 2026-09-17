@@ -1,6 +1,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <meta name="pdf-single-page" content="true" />
     <style type="text/css">
         html, body {
             margin: 0;
@@ -21,21 +22,29 @@
         .brand {
             text-align: center;
             letter-spacing: 0.08em;
-            margin-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        .brand-logo {
+            display: block;
+            width: auto;
+            max-width: 280px;
+            max-height: 280px;
+            margin: 0 auto 16px;
         }
 
         .brand-name {
             margin: 0;
-            font-size: 42px;
+            font-size: 64px;
             font-weight: 700;
-            color: #7a1515;
+            color: #487182;
             line-height: 1.05;
             text-transform: uppercase;
         }
 
         .brand-tag {
             margin: 10px 0 0;
-            font-size: 13px;
+            font-size: 32px;
             letter-spacing: 0.28em;
             text-transform: uppercase;
             color: #5a4638;
@@ -45,24 +54,24 @@
             height: 3px;
             margin: 18px auto 22px;
             max-width: 220px;
-            background: linear-gradient(90deg, transparent, #7a1515, transparent);
+            background: linear-gradient(90deg, transparent, #487182, transparent);
         }
 
         .group {
-            margin-bottom: 22px;
+            margin-bottom: 32px;
             page-break-inside: avoid;
         }
 
         .group-name {
             margin: 0 0 8px;
-            padding: 6px 0 6px 10px;
-            border-left: 4px solid #7a1515;
-            font-size: 23px;
+            padding: 12px 0 12px 20px;
+            border-left: 8px solid #487182;
+            font-size: 48px;
             font-weight: 700;
             letter-spacing: 0.04em;
             text-transform: uppercase;
             color: #2a1d16;
-            background: rgba(122, 21, 21, 0.06);
+            background: rgba(155, 188, 201, 1);
         }
 
         .products {
@@ -71,7 +80,7 @@
         }
 
         .products td {
-            padding: 7px 4px;
+            padding: 14px 8px;
             border-bottom: 1px dotted #c9b8a6;
             vertical-align: bottom;
         }
@@ -79,7 +88,7 @@
         .product-name {
             width: 72%;
             font-family: Verdana, Tahoma, Arial, sans-serif;
-            font-size: 19px;
+            font-size: 36px;
             letter-spacing: 0.01em;
             line-height: 1.35;
         }
@@ -88,7 +97,7 @@
             width: 28%;
             text-align: right;
             font-family: Verdana, Tahoma, Arial, sans-serif;
-            font-size: 19px;
+            font-size: 36px;
             font-weight: 600;
             letter-spacing: 0.02em;
             color: #3a2a20;
@@ -101,7 +110,7 @@
             border-top: 1px solid #c9b8a6;
             text-align: center;
             font-family: "Segoe UI", Tahoma, sans-serif;
-            font-size: 12px;
+            font-size: 24px;
             letter-spacing: 0.06em;
             color: #6a5648;
             text-transform: uppercase;
@@ -111,8 +120,9 @@
 <body>
     <div class="page">
         <header class="brand">
-            <h1 class="brand-name">Carnes Malvinas</h1>
-            <p class="brand-tag">Lista de precios</p>
+            <img class="brand-logo" src="images/logo.png" alt="Granja Malvinas" />
+            <h1 class="brand-name">Granja Malvinas</h1>
+            <p class="brand-tag">Venta por mayor</p>
         </header>
         <div class="rule"></div>
 

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('client')
-  .controller('CatalogIndexCtrl', function ($scope, $state, hotkeys, Catalog, Notification, ModalService, catalogs) {
+  .controller('CatalogIndexCtrl', function ($scope, $state, hotkeys, Catalog, Product, Notification, ModalService, catalogs) {
       $scope.catalogIndex = 0;
       $scope.catalogs = catalogs;
 
@@ -45,6 +45,16 @@ angular.module('client')
           }
       })
       .add({
+          combo: 'f5',
+          description: 'Publicar lista de precios',
+          allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
+          persistent: false,
+          callback: function (e) {
+              $scope.publishPriceList();
+              e.preventDefault();
+          }
+      })
+      .add({
           combo: 'up',
           description: 'Mover arriba',
           persistent: false,
@@ -66,7 +76,29 @@ angular.module('client')
               }
           }
       });
-      
+
+      $scope.publishPriceList = function () {
+          Product.pricelist(function (groups) {
+              Notification.success('Generando lista de precios...');
+              var model = {
+                  groups: $.map(groups, function (group) {
+                      return {
+                          name: group.name,
+                          products: $.map(group.products || [], function (product) {
+                              return {
+                                  name: product.name,
+                                  price: product.price
+                              };
+                          })
+                      };
+                  })
+              };
+              PrintHelper.print('StorePriceList', JSON.stringify(model));
+          }, function (err) {
+              Notification.error(err.data || 'No se pudo obtener la lista de precios.');
+          });
+      };
+
       $scope.delete = function (index) {
           ModalService.show({ title: 'Lista de precios', message: 'Desea borrar la lista de precios?' }).then(function (res) {
             Catalog.delete({ id: $scope.catalogs[index].id }, function (res) {
