@@ -10,9 +10,14 @@
   <NewLine/>
   <NewLine>
     <Center>
-	<Text>@Model.CustomerCode - @Model.CustomerName</Text>
+	<Text Size="2">@Model.CustomerCode - @Model.CustomerName</Text>
     </Center>
   </NewLine>
+    <NewLine>
+        <Center>
+            <Text Size="2">Pedido</Text>
+        </Center>
+    </NewLine>
   <NewLine/>
   <Line>48</Line>
   <NewLine/>
@@ -20,9 +25,7 @@
 {
 	<NewLine>
 		<Text Width="20" Align="L">@item.Product</Text>
-		<Text Width="8" Align="L">@item.Quantity.ToString("N2")</Text>
-		<Text Width="2" Align="L">@item.Measure</Text>
-		<Text Width="18" Align="L"></Text>
+		<Text Width="10" Align="L">@item.Quantity.ToString("N2") @item.Measure.ToUpper()</Text>
 	</NewLine>
 	<NewLine/>
   }
