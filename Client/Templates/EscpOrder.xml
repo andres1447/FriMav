@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<EscCommandTemplate>
+  <Line>48</Line>
+  <NewLine/>
+  <NewLine>
+    <Right>
+      <Text>@Model.Date.ToString("dd/MM/yyyy HH:mm")</Text>
+    </Right>
+  </NewLine>
+  <NewLine/>
+  <NewLine>
+    <Center>
+	<Text>@Model.CustomerCode - @Model.CustomerName</Text>
+    </Center>
+  </NewLine>
+  <NewLine/>
+  <Line>48</Line>
+  <NewLine/>
+@foreach (var item in Model.Items)
+{
+	<NewLine>
+		<Text Width="20" Align="L">@item.Product</Text>
+		<Text Width="8" Align="L">@item.Quantity.ToString("N2")</Text>
+		<Text Width="2" Align="L">@item.Measure</Text>
+		<Text Width="18" Align="L"></Text>
+	</NewLine>
+	<NewLine/>
+  }
+  <Line>48</Line>
+  <Feed>9</Feed>
+  <CutFull></CutFull>
+</EscCommandTemplate>

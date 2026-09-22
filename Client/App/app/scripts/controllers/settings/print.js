@@ -30,6 +30,7 @@ angular.module('client')
         switch (type) {
           case "Ticket": return "Ticket";
           case "Invoice": return "Factura";
+          case "Order": return "Pedido";
           case "Delivery": return "Reparto";
           case "PriceList": return "Lista de precios";
           case "StorePriceList": return "Lista de precios Online";

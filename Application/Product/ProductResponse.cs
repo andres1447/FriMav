@@ -17,6 +17,7 @@ namespace FriMav.Application
         public int? ProductTypeId { get; set; }
         public ProductTypeResponse Type { get; set; }
         public bool Active { get; set; }
+        public ProductMeasure Measure { get; set; }
 
         public static Expression<Func<Product, ProductResponse>> Expression;
 
@@ -32,6 +33,7 @@ namespace FriMav.Application
                 Active = !product.DeleteDate.HasValue,
                 Price = product.Price,
                 ProductTypeId = product.ProductTypeId,
+                Measure = product.Measure,
                 Type = !product.ProductTypeId.HasValue ? null : new ProductTypeResponse
                 {
                     Id = product.Type.Id,

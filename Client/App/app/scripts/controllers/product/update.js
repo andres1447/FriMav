@@ -26,6 +26,9 @@ angular.module('client')
       });
 
       $scope.init = function () {
+           if ($scope.product.measure == null) {
+               $scope.product.measure = 0;
+           }
            $scope.broadcast('InitProductCreate');
       };
 

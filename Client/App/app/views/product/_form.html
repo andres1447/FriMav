@@ -7,9 +7,16 @@
          ae-key-prev="[37, 38]" autocomplete="off" required />
 </form-group>
 <form-group input="form.price" label="Precio">
-  <input id="product_price" name="price" type="text" class="form-control" ng-model="product.price" ae-key-tab="[13, 9, 40]"
-         ae-key-prev="[37, 38]" autocomplete="off" restrict-decimal required />
+    <input id="product_price" name="price" type="text" class="form-control" ng-model="product.price" ae-key-tab="[13, 9, 40]"
+           ae-key-prev="[37, 38]" autocomplete="off" restrict-decimal required />
 </form-group>
+<div class="form-group">
+  <label for="product_measure" class="control-label">Medida</label>
+  <select id="product_measure" class="form-control" ae-key-tab="[13, 9, 40]" ae-key-prev="[37, 38]"
+          ng-model="product.measure" required>
+    <option ng-repeat="option in measureOptions" ng-value="option.id">{{option.name}}</option>
+  </select>
+</div>
 <div class="form-group">
   <label for="product_type" class="control-label">Categoría</label>
   <input id="product_type" type="text" class="form-control" ng-model="product.type" ae-key-tab="[13, 9, 40]" ae-key-prev="[37, 38]"

@@ -54,7 +54,8 @@ namespace FriMav.Application
                 Name = request.Name,
                 Price = request.Price,
                 ProductTypeId = request.ProductTypeId,
-                Type = type
+                Type = type,
+                Measure = request.Measure
             };
             _productRepository.Add(product);
         }
@@ -73,6 +74,7 @@ namespace FriMav.Application
             }
             saved.Price = product.Price;
             saved.Code = product.Code;
+            saved.Measure = product.Measure;
             if (!product.Active)
                 saved.Delete();
             else

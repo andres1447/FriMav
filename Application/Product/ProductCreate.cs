@@ -1,9 +1,5 @@
-﻿using FriMav.Domain;
-using System;
-using System.Collections.Generic;
+﻿using FriMav.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace FriMav.Application
 {
@@ -17,5 +13,6 @@ namespace FriMav.Application
         public decimal Price { get; set; }
         public bool Active { get; set; }
         public int? ProductTypeId { get; set; }
+        public ProductMeasure Measure { get; set; }
     }
 }

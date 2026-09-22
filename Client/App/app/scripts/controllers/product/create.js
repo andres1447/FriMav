@@ -25,7 +25,7 @@ angular.module('client')
       });
 
       $scope.init = function () {
-          $scope.product = { active: true };
+          $scope.product = { active: true, measure: 0 };
           $scope.broadcast('InitProductCreate');
       };
 

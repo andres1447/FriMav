@@ -21,6 +21,7 @@ namespace FriMav.Client.Printer
         {
             { "Ticket", typeof(TicketModel) },
             { "Invoice", typeof(InvoiceModel) },
+            { "Order", typeof(OrderModel) },
             { "PriceList", typeof(CatalogModel) },
             { "StorePriceList", typeof(StorePriceListModel) },
             { "Delivery", typeof(DeliveryModel) },

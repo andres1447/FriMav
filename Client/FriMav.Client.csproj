@@ -172,6 +172,7 @@
     <Compile Include="Models\LoanFeeModel.cs" />
     <Compile Include="Models\PayrollModel.cs" />
     <Compile Include="Models\TicketModel.cs" />
+    <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Printer\Modes\PrintEpsonCommandsToPrinter.cs" />
     <Compile Include="Printer\Modes\PrintOff.cs" />
     <Compile Include="Printer\Modes\PrintToFile.cs" />
@@ -358,10 +359,17 @@
     <Content Include="Templates\Ticket.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Templates\Order.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Templates\EscpPriceList.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\EscpTicket.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Templates\EscpOrder.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
@@ -431,6 +439,7 @@
     <Content Include="App\app\scripts\controllers\invoice\invoice.js" />
     <Content Include="App\app\scripts\controllers\invoice\show.js" />
     <Content Include="App\app\scripts\controllers\invoice\ticket.js" />
+    <Content Include="App\app\scripts\controllers\order\order.js" />
     <Content Include="App\app\scripts\controllers\main.js" />
     <Content Include="App\app\scripts\controllers\family\create.js" />
     <Content Include="App\app\scripts\controllers\family\index.js" />
@@ -451,6 +460,7 @@
     <Content Include="App\app\scripts\routes\transaction.js" />
     <Content Include="App\app\scripts\routes\settings.js" />
     <Content Include="App\app\scripts\routes\invoice.js" />
+    <Content Include="App\app\scripts\routes\order.js" />
     <Content Include="App\app\scripts\routes\customer.js" />
     <Content Include="App\app\scripts\routes\family.js" />
     <Content Include="App\app\scripts\routes\payment.js" />
@@ -482,6 +492,7 @@
     <Content Include="App\app\views\invoice\invoice.html" />
     <Content Include="App\app\views\invoice\show.html" />
     <Content Include="App\app\views\invoice\ticket.html" />
+    <Content Include="App\app\views\order\order.html" />
     <Content Include="App\app\views\main.html" />
     <Content Include="App\app\views\customer\create.html" />
     <Content Include="App\app\views\customer\index.html" />

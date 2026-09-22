@@ -15,6 +15,11 @@ angular.module('client').controller('MainCtrl', function ($scope, $state, hotkey
         { name: 'Cuenta', id: 2 }
     ];
 
+    $scope.measureOptions = [
+        { name: 'Kg', id: 0 },
+        { name: 'Unidades', id: 1 }
+    ];
+
     $scope.shippingView = function ($model) {
         var text;
         angular.forEach($scope.shippingOptions, function (it, index) {

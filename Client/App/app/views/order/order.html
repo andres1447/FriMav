@@ -1,0 +1,55 @@
+<header>
+  <h3>Pedido</h3>
+  <div>
+    <a class="btn btn-default" href="" ng-click="reload()"><i class="glyphicon glyphicon-refresh"></i> <span class="key-shortcut">ESC</span></a>
+  </div>
+</header>
+<form class="form" name="form" ng-submit="form.$valid && print(order)">
+  <div class="row">
+    <div class="form-group col-md-4">
+      <label class="control-label" for="order_customer">Cliente</label>
+      <input id="order_customer" name="customer" type="text" ng-model="order.customer" class="form-control" ae-key-tab="[13, 9]" ae-tab-validator="order.customer != null" autocomplete="off"
+             uib-typeahead="customer as (customer.code + ' - ' + customer.name) for customer in getMatchingCustomer($viewValue) | limitTo:8"
+             typeahead-select-on-blur="true" typeahead-on-select="setCustomer(order)" ae-select-on-click=""
+             typeahead-focus-on-select="false" typeahead-editable="false" ae-key-prev="[37, 38]"
+             clear-on-backspace="clearCustomer()" ae-autofocus="InitOrder" required>
+    </div>
+  </div>
+  <div>
+    <h4>Detalle</h4>
+    <table class="table table-bordered table-condensed">
+      <thead>
+        <tr>
+          <th class="col-md-1"></th>
+          <th class="col-md-5">Código</th>
+          <th class="col-md-3">Cantidad</th>
+          <th class="col-md-3">Medida</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="it in order.items" ae-navigate>
+          <td>
+            <button ng-if="$index < order.items.length - 1" type="button" class="btn btn-danger" ng-click="deleteItem($index)">
+              <i class="glyphicon glyphicon-trash"></i><span class="key-shortcut">supr</span>
+            </button>
+          </td>
+          <td>
+            <input type="text" ng-model="it.product" class="form-control" ae-key-tab="[13, 9]" ae-tab-validator="hasProduct(it)"
+                   uib-typeahead="product as (product.code + ' - ' + product.name) for product in getMatchingProduct($viewValue) | limitTo:8"
+                   typeahead-select-on-blur="true" typeahead-on-select="setProduct(it)" ae-select-on-click
+                   typeahead-focus-on-select="false" typeahead-editable="false" clear-on-backspace on-clear="clearProduct(it)">
+          </td>
+          <td><input type="text" class="form-control" ng-model="it.quantity" ae-key-tab="[13, 9]" ae-tab-validator="hasQuantity(it)" restrict-decimal></td>
+          <td>
+            <select class="form-control" ng-model="it.measure" ae-key-tab="[13, 9]" ae-before-tab="AddItem(it)">
+              <option ng-repeat="option in measureOptions" ng-value="option.id">{{option.name}}</option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-success" ng-disabled="sending">Imprimir<span class="key-shortcut">F5</span></button>
+  </div>
+</form>

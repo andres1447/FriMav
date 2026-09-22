@@ -1,0 +1,73 @@
+<html>
+<head>
+    <style type="text/css">
+        html, body {
+            width: 80mm;
+            font-family: Consolas;
+            font-style: normal;
+            text-transform: uppercase;
+            font-size: 11px;
+        }
+        .header {
+            padding-top: 1mm;
+            padding-bottom: 1mm;
+            border-bottom: 1px solid;
+            border-top: 1px solid;
+        }
+        .date {
+            text-align: right;
+        }
+        .title {
+            margin-top: 1mm;
+            text-align: center;
+        }
+        .order-item-list {
+            padding-top: 3mm;
+        }
+        .order-item {
+            margin-top: 1mm;
+            margin-bottom: 3mm;
+            white-space: pre;
+        }
+        .item-product {
+            display: inline-block;
+            width: 33mm;
+        }
+        .item-quantity {
+            display: inline-block;
+            width: 13mm;
+        }
+        .item-measure {
+            display: inline-block;
+            width: 4mm;
+        }
+        .item-blank {
+            display: inline-block;
+            width: 30mm;
+        }
+        @("@")media print {
+            @("@")page {
+                size: auto;
+                margin: 0 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="date">@Model.Date.ToString("dd/MM/yyyy HH:mm")</div>
+        <div class="title">@Model.CustomerCode - @Model.CustomerName</div>
+    </div>
+    <div class="order-item-list">
+        @foreach (var item in Model.Items)
+        {
+        <div class="order-item">
+            <span class="item-product">@item.Product</span>
+            <span class="item-quantity">@item.Quantity.ToString("N2")</span>
+            <span class="item-measure">@item.Measure</span>
+            <span class="item-blank">&nbsp;</span>
+        </div>
+        }
+    </div>
+</body>
+</html>

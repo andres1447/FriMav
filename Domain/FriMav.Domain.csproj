@@ -84,6 +84,7 @@
     <Compile Include="Entities\Person.cs" />
     <Compile Include="Entities\PersonType.cs" />
     <Compile Include="Entities\Product.cs" />
+    <Compile Include="Entities\ProductMeasure.cs" />
     <Compile Include="Entities\ProductType.cs" />
     <Compile Include="Entities\Payrolls\Salary.cs" />
     <Compile Include="Entities\Shipping.cs" />
