@@ -6,7 +6,6 @@ using FriMav.Client.Utils;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -15,7 +14,6 @@ namespace FriMav.Client
     public partial class ClientContainer : Form
     {
         private ChromiumWebBrowser browser;
-        private ChromiumWebBrowser pdfBrowser;
         private CefHelper helper;
 
         public ClientContainer()
@@ -38,7 +36,6 @@ namespace FriMav.Client
             }
 
             browser = new ChromiumWebBrowser(start);
-            pdfBrowser = CreatePdfBrowser();
             helper = new CefHelper(browser);
 
             browser.RegisterJsObject("CefHelper", helper);
@@ -50,7 +47,6 @@ namespace FriMav.Client
             this.Controls.Add(browser);
 
             browser.Dock = DockStyle.Fill;
-            browser.BringToFront();
             //browser.IsBrowserInitializedChanged += ShowDevTools;
             // Allow the use of local resources in the browser
             BrowserSettings browserSettings = new BrowserSettings();
@@ -70,27 +66,11 @@ namespace FriMav.Client
                 new PrintOff(),
                 new PrintToPrinter(browser),
                 new PrintToImage(),
-                new PrintToPDF(pdfBrowser),
+                new PrintToPDF(),
                 new PrintToFile(),
                 new PrintEpsonCommandsToPort(),
                 new PrintEpsonCommandsToPrinter()
             };
-        }
-
-        private ChromiumWebBrowser CreatePdfBrowser()
-        {
-            // ChromiumWebBrowser defaults to Dock.Fill. A second fill browser
-            // consumes the whole form and leaves the app with no space to render.
-            var browser = new ChromiumWebBrowser("about:blank")
-            {
-                Dock = DockStyle.None,
-                Size = new Size(1, 1),
-                Location = new Point(0, 0),
-                TabStop = false
-            };
-            Controls.Add(browser);
-            browser.SendToBack();
-            return browser;
         }
 
         private void ShowDevTools(object sender, IsBrowserInitializedChangedEventArgs e)
@@ -102,11 +82,6 @@ namespace FriMav.Client
         private void ClientContainer_FormClosing(object sender, FormClosingEventArgs e)
         {
             CefSharpSettings.WcfTimeout = TimeSpan.Zero;
-            if (pdfBrowser != null)
-            {
-                pdfBrowser.Dispose();
-                Controls.Remove(pdfBrowser);
-            }
             browser.Dispose();
             Controls.Remove(browser);
             Cef.Shutdown();

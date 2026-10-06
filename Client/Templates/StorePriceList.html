@@ -1,64 +1,22 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <meta name="pdf-single-page" content="true" />
     <style type="text/css">
-        @@page {
-            size: A4 portrait;
-            margin: 0;
-        }
-
         html, body {
             margin: 0;
             padding: 0;
             color: #1c1410;
-            background: #f3ebe0;
+            background: #f7f1e8;
             font-family: "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
-            -webkit-print-color-adjust: exact;
-        }
-
-        .page-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 210mm;
-            height: 297mm;
-            z-index: 0;
-            background-color: #f3ebe0;
-            background-image:
-                radial-gradient(ellipse at top, rgba(140, 28, 28, 0.08), transparent 55%),
-                linear-gradient(180deg, #fbf7f0 0%, #f3ebe0 100%);
-            -webkit-print-color-adjust: exact;
-        }
-
-        .sheet {
-            width: 100%;
-            border-collapse: collapse;
-            position: relative;
-            z-index: 1;
-        }
-
-        .sheet td {
-            padding: 0 14mm;
-        }
-
-        thead {
-            display: table-header-group;
-        }
-
-        tfoot {
-            display: table-footer-group;
-        }
-
-        .sheet-top {
-            height: 12mm;
-        }
-
-        .sheet-bottom {
-            height: 22mm;
         }
 
         .page {
-            background: transparent;
+            min-height: 100%;
+            padding: 28px 32px 36px;
+            background:
+                radial-gradient(ellipse at top, rgba(140, 28, 28, 0.08), transparent 55%),
+                linear-gradient(180deg, #fbf7f0 0%, #f3ebe0 100%);
         }
 
         .brand {
@@ -101,7 +59,7 @@
 
         .group {
             margin-bottom: 32px;
-            page-break-inside: auto;
+            page-break-inside: avoid;
         }
 
         .group-name {
@@ -114,16 +72,11 @@
             text-transform: uppercase;
             color: #2a1d16;
             background: rgba(155, 188, 201, 1);
-            page-break-after: avoid;
         }
 
         .products {
             width: 100%;
             border-collapse: collapse;
-        }
-
-        .products tr {
-            page-break-inside: avoid;
         }
 
         .products td {
@@ -161,21 +114,10 @@
             letter-spacing: 0.06em;
             color: #6a5648;
             text-transform: uppercase;
-            page-break-before: avoid;
         }
     </style>
 </head>
 <body>
-    <div class="page-bg"></div>
-    <table class="sheet">
-        <thead>
-            <tr><td><div class="sheet-top"></div></td></tr>
-        </thead>
-        <tfoot>
-            <tr><td><div class="sheet-bottom"></div></td></tr>
-        </tfoot>
-        <tbody>
-            <tr><td>
     <div class="page">
         <header class="brand">
             <img class="brand-logo" src="images/logo.png" alt="Granja Malvinas" />
@@ -204,8 +146,5 @@
             Valida al @DateTime.Now.ToString("dd/MM/yyyy")
         </footer>
     </div>
-            </td></tr>
-        </tbody>
-    </table>
 </body>
 </html>
