@@ -1,18 +1,28 @@
-﻿using SelectPdf;
+﻿using CefSharp;
+using CefSharp.WinForms;
+using SelectPdf;
 using System;
 using System.Configuration;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.IO.Compression;
-using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace FriMav.Client.Printer
 {
     class PrintToPDF : AbstractRazorPrintMode
     {
+        // SelectPdf lays the HTML out at this width and then scales it to the A4 page.
+        private const double LayoutWidth = 1024d;
+        private const double A4WidthMicrons = 210000d;
+        private const double A4HeightMicrons = 297000d;
+        private const double MicronsPerInch = 25400d;
+        private const double CssPixelsPerInch = 96d;
+        // PDF page height cannot exceed 200 inches.
+        private const double MaxPageMicrons = 200d * MicronsPerInch;
+
         private static readonly Regex LocalImageSrc = new Regex(
             @"src\s*=\s*[""'](?!data:|https?:|file:)([^""']+)[""']",
             RegexOptions.IgnoreCase | RegexOptions.Compiled);
@@ -24,6 +34,13 @@ namespace FriMav.Client.Printer
         private static readonly Regex PdfA4Meta = new Regex(
             @"<meta\s+name=[""']pdf-a4[""']\s+content=[""']true[""']",
             RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+        // 210mm at 96px/in is ~794px. Dividing by the 1024px layout width is the
+        // same fit SelectPdf applied, so type size and wrapping stay as they are.
+        private static double FitZoom
+        {
+            get { return (A4WidthMicrons / MicronsPerInch * CssPixelsPerInch) / LayoutWidth; }
+        }
 
         public override string Name
         {
@@ -41,330 +58,242 @@ namespace FriMav.Client.Printer
 
             template = EmbedLocalImages(template, templatesPath);
 
-            HtmlToPdf converter = new HtmlToPdf();
-            var a4 = PdfA4Meta.IsMatch(template);
-            if (PdfSinglePageMeta.IsMatch(template))
-                ConfigureSinglePage(converter, template);
-            else if (a4)
-                ConfigureA4Pages(converter);
+            if (PdfSinglePageMeta.IsMatch(template) || PdfA4Meta.IsMatch(template))
+                PrintWithChromium(dest, template, PdfSinglePageMeta.IsMatch(template));
+            else
+                PrintWithSelectPdf(dest, template);
+        }
 
+        private static void PrintWithSelectPdf(string dest, string template)
+        {
+            HtmlToPdf converter = new HtmlToPdf();
             using (var file = new FileStream(dest, FileMode.Create))
             {
                 PdfDocument doc = converter.ConvertHtmlString(template);
-                if (!a4)
+                doc.Save(file);
+                doc.Close();
+            }
+        }
+
+        private static void PrintWithChromium(string dest, string template, bool singlePage)
+        {
+            var job = new PdfJob();
+            HiddenHost host = null;
+            ChromiumWebBrowser browser = null;
+            var htmlFile = Path.Combine(Path.GetTempPath(), "frimav-print-" + Guid.NewGuid().ToString("n") + ".html");
+            File.WriteAllText(htmlFile, template, System.Text.Encoding.UTF8);
+            var url = new Uri(htmlFile).AbsoluteUri;
+
+            Action start = () =>
+            {
+                try
                 {
-                    doc.Save(file);
-                    doc.Close();
+                    host = new HiddenHost();
+                    host.ShowInTaskbar = false;
+                    host.FormBorderStyle = FormBorderStyle.None;
+                    host.StartPosition = FormStartPosition.Manual;
+                    host.Location = new Point(-4200, -4200);
+                    host.ClientSize = new Size((int)LayoutWidth, 1600);
+
+                    browser = new ChromiumWebBrowser("about:blank");
+                    browser.Dock = DockStyle.None;
+                    browser.Location = new Point(0, 0);
+                    browser.Size = host.ClientSize;
+                    browser.BrowserSettings = new BrowserSettings
+                    {
+                        FileAccessFromFileUrls = CefState.Enabled,
+                        UniversalAccessFromFileUrls = CefState.Enabled
+                    };
+                    host.Controls.Add(browser);
+
+                    browser.FrameLoadEnd += (sender, args) =>
+                    {
+                        if (!args.Frame.IsMain)
+                            return;
+                        if (args.Url == null || args.Url.IndexOf("frimav-print-", StringComparison.OrdinalIgnoreCase) < 0)
+                            return;
+                        if (Interlocked.Exchange(ref job.Started, 1) != 0)
+                            return;
+
+                        ApplyScaleAndPrint(browser, dest, singlePage, job);
+                    };
+
+                    browser.LoadError += (sender, args) =>
+                    {
+                        if (!args.Frame.IsMain || args.ErrorCode == CefErrorCode.Aborted)
+                            return;
+                        job.Fail(new InvalidOperationException(args.ErrorText));
+                    };
+
+                    // Navigation before the browser exists is stored and then ignored.
+                    var requested = 0;
+                    Action load = () =>
+                    {
+                        if (!browser.IsBrowserInitialized || Interlocked.Exchange(ref requested, 1) != 0)
+                            return;
+                        browser.Load(url);
+                    };
+                    browser.IsBrowserInitializedChanged += (sender, args) =>
+                    {
+                        if (!browser.IsBrowserInitialized)
+                            return;
+                        if (browser.InvokeRequired)
+                            browser.BeginInvoke(load);
+                        else
+                            load();
+                    };
+                    host.Show();
+                    load();
+                }
+                catch (Exception ex)
+                {
+                    job.Fail(ex);
+                }
+            };
+
+            var ui = Application.OpenForms.Count > 0 ? Application.OpenForms[0] : null;
+            try
+            {
+                if (ui != null && ui.InvokeRequired)
+                    ui.BeginInvoke(start);
+                else
+                    start();
+
+                WaitFor(job.Done, ui);
+            }
+            finally
+            {
+                Action cleanup = () =>
+                {
+                    if (browser != null)
+                        browser.Dispose();
+                    if (host != null)
+                    {
+                        host.Close();
+                        host.Dispose();
+                    }
+                };
+
+                try
+                {
+                    if (host != null && host.InvokeRequired)
+                        host.Invoke(cleanup);
+                    else
+                        cleanup();
+                }
+                catch (InvalidOperationException)
+                {
+                }
+
+                try
+                {
+                    if (File.Exists(htmlFile))
+                        File.Delete(htmlFile);
+                }
+                catch (IOException)
+                {
+                }
+            }
+
+            if (job.Error != null)
+                throw job.Error;
+        }
+
+        private static void ApplyScaleAndPrint(ChromiumWebBrowser browser, string dest, bool singlePage, PdfJob job)
+        {
+            var zoom = FitZoom.ToString("0.########", CultureInfo.InvariantCulture);
+            var script =
+                "(function(){" +
+                "var h=Math.max(document.body?document.body.scrollHeight:0, document.documentElement.scrollHeight||0);" +
+                "var s=document.documentElement.style;" +
+                "s.webkitPrintColorAdjust='exact';" +
+                "s.zoom='" + zoom + "';" +
+                "if(document.body) document.body.style.webkitPrintColorAdjust='exact';" +
+                "return h;" +
+                "})()";
+
+            browser.EvaluateScriptAsync(script).ContinueWith(measure =>
+            {
+                if (measure.IsFaulted || measure.IsCanceled)
+                {
+                    job.Fail(measure.Exception == null
+                        ? new InvalidOperationException("No se pudo medir el PDF.")
+                        : measure.Exception.GetBaseException());
                     return;
                 }
 
-                using (var buffer = new MemoryStream())
+                if (measure.Result == null || !measure.Result.Success)
                 {
-                    doc.Save(buffer);
-                    doc.Close();
-                    var stamped = StampA4Background(buffer.ToArray());
-                    file.Write(stamped, 0, stamped.Length);
+                    var message = measure.Result == null ? "No se pudo medir el PDF." : measure.Result.Message;
+                    job.Fail(new InvalidOperationException(message));
+                    return;
                 }
-            }
+
+                double layoutHeight = 0d;
+                if (measure.Result.Result != null)
+                    layoutHeight = Convert.ToDouble(measure.Result.Result, CultureInfo.InvariantCulture);
+
+                var settings = CreateSettings(singlePage, layoutHeight);
+                browser.PrintToPdfAsync(dest, settings).ContinueWith(print =>
+                {
+                    if (print.IsFaulted || print.IsCanceled)
+                    {
+                        job.Fail(print.Exception == null
+                            ? new InvalidOperationException("Chromium no pudo generar el PDF.")
+                            : print.Exception.GetBaseException());
+                        return;
+                    }
+
+                    if (!print.Result)
+                        job.Fail(new InvalidOperationException("Chromium no pudo generar el PDF."));
+                    else
+                        job.Succeed();
+                });
+            });
         }
 
-        // SelectPdf clips each page to the HTML fragment, so the rest of the
-        // sheet stays white. Paint the same document gradient on the full page first.
-        private static byte[] StampA4Background(byte[] pdf)
+        private static PdfPrintSettings CreateSettings(bool singlePage, double layoutHeightPx)
         {
-            var enc = Encoding.GetEncoding(28591);
-            var text = enc.GetString(pdf);
-            float formHeight = 0f;
-            foreach (Match bbox in Regex.Matches(text, @"/BBox\s*\[\s*[-\d\.]+\s+[-\d\.]+\s+[-\d\.]+\s+([-\d\.]+)\s*\]"))
+            var settings = new PdfPrintSettings
             {
-                float height = Parse(bbox.Groups[1].Value);
-                if (height > formHeight)
-                    formHeight = height;
-            }
-            if (formHeight < 1f)
-                return pdf;
+                MarginType = CefPdfPrintMarginType.None,
+                BackgroundsEnabled = true,
+                HeaderFooterEnabled = false,
+                Landscape = false,
+                SelectionOnly = false,
+                PageWidth = (int)A4WidthMicrons,
+                PageHeight = (int)A4HeightMicrons
+            };
 
-            var trailer = Regex.Match(text, @"trailer\s*<<(?<body>.*?)>>\s*startxref\s*(?<xref>\d+)", RegexOptions.Singleline);
-            if (!trailer.Success)
-                return pdf;
-            int prev = int.Parse(trailer.Groups["xref"].Value, CultureInfo.InvariantCulture);
-            var sizeMatch = Regex.Match(trailer.Groups["body"].Value, @"/Size\s+(\d+)");
-            var rootMatch = Regex.Match(trailer.Groups["body"].Value, @"/Root\s+(\d+\s+\d+\s+R)");
-            var infoMatch = Regex.Match(trailer.Groups["body"].Value, @"/Info\s+(\d+\s+\d+\s+R)");
-            if (!sizeMatch.Success || !rootMatch.Success)
-                return pdf;
+            if (!singlePage)
+                return settings;
 
-            int nextId = int.Parse(sizeMatch.Groups[1].Value, CultureInfo.InvariantCulture);
-            var append = new MemoryStream();
-            var writer = new StreamWriter(append, enc) { NewLine = "\n", AutoFlush = true };
-            var offsets = new System.Collections.Generic.List<long>();
+            var visualPx = layoutHeightPx * FitZoom;
+            var microns = visualPx / CssPixelsPerInch * MicronsPerInch + 2000d;
+            if (microns < 1000d)
+                return settings;
+            if (microns > MaxPageMicrons)
+                microns = MaxPageMicrons;
 
-            int search = 0;
-            while (true)
-            {
-                int typeAt = text.IndexOf("/Type /Page", search);
-                if (typeAt < 0)
-                    break;
-                if (typeAt + 11 < text.Length && text[typeAt + 11] == 's')
-                {
-                    search = typeAt + 11;
-                    continue;
-                }
-
-                int objAt = text.LastIndexOf("obj", typeAt, StringComparison.Ordinal);
-                int endObj = text.IndexOf("endobj", typeAt, StringComparison.Ordinal);
-                if (objAt < 0 || endObj < 0)
-                    break;
-
-                int numStart = objAt;
-                while (numStart > 0 && text[numStart - 1] == ' ')
-                    numStart--;
-                while (numStart > 0 && char.IsDigit(text[numStart - 1]))
-                    numStart--;
-                while (numStart > 0 && text[numStart - 1] == ' ')
-                    numStart--;
-                while (numStart > 0 && char.IsDigit(text[numStart - 1]))
-                    numStart--;
-                var pageDict = text.Substring(numStart, endObj - numStart);
-                var pageNum = Regex.Match(pageDict, @"(\d+)\s+0\s+obj");
-                var box = Regex.Match(pageDict, @"/MediaBox\s*\[\s*([-\d\.]+)\s+([-\d\.]+)\s+([-\d\.]+)\s+([-\d\.]+)\s*\]");
-                var contents = Regex.Match(pageDict, @"/Contents\s*\[\s*(\d+)\s+0\s+R\s*\]");
-                if (!pageNum.Success || !box.Success || !contents.Success)
-                {
-                    search = endObj + 6;
-                    continue;
-                }
-
-                var decoded = ReadContentStream(pdf, text, int.Parse(contents.Groups[1].Value, CultureInfo.InvariantCulture));
-                if (decoded == null)
-                {
-                    search = endObj + 6;
-                    continue;
-                }
-
-                var content = enc.GetString(decoded);
-                var matrix = Regex.Match(content, @"([-\d\.]+)\s+[-\d\.]+\s+[-\d\.]+\s+([-\d\.]+)\s+[-\d\.]+\s+([-\d\.]+)\s+cm");
-                if (!matrix.Success)
-                {
-                    search = endObj + 6;
-                    continue;
-                }
-
-                float scale = Parse(matrix.Groups[2].Value);
-                float ty = Parse(matrix.Groups[3].Value);
-                float pageWidth = Parse(box.Groups[3].Value) - Parse(box.Groups[1].Value);
-                float pageHeight = Parse(box.Groups[4].Value) - Parse(box.Groups[2].Value);
-                if (scale <= 0f || pageWidth <= 0f || pageHeight <= 0f)
-                {
-                    search = endObj + 6;
-                    continue;
-                }
-
-                var painted = new MemoryStream();
-                var paint = new StreamWriter(painted, enc) { NewLine = "\n", AutoFlush = true };
-                paint.WriteLine("q");
-                const int strips = 64;
-                for (int i = 0; i < strips; i++)
-                {
-                    float y0 = pageHeight * i / strips;
-                    float y1 = pageHeight * (i + 1) / strips;
-                    float formY = ((y0 + y1) * 0.5f - ty) / scale;
-                    float r, g, b;
-                    SampleBackground(formY, formHeight, out r, out g, out b);
-                    paint.WriteLine(string.Format(CultureInfo.InvariantCulture,
-                        "{0:0.#####} {1:0.#####} {2:0.#####} rg", r, g, b));
-                    paint.WriteLine(string.Format(CultureInfo.InvariantCulture,
-                        "0 {0:0.#####} {1:0.#####} {2:0.#####} re f", y0, pageWidth, y1 - y0));
-                }
-                paint.WriteLine("Q");
-                paint.Flush();
-                var prefix = painted.ToArray();
-                var combined = new byte[prefix.Length + decoded.Length];
-                Buffer.BlockCopy(prefix, 0, combined, 0, prefix.Length);
-                Buffer.BlockCopy(decoded, 0, combined, prefix.Length, decoded.Length);
-
-                int contentId = nextId++;
-                long contentOffset = pdf.Length + append.Length;
-                writer.WriteLine(contentId + " 0 obj");
-                writer.WriteLine("<< /Length " + combined.Length + " >>");
-                writer.WriteLine("stream");
-                writer.Flush();
-                append.Write(combined, 0, combined.Length);
-                writer.WriteLine();
-                writer.WriteLine("endstream");
-                writer.WriteLine("endobj");
-                writer.Flush();
-
-                var updated = Regex.Replace(pageDict, @"/Contents\s*\[\s*\d+\s+0\s+R\s*\]",
-                    "/Contents [" + contentId + " 0 R]");
-                int pageId = int.Parse(pageNum.Groups[1].Value, CultureInfo.InvariantCulture);
-                long pageOffset = pdf.Length + append.Length;
-                writer.Write(updated);
-                if (!updated.EndsWith("\n"))
-                    writer.WriteLine();
-                writer.WriteLine("endobj");
-                writer.Flush();
-
-                while (offsets.Count <= pageId)
-                    offsets.Add(-1);
-                while (offsets.Count <= contentId)
-                    offsets.Add(-1);
-                offsets[pageId] = pageOffset;
-                offsets[contentId] = contentOffset;
-                search = endObj + 6;
-            }
-
-            if (offsets.Count == 0 || !offsets.Exists(offset => offset >= 0))
-                return pdf;
-
-            long xrefOffset = pdf.Length + append.Length;
-            writer.Write("xref\n");
-            writer.Write("0 1\n");
-            writer.Write("0000000000 65535 f \n");
-            int index = 1;
-            while (index < offsets.Count)
-            {
-                if (offsets[index] < 0)
-                {
-                    index++;
-                    continue;
-                }
-                int start = index;
-                while (index < offsets.Count && offsets[index] >= 0)
-                    index++;
-                writer.Write(start + " " + (index - start) + "\n");
-                for (int id = start; id < index; id++)
-                    writer.Write(offsets[id].ToString("0000000000", CultureInfo.InvariantCulture) + " 00000 n \n");
-            }
-            writer.WriteLine("trailer");
-            writer.WriteLine("<<");
-            writer.WriteLine("/Size " + nextId);
-            writer.WriteLine("/Prev " + prev);
-            writer.WriteLine("/Root " + rootMatch.Groups[1].Value);
-            if (infoMatch.Success)
-                writer.WriteLine("/Info " + infoMatch.Groups[1].Value);
-            writer.WriteLine(">>");
-            writer.WriteLine("startxref");
-            writer.WriteLine(xrefOffset.ToString(CultureInfo.InvariantCulture));
-            writer.WriteLine("%%EOF");
-            writer.Flush();
-
-            var result = new byte[pdf.Length + append.Length];
-            Buffer.BlockCopy(pdf, 0, result, 0, pdf.Length);
-            append.Position = 0;
-            append.Read(result, pdf.Length, (int)append.Length);
-            return result;
+            settings.PageHeight = (int)Math.Ceiling(microns);
+            return settings;
         }
 
-        private static void SampleBackground(float formY, float formHeight, out float r, out float g, out float b)
+        private static void WaitFor(ManualResetEvent done, Control ui)
         {
-            float t = formY / formHeight;
-            if (t < 0f) t = 0f;
-            if (t > 1f) t = 1f;
-            r = (243f + (251f - 243f) * t) / 255f;
-            g = (235f + (247f - 235f) * t) / 255f;
-            b = (224f + (240f - 224f) * t) / 255f;
-            float fromTop = 1f - t;
-            if (fromTop < 0.55f)
+            var deadline = DateTime.UtcNow.AddMinutes(3);
+            if (ui != null && ui.InvokeRequired)
             {
-                float alpha = 0.08f * (1f - fromTop / 0.55f);
-                r = r * (1f - alpha) + (140f / 255f) * alpha;
-                g = g * (1f - alpha) + (28f / 255f) * alpha;
-                b = b * (1f - alpha) + (28f / 255f) * alpha;
+                if (!done.WaitOne(TimeSpan.FromMinutes(3)))
+                    throw new TimeoutException("La generación del PDF superó el tiempo de espera.");
+                return;
             }
-        }
 
-        private static byte[] ReadContentStream(byte[] pdf, string text, int id)
-        {
-            var marker = id.ToString(CultureInfo.InvariantCulture) + " 0 obj";
-            int at = 0;
-            while (true)
+            while (!done.WaitOne(15))
             {
-                at = text.IndexOf(marker, at, StringComparison.Ordinal);
-                if (at < 0)
-                    return null;
-                if (at == 0 || !char.IsDigit(text[at - 1]))
-                    break;
-                at += marker.Length;
-            }
-            int streamAt = text.IndexOf("stream", at, StringComparison.Ordinal);
-            int endAt = text.IndexOf("endstream", streamAt, StringComparison.Ordinal);
-            if (streamAt < 0 || endAt < 0)
-                return null;
-            int data = streamAt + 6;
-            if (data < text.Length && text[data] == '\r') data++;
-            if (data < text.Length && text[data] == '\n') data++;
-            int dataEnd = endAt;
-            if (dataEnd > data && text[dataEnd - 1] == '\n') dataEnd--;
-            if (dataEnd > data && text[dataEnd - 1] == '\r') dataEnd--;
-            if (dataEnd <= data)
-                return null;
-            var raw = new byte[dataEnd - data];
-            Buffer.BlockCopy(pdf, data, raw, 0, raw.Length);
-            bool flate = text.IndexOf("/FlateDecode", at, streamAt - at, StringComparison.Ordinal) >= 0;
-            if (!flate)
-                return raw;
-            try
-            {
-                int start = raw.Length > 2 && raw[0] == 0x78 ? 2 : 0;
-                using (var input = new MemoryStream(raw, start, raw.Length - start))
-                using (var deflate = new DeflateStream(input, CompressionMode.Decompress))
-                using (var output = new MemoryStream())
-                {
-                    deflate.CopyTo(output);
-                    return output.ToArray();
-                }
-            }
-            catch (InvalidDataException)
-            {
-                return null;
-            }
-        }
-
-        private static float Parse(string value)
-        {
-            return float.Parse(value, CultureInfo.InvariantCulture);
-        }
-
-        private static void ConfigureA4Pages(HtmlToPdf converter)
-        {
-            converter.Options.PdfPageSize = PdfPageSize.A4;
-            converter.Options.WebPageWidth = 1024;
-            converter.Options.WebPageHeight = 0;
-            converter.Options.MarginTop = 0;
-            converter.Options.MarginBottom = 0;
-            converter.Options.MarginLeft = 0;
-            converter.Options.MarginRight = 0;
-            converter.Options.AutoFitWidth = HtmlToPdfPageFitMode.AutoFit;
-            converter.Options.AutoFitHeight = HtmlToPdfPageFitMode.NoAdjustment;
-        }
-
-        private static void ConfigureSinglePage(HtmlToPdf converter, string html)
-        {
-            const int webPageWidth = 1024;
-
-            var htmlToImage = new HtmlToImage();
-            htmlToImage.WebPageWidth = webPageWidth;
-            htmlToImage.WebPageHeight = 0;
-
-            using (Image preview = htmlToImage.ConvertHtmlString(html))
-            {
-                // Keep A4 width; height grows with content so the PDF has no trailing blank.
-                const float pageWidthPt = 595f;
-                float pageHeightPt = pageWidthPt * preview.Height / (float)preview.Width;
-                if (pageHeightPt < 1f)
-                    pageHeightPt = 1f;
-
-                converter.Options.WebPageWidth = webPageWidth;
-                converter.Options.WebPageHeight = 0;
-                converter.Options.PdfPageSize = PdfPageSize.Custom;
-                converter.Options.PdfPageCustomSize = new SizeF(pageWidthPt, pageHeightPt);
-                converter.Options.MarginTop = 0;
-                converter.Options.MarginBottom = 0;
-                converter.Options.MarginLeft = 0;
-                converter.Options.MarginRight = 0;
-                converter.Options.AutoFitWidth = HtmlToPdfPageFitMode.AutoFit;
-                converter.Options.AutoFitHeight = HtmlToPdfPageFitMode.AutoFit;
+                if (DateTime.UtcNow >= deadline)
+                    throw new TimeoutException("La generación del PDF superó el tiempo de espera.");
+                Application.DoEvents();
             }
         }
 
@@ -406,6 +335,43 @@ namespace FriMav.Client.Printer
         public override string ToString()
         {
             return PrintResource.Mode_PrintToPDF;
+        }
+
+        private class PdfJob
+        {
+            public Exception Error;
+            public int Started;
+            public readonly ManualResetEvent Done = new ManualResetEvent(false);
+
+            public void Fail(Exception ex)
+            {
+                Error = ex;
+                Done.Set();
+            }
+
+            public void Succeed()
+            {
+                Done.Set();
+            }
+        }
+
+        private class HiddenHost : Form
+        {
+            protected override bool ShowWithoutActivation
+            {
+                get { return true; }
+            }
+
+            protected override CreateParams CreateParams
+            {
+                get
+                {
+                    const int WS_EX_TOOLWINDOW = 0x80;
+                    var parameters = base.CreateParams;
+                    parameters.ExStyle |= WS_EX_TOOLWINDOW;
+                    return parameters;
+                }
+            }
         }
     }
 }
