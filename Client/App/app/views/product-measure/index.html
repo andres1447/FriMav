@@ -1,0 +1,27 @@
+<header>
+  <h3>Medidas</h3>
+  <div>
+    <a ui-sref="ProductMeasureCreate" class="btn btn-success">Nuevo<span class="key-shortcut">+</span></a>
+  </div>
+</header>
+<div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Nombre corto</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="it in measures" ng-class="{'alert-info': $index == measureIndex}">
+                <td class="col-md-2">{{::it.name}}</td>
+                <td class="col-md-2">{{::it.shortName}}</td>
+                <td class="col-md-3">
+                    <a ui-sref="ProductMeasureUpdate({ id: it.id})" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i><span class="key-shortcut">&midast;</span></a>
+                    <button type="button" class="btn btn-danger" ng-click="delete($index)"><i class="glyphicon glyphicon-trash"></i><span class="key-shortcut">&minus;</span></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

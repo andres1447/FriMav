@@ -21,6 +21,9 @@ angular
                 productTypes: function (ProductFamily) {
                     return ProductFamily.query().$promise;
                 },
+                productMeasures: function (ProductMeasure) {
+                    return ProductMeasure.query().$promise;
+                },
                 codes: function (Product) {
                   return Product.codes().$promise;
                 }
@@ -33,6 +36,9 @@ angular
             resolve: {
                 productTypes: function (ProductFamily) {
                     return ProductFamily.query().$promise;
+                },
+                productMeasures: function (ProductMeasure) {
+                    return ProductMeasure.query().$promise;
                 },
                 product: function ($stateParams, Product) {
                   return Product.get({ id: $stateParams.id }).$promise;

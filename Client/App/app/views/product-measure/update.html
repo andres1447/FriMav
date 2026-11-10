@@ -1,0 +1,9 @@
+<header>
+  <h3>Editar medida</h3>
+  <div>
+    <a ui-sref="ProductMeasureIndex" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i><span class="key-shortcut">esc</span></a>
+  </div>
+</header>
+<form class="form" name="form" ng-submit="form.$valid && update(measure)" ng-disabled="sending">
+    <div ng-include="'views/product-measure/_form.html'" onload="init()"></div>
+</form>

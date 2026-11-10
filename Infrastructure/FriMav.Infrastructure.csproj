@@ -91,6 +91,7 @@
     <Compile Include="Mappings\Payrolls\TransferenceMapping.cs" />
     <Compile Include="Mappings\PersonMapping.cs" />
     <Compile Include="Mappings\ProductMapping.cs" />
+    <Compile Include="Mappings\ProductMeasureMapping.cs" />
     <Compile Include="Mappings\ProductTypeMapping.cs" />
     <Compile Include="Mappings\TransactionDocumentMapping.cs" />
     <Compile Include="Mappings\ZoneMapping.cs" />
@@ -133,6 +134,10 @@
     <Compile Include="Migrations\202609220148596_ProductMeasureUnit.cs" />
     <Compile Include="Migrations\202609220148596_ProductMeasureUnit.Designer.cs">
       <DependentUpon>202609220148596_ProductMeasureUnit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202611101118491_ProductMeasureEntity.cs" />
+    <Compile Include="Migrations\202611101118491_ProductMeasureEntity.Designer.cs">
+      <DependentUpon>202611101118491_ProductMeasureEntity.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\202101210252279_PayrollSql.cs" />
@@ -185,6 +190,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202609220148596_ProductMeasureUnit.resx">
       <DependentUpon>202609220148596_ProductMeasureUnit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202611101118491_ProductMeasureEntity.resx">
+      <DependentUpon>202611101118491_ProductMeasureEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

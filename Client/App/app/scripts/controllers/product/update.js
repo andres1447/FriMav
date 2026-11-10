@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('client')
-  .controller('ProductUpdateCtrl', function ($scope, $state, $timeout, hotkeys, Notification, Product, productTypes, product, codes) {
+  .controller('ProductUpdateCtrl', function ($scope, $state, $timeout, hotkeys, Notification, Product, productTypes, productMeasures, product, codes) {
       $scope.productTypes = productTypes;
+      $scope.productMeasures = productMeasures;
       $scope.product = product;
       $scope.codes = codes.remove(product.code);
 
@@ -26,9 +27,6 @@ angular.module('client')
       });
 
       $scope.init = function () {
-           if ($scope.product.measure == null) {
-               $scope.product.measure = 0;
-           }
            $scope.broadcast('InitProductCreate');
       };
 

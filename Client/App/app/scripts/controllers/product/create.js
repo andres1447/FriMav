@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('client')
-  .controller('ProductCreateCtrl', function ($scope, $state, hotkeys, Notification, Product, productTypes, codes) {
+  .controller('ProductCreateCtrl', function ($scope, $state, hotkeys, Notification, Product, productTypes, productMeasures, codes) {
       $scope.productTypes = productTypes;
+      $scope.productMeasures = productMeasures;
       $scope.codes = codes;
 
       hotkeys.bindTo($scope).add({
@@ -25,7 +26,7 @@ angular.module('client')
       });
 
       $scope.init = function () {
-          $scope.product = { active: true, measure: 0 };
+          $scope.product = { active: true };
           $scope.broadcast('InitProductCreate');
       };
 

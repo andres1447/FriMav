@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('client')
-  .controller('OrderCtrl', function ($scope, $state, $filter, hotkeys, Notification, products, customers) {
+  .controller('OrderCtrl', function ($scope, $state, $filter, hotkeys, Notification, products, customers, productMeasures) {
       $scope.products = orderByCode($filter, products);
       $scope.customers = orderByCode($filter, customers);
+      $scope.productMeasures = productMeasures;
 
       hotkeys.bindTo($scope).add({
           combo: 'f5',
@@ -54,7 +55,7 @@ angular.module('client')
       $scope.init();
 
       function emptyItem() {
-          return { quantity: 1, measure: 0 };
+          return { quantity: 1, measure: 1 };
       }
 
       $scope.addItem = function () {
@@ -86,14 +87,14 @@ angular.module('client')
           if (res.length > 0) {
               var product = res[0];
               item.productId = product.id;
-              item.measure = product.measure != null ? product.measure : 0;
+              item.measure = product.productMeasureId != null ? product.productMeasureId : 1;
           }
       };
 
       $scope.clearProduct = function (item) {
           item.product = null;
           item.productId = null;
-          item.measure = 0;
+          item.measure = 1;
       };
 
       $scope.deleteItem = function (index) {
@@ -114,6 +115,17 @@ angular.module('client')
           $state.reload();
       };
 
+      function measureShortName(id) {
+          var selected = Number(id);
+          var match = null;
+          angular.forEach($scope.productMeasures, function (measure) {
+              if (Number(measure.id) === selected) {
+                  match = measure;
+              }
+          });
+          return match ? match.shortName : '';
+      }
+
       $scope.getPrintModel = function (order, items) {
           var model = {
               date: new Date(),
@@ -125,7 +137,7 @@ angular.module('client')
               model.items.push({
                   product: item.product.name,
                   quantity: item.quantity,
-                  measure: Number(item.measure) === 1 ? 'Un' : 'Kg'
+                  measure: measureShortName(item.measure)
               });
           });
           return model;

@@ -444,6 +444,9 @@
     <Content Include="App\app\scripts\controllers\family\create.js" />
     <Content Include="App\app\scripts\controllers\family\index.js" />
     <Content Include="App\app\scripts\controllers\family\update.js" />
+    <Content Include="App\app\scripts\controllers\product-measure\create.js" />
+    <Content Include="App\app\scripts\controllers\product-measure\index.js" />
+    <Content Include="App\app\scripts\controllers\product-measure\update.js" />
     <Content Include="App\app\scripts\controllers\payment\cancel.js" />
     <Content Include="App\app\scripts\controllers\payment\customer-payment-create.js" />
     <Content Include="App\app\scripts\controllers\product\create.js" />
@@ -465,6 +468,7 @@
     <Content Include="App\app\scripts\routes\family.js" />
     <Content Include="App\app\scripts\routes\payment.js" />
     <Content Include="App\app\scripts\routes\product.js" />
+    <Content Include="App\app\scripts\routes\product-measure.js" />
     <Content Include="App\app\scripts\services\transaction.js" />
     <Content Include="App\app\scripts\services\config.js" />
     <Content Include="App\app\scripts\services\confirm.js" />
@@ -476,6 +480,7 @@
     <Content Include="App\app\scripts\services\delivery.js" />
     <Content Include="App\app\scripts\services\payment.js" />
     <Content Include="App\app\scripts\services\product.js" />
+    <Content Include="App\app\scripts\services\product-measure.js" />
     <Content Include="App\app\styles\main.css" />
     <Content Include="App\app\views\catalog\create.html" />
     <Content Include="App\app\views\catalog\index.html" />
@@ -502,6 +507,10 @@
     <Content Include="App\app\views\family\index.html" />
     <Content Include="App\app\views\family\update.html" />
     <Content Include="App\app\views\family\_form.html" />
+    <Content Include="App\app\views\product-measure\create.html" />
+    <Content Include="App\app\views\product-measure\index.html" />
+    <Content Include="App\app\views\product-measure\update.html" />
+    <Content Include="App\app\views\product-measure\_form.html" />
     <Content Include="App\app\views\partials\modal.html" />
     <Content Include="App\app\views\payment\cancel.html" />
     <Content Include="App\app\views\payment\customer-payment-create.html" />

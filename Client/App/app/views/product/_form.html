@@ -13,8 +13,8 @@
 <div class="form-group">
   <label for="product_measure" class="control-label">Medida</label>
   <select id="product_measure" class="form-control" ae-key-tab="[13, 9, 40]" ae-key-prev="[37, 38]"
-          ng-model="product.measure" required>
-    <option ng-repeat="option in measureOptions" ng-value="option.id">{{option.name}}</option>
+          ng-model="product.productMeasureId" required>
+    <option ng-repeat="option in productMeasures" ng-value="option.id">{{option.name}}</option>
   </select>
 </div>
 <div class="form-group">

@@ -30,7 +30,7 @@ namespace FriMav.Application
 
         private Product GetById(int id)
         {
-            var product = _productRepository.Get(id, x => x.Type);
+            var product = _productRepository.Get(id, x => x.Type, x => x.Measure);
             if (product == null)
                 throw new NotFoundException();
             return product;
@@ -55,7 +55,7 @@ namespace FriMav.Application
                 Price = request.Price,
                 ProductTypeId = request.ProductTypeId,
                 Type = type,
-                Measure = request.Measure
+                ProductMeasureId = request.ProductMeasureId
             };
             _productRepository.Add(product);
         }
@@ -74,7 +74,7 @@ namespace FriMav.Application
             }
             saved.Price = product.Price;
             saved.Code = product.Code;
-            saved.Measure = product.Measure;
+            saved.ProductMeasureId = product.ProductMeasureId;
             if (!product.Active)
                 saved.Delete();
             else

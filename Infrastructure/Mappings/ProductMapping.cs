@@ -16,9 +16,9 @@ namespace FriMav.Infrastructure.Mappings
 
             Property(x => x.Code).IsRequired().HasMaxLength(10);
             Property(x => x.Name).IsRequired().HasMaxLength(128);
-            Property(x => x.Measure).IsRequired();
 
             HasOptional(x => x.Type).WithMany().HasForeignKey(x => x.ProductTypeId);
+            HasRequired(x => x.Measure).WithMany().HasForeignKey(x => x.ProductMeasureId).WillCascadeOnDelete(false);
         }
     }
 }

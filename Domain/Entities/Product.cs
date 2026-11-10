@@ -15,7 +15,8 @@ namespace FriMav.Domain.Entities
         public DateTime? DeleteDate { get; set; }
         public int? ProductTypeId { get; set; }
         public ProductType Type { get; set; }
-        public ProductMeasure Measure { get; set; } = ProductMeasure.Kg;
+        public int ProductMeasureId { get; set; } = 1;
+        public ProductMeasure Measure { get; set; }
 
         public void Delete()
         {

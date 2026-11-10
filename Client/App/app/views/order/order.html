@@ -42,7 +42,7 @@
           <td><input type="text" class="form-control" ng-model="it.quantity" ae-key-tab="[13, 9]" ae-tab-validator="hasQuantity(it)" restrict-decimal></td>
           <td>
             <select class="form-control" ng-model="it.measure" ae-key-tab="[13, 9]" ae-before-tab="AddItem(it)">
-              <option ng-repeat="option in measureOptions" ng-value="option.id">{{option.name}}</option>
+              <option ng-repeat="option in productMeasures" ng-value="option.id">{{option.name}}</option>
             </select>
           </td>
         </tr>

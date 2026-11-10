@@ -13,6 +13,9 @@ angular
                 },
                 customers: function (Customer) {
                     return Customer.query().$promise;
+                },
+                productMeasures: function (ProductMeasure) {
+                    return ProductMeasure.query().$promise;
                 }
             }
         });

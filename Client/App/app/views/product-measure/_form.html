@@ -1,0 +1,11 @@
+<div class="form-group">
+  <label for="measure_name" class="control-label">Nombre</label>
+  <input id="measure_name" type="text" class="form-control" ng-model="measure.name" ae-autofocus="InitProductMeasureCreate" autocomplete="off" ae-key-tab="[13, 9]" required />
+</div>
+<div class="form-group">
+  <label for="measure_short_name" class="control-label">Nombre corto</label>
+  <input id="measure_short_name" type="text" class="form-control" ng-model="measure.shortName" maxlength="2" autocomplete="off" ae-key-tab="[13]" required />
+</div>
+<div class="form-actions">
+  <button type="submit" class="btn btn-success" ng-disabled="sending">Guardar<span class="key-shortcut">F5</span></button>
+</div>

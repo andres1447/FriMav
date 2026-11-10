@@ -114,6 +114,8 @@
     <Compile Include="Product\ProductResponse.cs" />
     <Compile Include="Product\ProductTypeService.cs" />
     <Compile Include="Product\IProductTypeService.cs" />
+    <Compile Include="Product\ProductMeasureService.cs" />
+    <Compile Include="Product\IProductMeasureService.cs" />
     <Compile Include="Customer\ICustomerService.cs" />
     <Compile Include="Invoice\IInvoiceService.cs" />
     <Compile Include="Customer\CustomerService.cs" />

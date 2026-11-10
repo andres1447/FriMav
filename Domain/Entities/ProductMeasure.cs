@@ -1,8 +1,16 @@
+using System;
+
 namespace FriMav.Domain.Entities
 {
-    public enum ProductMeasure : int
+    public class ProductMeasure : Entity
     {
-        Kg = 0,
-        Units = 1
+        public string Name { get; set; }
+        public string ShortName { get; set; }
+        public DateTime? DeleteDate { get; set; }
+
+        public void Delete()
+        {
+            DeleteDate = DateTime.UtcNow;
+        }
     }
 }
